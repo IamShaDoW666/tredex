@@ -6,6 +6,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { IProduct } from '@/model/productSchema';
 import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 
 interface ProductCardProps {
   product: IProduct;
@@ -32,9 +33,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           )}
         </div>
       </div>
-      <CardFooter className="flex flex-col items-start p-4 bg-background/80 backdrop-blur-sm">
+      <CardFooter className="flex flex-col items-start p-4 backdrop-blur-sm">
         <h3 className="font-bold text-lg truncate w-full">{product.name}</h3>
         <p className="text-sm text-muted-foreground mt-1">{product.productType}</p>
+        <Separator className='my-4' />
         <div className="flex justify-between items-center w-full mt-4">
           <div className="flex items-center gap-x-2">
             {product.discountPrice ? (
