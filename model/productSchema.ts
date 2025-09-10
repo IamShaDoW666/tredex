@@ -4,6 +4,7 @@ export interface IProduct extends Document {
   name: string;
   images: string[];
   price: number;
+  discountPrice?: number;
   productType: "Sneaker" | "Watch"
   available: boolean;
   description?: string;
@@ -29,6 +30,10 @@ const productSchema = new Schema<IProduct>({
     type: Number,
     required: [true, 'Product price is required.'],
     min: [0, 'Price cannot be negative.'],
+  },
+  discountPrice: {
+    type: Number,
+    min: [0, 'Discount price cannot be negative.'],
   },
   available: {
     type: Boolean,
