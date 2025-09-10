@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { ICategory } from '@/model/categorySchema';
 
-const fetchCategories = async () => {
+const fetchCategories = async (): Promise<ICategory[]> => {
   const response = await fetch('/api/categories');
   if (!response.ok) {
     throw new Error('Network response was not ok');
@@ -8,7 +9,7 @@ const fetchCategories = async () => {
   return response.json();
 };
 
-const createCategory = async (newCategory: any) => {
+const createCategory = async (newCategory: ICategory) => {
   const response = await fetch('/api/categories', {
     method: 'POST',
     headers: {
@@ -22,7 +23,7 @@ const createCategory = async (newCategory: any) => {
   return response.json();
 };
 
-export const useCategories = () => useQuery({ queryKey: ['categories'], queryFn: fetchCategories });
+export const useCategories = () => useQuery<ICategory[]>({ queryKey: ['categories'], queryFn: fetchCategories });
 
 export const useCreateCategory = () => {
   const queryClient = useQueryClient();

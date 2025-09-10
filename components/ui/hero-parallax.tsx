@@ -8,6 +8,7 @@ import {
   MotionValue,
 } from "motion/react";
 import SplitText from "@/components/SplitText";
+import Image from 'next/image'; // Added this import
 
 
 export const HeroParallax = ({
@@ -154,12 +155,11 @@ export const ProductCard = ({
         href={product.link}
         className="block group-hover/product:shadow-2xl "
       >
-        <img
+        <Image // Changed from img to Image
           src={product.thumbnail}
-          height="600"
-          width="600"
-          className="object-cover object-left-top absolute h-full w-full inset-0"
           alt={product.title}
+          fill // Added fill prop
+          className="object-cover object-left-top absolute h-full w-full inset-0"
         />
       </a>
       <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-background pointer-events-none"></div>

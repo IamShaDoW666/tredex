@@ -8,8 +8,12 @@ export async function GET() {
   try {
     const categories = await Category.find();
     return NextResponse.json({ data: categories });
-  } catch (error) {
-    return NextResponse.json({ error: { message: 'An unexpected error occurred.' } }, { status: 500 });
+  } catch (error: unknown) {
+    let errorMessage = 'An unexpected error occurred.';
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+    return NextResponse.json({ error: { message: errorMessage } }, { status: 500 });
   }
 }
 
@@ -28,7 +32,11 @@ export async function POST(request: Request) {
     const savedCategory = await newCategory.save();
 
     return NextResponse.json({ data: savedCategory }, { status: 201 });
-  } catch (error) {
-    return NextResponse.json({ error: { message: 'An unexpected error occurred.' } }, { status: 500 });
+  } catch (error: unknown) {
+    let errorMessage = 'An unexpected error occurred.';
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+    return NextResponse.json({ error: { message: errorMessage } }, { status: 500 });
   }
 }

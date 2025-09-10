@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { IProduct } from '@/model/productSchema';
 import { Badge } from '@/components/ui/badge';

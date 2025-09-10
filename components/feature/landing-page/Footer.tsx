@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Facebook, Instagram, Twitter } from 'lucide-react';
+import { Instagram } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 const Footer = () => {

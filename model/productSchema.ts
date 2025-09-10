@@ -1,7 +1,17 @@
 import { Schema, model, Document } from 'mongoose';
 
-export interface IProduct extends Document {
+export interface IProductData {
   name: string;
+  images: string[];
+  price: number;
+  discountPrice?: number;
+  productType: "Sneaker" | "Watch";
+  available: boolean;
+  description?: string;
+}
+
+export interface IProduct extends IProductData, Document {
+  _id: string;
   images: string[];
   price: number;
   discountPrice?: number;

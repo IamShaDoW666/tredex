@@ -2,16 +2,14 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import AnimatedContent from '@/components/AnimatedContent';
 import { HeroParallax } from '@/components/ui/hero-parallax';
 import { Spotlight } from '@/components/ui/spotlight';
-import { cn } from '@/lib/utils';
 export const products = [
   {
     title: "Nike Air Force 1 '07",
     link: "http://localhost:3000",
     thumbnail:
-      "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/374915/01/sv01/fnd/PNA/fmt/png/Suede-Classic-XXI-Men's-Sneakers",
+      "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/99486859-0ff3-46b4-949b-2d16af2ad421/custom-nike-dunk-high-by-you-shoes.png",
   },
   {
     title: "Adidas Samba OG",
@@ -23,7 +21,7 @@ export const products = [
     title: "Converse Chuck 70",
     link: "http://localhost:3000",
     thumbnail:
-      "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/374915/01/sv01/fnd/PNA/fmt/png/Suede-Classic-XXI-Men's-Sneakers",
+      "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/99486859-0ff3-46b4-949b-2d16af2ad421/custom-nike-dunk-high-by-you-shoes.png",
   },
   {
     title: "New Balance 550",
@@ -35,7 +33,7 @@ export const products = [
     title: "Nike Dunk Low Retro",
     link: "http://localhost:3000",
     thumbnail:
-      "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/374915/01/sv01/fnd/PNA/fmt/png/Suede-Classic-XXI-Men's-Sneakers",
+      "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/99486859-0ff3-46b4-949b-2d16af2ad421/custom-nike-dunk-high-by-you-shoes.png",
   },
   {
     title: "Air Jordan 1 High OG",
@@ -47,7 +45,7 @@ export const products = [
     title: "Vans Knu Skool",
     link: "http://localhost:3000",
     thumbnail:
-      "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/374915/01/sv01/fnd/PNA/fmt/png/Suede-Classic-XXI-Men's-Sneakers",
+      "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/99486859-0ff3-46b4-949b-2d16af2ad421/custom-nike-dunk-high-by-you-shoes.png",
   },
   {
     title: "Puma Suede Classic",
@@ -59,7 +57,7 @@ export const products = [
     title: "Reebok Club C 85",
     link: "http://localhost:3000",
     thumbnail:
-      "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/374915/01/sv01/fnd/PNA/fmt/png/Suede-Classic-XXI-Men's-Sneakers",
+      "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/99486859-0ff3-46b4-949b-2d16af2ad421/custom-nike-dunk-high-by-you-shoes.png",
   },
   {
     title: "ASICS GEL-Kayano 14",
@@ -71,7 +69,7 @@ export const products = [
     title: "Hoka Clifton 9",
     link: "http://localhost:3000",
     thumbnail:
-      "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/374915/01/sv01/fnd/PNA/fmt/png/Suede-Classic-XXI-Men's-Sneakers",
+      "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/99486859-0ff3-46b4-949b-2d16af2ad421/custom-nike-dunk-high-by-you-shoes.png",
   },
   {
     title: "On Cloud 5",
@@ -83,7 +81,7 @@ export const products = [
     title: "Salomon XT-6",
     link: "http://localhost:3000",
     thumbnail:
-      "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/374915/01/sv01/fnd/PNA/fmt/png/Suede-Classic-XXI-Men's-Sneakers",
+      "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/99486859-0ff3-46b4-949b-2d16af2ad421/custom-nike-dunk-high-by-you-shoes.png",
   },
   {
     title: "Adidas Campus 00s",
@@ -95,7 +93,7 @@ export const products = [
     title: "Nike Blazer Mid '77",
     link: "http://localhost:3000",
     thumbnail:
-      "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/374915/01/sv01/fnd/PNA/fmt/png/Suede-Classic-XXI-Men's-Sneakers",
+      "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/99486859-0ff3-46b4-949b-2d16af2ad421/custom-nike-dunk-high-by-you-shoes.png",
   },
 ];
 
