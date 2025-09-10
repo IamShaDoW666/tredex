@@ -12,7 +12,7 @@ const categories = [
 const products = [
   {
     name: 'Nike Air Max 90',
-    images: ["https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/374915/01/sv01/fnd/PNA/fmt/png/Suede-Classic-XXI-Men's-Sneakers"],
+    images: ["https://www.tracerindia.com/cdn/shop/files/1_3a3a95a0-218a-47cf-9d02-f6c1134b88bc.jpg?v=1696502581"],
     price: 120,
     productType: 'Sneaker',
     available: true,
@@ -28,7 +28,7 @@ const products = [
   },
   {
     name: 'Puma Suede Classic',
-    images: ["https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/374915/01/sv01/fnd/PNA/fmt/png/Suede-Classic-XXI-Men's-Sneakers"],
+    images: ["https://www.tracerindia.com/cdn/shop/files/1_3a3a95a0-218a-47cf-9d02-f6c1134b88bc.jpg?v=1696502581"],
     price: 65,
     productType: 'Sneaker',
     available: true,
@@ -44,7 +44,7 @@ const products = [
   },
   {
     name: 'Nike Air Force 1',
-    images: ["https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/374915/01/sv01/fnd/PNA/fmt/png/Suede-Classic-XXI-Men's-Sneakers"],
+    images: ["https://www.tracerindia.com/cdn/shop/files/1_3a3a95a0-218a-47cf-9d02-f6c1134b88bc.jpg?v=1696502581"],
     price: 100,
     productType: 'Sneaker',
     available: true,
@@ -60,7 +60,7 @@ const products = [
   },
   {
     name: 'New Balance 550',
-    images: ["https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/374915/01/sv01/fnd/PNA/fmt/png/Suede-Classic-XXI-Men's-Sneakers"],
+    images: ["https://www.tracerindia.com/cdn/shop/files/1_3a3a95a0-218a-47cf-9d02-f6c1134b88bc.jpg?v=1696502581"],
     price: 110,
     productType: 'Sneaker',
     available: true,
