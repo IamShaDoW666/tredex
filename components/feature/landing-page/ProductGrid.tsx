@@ -1,12 +1,12 @@
 "use client";
 
 import React from 'react';
-import { Sneaker } from '@/lib/types';
 import ProductCard from './ProductCard';
 import AnimatedContent from '@/components/AnimatedContent';
+import { IProduct } from '@/model/productSchema';
 
 interface ProductGridProps {
-  products: Sneaker[];
+  products: IProduct[];
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {

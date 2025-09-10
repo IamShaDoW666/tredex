@@ -3,14 +3,15 @@ import Header from '@/components/feature/landing-page/Header';
 import Hero from '@/components/feature/landing-page/Hero';
 import ProductGrid from '@/components/feature/landing-page/ProductGrid';
 import Footer from '@/components/feature/landing-page/Footer';
-import { sneakers } from '@/lib/mock-data';
+import dbConnect from '@/lib/db';
 
-const LandingPage = () => {
+const LandingPage = async () => {
+  await dbConnect()
   return (
     <div>
       <Header />
       <Hero />
-      <ProductGrid products={sneakers} />
+      {/* <ProductGrid products={sneakers} /> */}
       <Footer />
     </div>
   );
