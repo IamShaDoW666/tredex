@@ -1,4 +1,20 @@
+import React from 'react';
+import Header from '@/components/feature/landing-page/Header';
+import Hero from '@/components/feature/landing-page/Hero';
+import ProductGrid from '@/components/feature/landing-page/ProductGrid';
+import Footer from '@/components/feature/landing-page/Footer';
+import dbConnect from '@/lib/db';
 
-export default function Home() {
-  return <div>Hello World</div>
-}
+const LandingPage = async () => {
+  await dbConnect()
+  return (
+    <div>
+      <Header />
+      <Hero />
+      {/* <ProductGrid products={sneakers} /> */}
+      <Footer />
+    </div>
+  );
+};
+
+export default LandingPage;
