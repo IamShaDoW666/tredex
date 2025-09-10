@@ -7,7 +7,7 @@ import {
   useSpring,
   MotionValue,
 } from "motion/react";
-
+import SplitText from "@/components/SplitText";
 
 
 export const HeroParallax = ({
@@ -27,6 +27,7 @@ export const HeroParallax = ({
     target: ref,
     offset: ["start start", "end start"],
   });
+
 
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
@@ -57,7 +58,7 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="h-[300vh] md:y-20 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[280vh] md:y-20 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -102,12 +103,22 @@ export const HeroParallax = ({
 };
 
 export const Header = () => {
+  const sloganRef = React.useRef<HTMLHeadingElement>(null);
   return (
-    <div className="max-w-7xl relative mx-auto py-40 md:py-40 px-4 w-full  left-0 top-0">
-      <h1 className="text-8xl md:text-9xl font-bold dark:text-white mb-4">
-        Tredex
-      </h1>
-      <h2 className="text-4xl md:text-6xl font-bold dark:text-white ml-4">
+    <div className="max-w-7xl relative mx-auto py-40 md:py-40 px-4 w-full left-0 top-0">
+      <SplitText text="Tredex"
+        className="text-8xl md:text-9xl font-bold dark:text-primary mb-4"
+        delay={100}
+        duration={0.6}
+        ease="power3.out"
+        splitType="chars"
+        from={{ opacity: 0, y: 40 }}
+        to={{ opacity: 1, y: 0 }}
+        threshold={0.1}
+        rootMargin="-100px"
+        textAlign="center"
+      />
+      <h2 ref={sloganRef} className="text-4xl md:text-6xl font-bold dark:text-white ml-4">
         Trends <br /> Start Here.
       </h2>
       <p className="max-w-xl text-xl md:text-2xl mt-8 dark:text-neutral-200">
@@ -137,7 +148,7 @@ export const ProductCard = ({
         y: -20,
       }}
       key={product.title}
-      className="group/product h-64 md:h-96 md:w-[40rem] w-[20rem] relative shrink-0"
+      className="group/product rounded-lg overflow-hidden h-64 md:h-96 md:w-[40rem] w-[20rem] relative shrink-0"
     >
       <a
         href={product.link}

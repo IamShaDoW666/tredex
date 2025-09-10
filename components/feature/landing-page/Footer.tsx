@@ -11,7 +11,7 @@ const Footer = () => {
           {/* Brand Info */}
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
             <h3 className="text-2xl font-bold mb-4 text-primary">TREDEX</h3>
-            <p className="text-muted-foreground text-sm">Step into style, where every stride is a statement.</p>
+            <p className="text-muted-foreground text-sm">Trends start here.</p>
           </div>
 
           {/* Separator for larger screens */}
@@ -47,7 +47,7 @@ const Footer = () => {
               {/* <Link href="#" aria-label="Facebook" className="text-muted-foreground hover:text-primary transition-colors"> */}
               {/*   <Facebook size={24} /> */}
               {/* </Link> */}
-              <Link href="" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
+              <Link target='_blank' href="https://www.instagram.com/tredexstorein?igsh=NHJjNXF5MDcxMmIz" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
                 <Instagram size={24} />
               </Link>
               {/* <Link href="#" aria-label="Twitter" className="text-muted-foreground hover:text-primary transition-colors"> */}
