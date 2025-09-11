@@ -22,6 +22,7 @@
     "@acme": "https://acme.com/r/{name}.json",
     "@aceternity": "https://ui.aceternity.com/registry/{name}.json",
     "@originui": "https://originui.com/r/{name}.json",
-    "@react-bits": "https://reactbits.dev/r/{name}.json"
+    "@react-bits": "https://reactbits.dev/r/{name}.json",
+    "@magic": "https://ui.magic.com/registry/{name}.json"
   }
 }

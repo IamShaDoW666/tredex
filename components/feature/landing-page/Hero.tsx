@@ -106,7 +106,7 @@ const Hero = () => {
           className="-top-40 left-0 md:-top-20 md:left-60"
           fill="white"
         />
-        <div className="bg-background bg-opacity-50 flex flex-col justify-center items-center text-foreground">
+        <div className="bg-background bg-opacity-50 px-4 flex flex-col justify-center items-center text-foreground">
           <h2 className="text-6xl font-bold">Step Into Style</h2>
           <p className="text-xl mt-4 mb-8">Discover the latest sneaker collection</p>
           <Button size="lg">Shop Now</Button>

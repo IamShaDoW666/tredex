@@ -7,10 +7,11 @@ import Link from 'next/link';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { MobileNavToggle } from '@/components/MobileNavToggle'; // Import MobileNavToggle
 import LogoImage from '../../../images/logo.png';
+import { Instagram } from 'lucide-react';
 const Header = () => {
   return (
-    <header className="fixed top-10 ml-2 sm:left-16 z-50">
-      <div className="flex items-center gap-4 bg-card rounded-full p-2 overflow-x-auto">
+    <header className="fixed top-10 ml-2 sm:left-16 z-50 flex justify-between w-full sm:w-auto items-center px-8">
+      <div className="flex items-center gap-4 bg-card border-2 dark:border-0 border-accent-foreground rounded-full p-2 overflow-x-auto">
         <Avatar className="bg-primary">
           <AvatarImage src={LogoImage.src} alt="Tredex logo" />
           <AvatarFallback>TX</AvatarFallback>
@@ -38,11 +39,16 @@ const Header = () => {
             </Button>
           </Link>
         </nav>
-        {/* Mobile navigation toggle - visible on mobile */}
-        <div className="md:hidden"> {/* Added md:hidden */}
-          <MobileNavToggle />
-        </div>
         <ThemeToggle />
+        <Link passHref target='_blank' href="https://www.instagram.com/tredexstorein?igsh=NHJjNXF5MDcxMmIz" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
+          <Button variant={'ghost'} className="text-foreground hover:bg-accent hover:text-foreground">
+            <Instagram size={24} />
+          </Button>
+        </Link>
+      </div>
+      {/* Mobile navigation toggle - visible on mobile */}
+      <div className="md:hidden flex items-center gap-4 bg-card border-2 dark:border-0 border-accent-foreground rounded-full p-2 overflow-x-auto"> {/* Added md:hidden */}
+        <MobileNavToggle />
       </div>
     </header>
   );

@@ -1,11 +1,11 @@
 import Providers from '@/components/Providers';
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Exo_2 } from "next/font/google";
 import '../styles/tailwind.css'
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+
+const exo2 = Exo_2({
+  variable: "--font-exo2",
+})
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tredex",
-  description: "Online sneaker markerplace",
+  title: "Tredex - Trends start here",
+  description: "Trends Start Here.",
 };
 
 export default function RootLayout({
@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistMono.variable} ${exo2.variable} ${exo2.className} antialiased`}
       >
         <Providers>{children}</Providers>
       </body>

@@ -1,8 +1,8 @@
 "use client";
 
-import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose, SheetFooter } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Instagram, Menu } from "lucide-react";
 import Link from 'next/link';
 import gsap from 'gsap';
 import { useState, useRef, useEffect } from "react";
@@ -55,6 +55,13 @@ export function MobileNavToggle() {
             </Button>
           </Link>
         </nav>
+        <SheetFooter>
+          <Link passHref target='_blank' href="https://www.instagram.com/tredexstorein?igsh=NHJjNXF5MDcxMmIz" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
+            <Button variant={'ghost'} className="text-foreground hover:bg-accent hover:text-foreground">
+              <Instagram size={24} />
+            </Button>
+          </Link>
+        </SheetFooter>
       </SheetContent>
     </Sheet >
   );

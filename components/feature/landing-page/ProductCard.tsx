@@ -5,8 +5,9 @@ import Image from 'next/image';
 import { Card, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { IProduct } from '@/model/productSchema';
-import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { ShineBorder } from '@/components/magicui/shine-border';
+import { Badge } from '@/components/ui/badge';
 
 interface ProductCardProps {
   product: IProduct;
@@ -17,7 +18,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const discount = Math.random() > 0.5;
 
   return (
-    <Card className="overflow-hidden p-0 group border-2 border-transparent hover:border-primary transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg rounded-lg">
+    <Card className="overflow-hidden p-0 group relative">
+      {isNew && <ShineBorder className='z-10' borderWidth={2} shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />}
       <div className="relative bg-background h-[20vh] sm:h-[20rem]">
         <Image
           src={product.images[0]}
@@ -30,12 +32,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <Badge variant="destructive">Sale</Badge>
           )}
           {isNew && (
-            <Badge variant="secondary">New</Badge>
+            <Badge className='font-bold' variant="destructive">New</Badge>
           )}
         </div>
       </div>
-      <CardFooter className="flex flex-col items-start p-4 py-0 backdrop-blur-sm">
-        <h3 className="font-bold text-lg truncate w-full">{product.name}</h3>
+      <CardFooter className="flex flex-col items-start p-4 py-0 ">
+        <h3 className="font-bold sm:text-lg truncate w-full">{product.name}</h3>
         <p className="text-sm text-muted-foreground ">{product.productType}</p>
         <Separator className='my-2' />
         <div className="flex flex-col justify-between items-center w-full">
@@ -43,7 +45,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {discount ? (
               <>
                 <p className="text-sm text-muted-foreground line-through">
-                  ₹{Number(400)}
+                  ₹{Number(4000)}
                 </p>
                 <p className="font-semibold text-lg">
                   ₹{product.price}
