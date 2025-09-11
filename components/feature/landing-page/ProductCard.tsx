@@ -14,15 +14,16 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const isNew = Math.random() > 0.5; // Placeholder for demonstration
+  const discount = Math.random() > 0.5;
 
   return (
-    <Card className="overflow-hidden group border-2 border-transparent hover:border-primary transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg rounded-lg">
-      <div className="relative bg-background aspect-square">
+    <Card className="overflow-hidden p-0 group border-2 border-transparent hover:border-primary transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg rounded-lg">
+      <div className="relative bg-background h-[20vh] sm:h-[20rem]">
         <Image
           src={product.images[0]}
           alt={product.name}
           fill
-          className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-300 ease-in-out rounded-t-lg"
+          className="object-fill w-full h-full group-hover:scale-105 transition-transform duration-300 ease-in-out rounded-t-lg"
         />
         <div className="absolute top-2 left-2 flex gap-1">
           {product.discountPrice && (
@@ -33,28 +34,28 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           )}
         </div>
       </div>
-      <CardFooter className="flex flex-col items-start p-4 backdrop-blur-sm">
+      <CardFooter className="flex flex-col items-start p-4 py-0 backdrop-blur-sm">
         <h3 className="font-bold text-lg truncate w-full">{product.name}</h3>
-        <p className="text-sm text-muted-foreground mt-1">{product.productType}</p>
-        <Separator className='my-4' />
-        <div className="flex justify-between items-center w-full mt-4">
-          <div className="flex items-center gap-x-2">
-            {product.discountPrice ? (
+        <p className="text-sm text-muted-foreground ">{product.productType}</p>
+        <Separator className='my-2' />
+        <div className="flex flex-col justify-between items-center w-full">
+          <div className="flex items-center self-start gap-x-2">
+            {discount ? (
               <>
-                <p className="font-semibold text-lg">
-                  ${product.discountPrice.toFixed(2)}
-                </p>
                 <p className="text-sm text-muted-foreground line-through">
-                  ${product.price.toFixed(2)}
+                  ₹{Number(400)}
+                </p>
+                <p className="font-semibold text-lg">
+                  ₹{product.price}
                 </p>
               </>
             ) : (
-              <p className="font-semibold text-lg">${product.price.toFixed(2)}</p>
+              <p className="font-semibold text-lg">₹{product.price}</p>
             )}
           </div>
-          <div className='flex items-center gap-x-2'>
+          <div className='flex justify-between items-center mb-2 sm:mb-4 self-end gap-x-2'>
             <Button variant="outline" size="sm">View</Button>
-            <Button variant="default" className='w-18' size="sm">Buy</Button>
+            <Button variant="default" className='w-18 hidden sm:block' size="sm">Buy</Button>
           </div>
         </div>
       </CardFooter>
