@@ -7,7 +7,6 @@ import {
   useSpring,
   MotionValue,
 } from "motion/react";
-import SplitText from "@/components/SplitText";
 import Image from 'next/image'; // Added this import
 import { Highlighter } from "../magicui/highlighter";
 import Link from "next/link";
