@@ -16,7 +16,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <Card className="overflow-hidden p-0 group relative">
-      {product.isNew && <ShineBorder className='z-10' borderWidth={2} shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />}
+      {product.is_new && <ShineBorder className='z-10' borderWidth={2} shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />}
       <div className="relative bg-background h-[20vh] sm:h-[20rem]">
         <Image
           src={product.images[0]}
@@ -28,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {product.discountPrice && (
             <Badge variant="destructive">Sale</Badge>
           )}
-          {product.isNew && (
+          {product.is_new && (
             <Badge className='font-bold' variant="destructive">New</Badge>
           )}
         </div>

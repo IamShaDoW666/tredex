@@ -21,8 +21,8 @@ export function PriceRangeSlider() {
         onValueChange={setPriceRange}
       />
       <div className="flex justify-between">
-        <span>${value[0]}</span>
-        <span>${value[1]}</span>
+        <span>₹{value[0]}</span>
+        <span>₹{value[1]}</span>
       </div>
     </div>
   );

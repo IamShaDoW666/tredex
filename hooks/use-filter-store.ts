@@ -20,6 +20,8 @@ type FilterStore = {
   open: boolean;
   setOpen: (open: boolean) => void;
   setFilter: (type: 'category' | 'size' | 'color' | 'brand', value: string) => void;
+  removeFilter: (type: 'category' | 'size' | 'color' | 'brand', value: string) => void;
+  resetPriceFilter: () => void;
   setPriceRange: (range: [number, number]) => void;
   setPriceBounds: (bounds: PriceBounds) => void;
   initializeWithUrlParams: (params: URLSearchParams) => void;
@@ -62,6 +64,25 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
     });
   },
 
+  removeFilter: (type, value) => {
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        [type]: state.filters[type].filter((v) => v !== value),
+      },
+    }));
+  },
+
+  resetPriceFilter: () => {
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        minPrice: null,
+        maxPrice: null,
+      },
+    }));
+  },
+
   setPriceRange: (range) => {
     set((state) => ({
       filters: {
@@ -73,19 +94,7 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
   },
 
   setPriceBounds: (bounds) => {
-    set((state) => {
-      if (state.filters.minPrice === null && state.filters.maxPrice === null) {
-        return {
-          priceBounds: bounds,
-          filters: {
-            ...state.filters,
-            minPrice: bounds.min,
-            maxPrice: bounds.max,
-          },
-        };
-      }
-      return { priceBounds: bounds };
-    });
+    set({ priceBounds: bounds });
   },
 
   initializeWithUrlParams: (params) => {
@@ -96,21 +105,20 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
     const minPrice = params.has('minPrice') ? Number(params.get('minPrice')) : null;
     const maxPrice = params.has('maxPrice') ? Number(params.get('maxPrice')) : null;
 
-    set((state) => ({
+    set({
       filters: {
-        ...state.filters,
         category,
         size,
         color,
         brand,
-        minPrice: minPrice ?? state.priceBounds.min,
-        maxPrice: maxPrice ?? state.priceBounds.max,
+        minPrice,
+        maxPrice,
       },
-    }));
+    });
   },
 
   toUrlParams: () => {
-    const { filters, priceBounds } = get();
+    const { filters } = get();
     const params = new URLSearchParams();
 
     Object.entries(filters).forEach(([key, value]) => {
@@ -118,9 +126,7 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
         if (Array.isArray(value) && value.length > 0) {
           params.set(key, value.join(','));
         }
-      } else if (key === 'minPrice' && value !== null && value !== priceBounds.min) {
-        params.set(key, value.toString());
-      } else if (key === 'maxPrice' && value !== null && value !== priceBounds.max) {
+      } else if ((key === 'minPrice' || key === 'maxPrice') && value !== null) {
         params.set(key, value.toString());
       }
     });
@@ -128,12 +134,6 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
   },
 
   reset: () => {
-    set((state) => ({
-      filters: {
-        ...initialFilters,
-        minPrice: state.priceBounds.min,
-        maxPrice: state.priceBounds.max,
-      },
-    }));
+    set({ filters: initialFilters });
   },
 }));

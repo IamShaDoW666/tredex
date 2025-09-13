@@ -15,6 +15,7 @@ import { FilterBottomSheet } from './FilterBottomSheet';
 import { Button } from '@/components/ui/button';
 import { useProductPrices } from '@/hooks/use-product-prices';
 import { useFilterStore } from '@/hooks/use-filter-store';
+import { FilterBadges } from './FilterBadges';
 
 const ProductGrid: React.FC = () => {
   const searchParams = useSearchParams();
@@ -82,12 +83,19 @@ const ProductGrid: React.FC = () => {
         )}
         <div className={isMobile ? "col-span-12" : "col-span-9"}>
           <div className="flex justify-between mb-4">
-            {isMobile && <div>
-              <FilterBottomSheet />
-              {hasFilters && <Button variant="ghost" size="sm" onClick={handleClearFilter}>Clear</Button>}
-            </div>}
+            {isMobile ? (
+              <div className="flex items-center gap-2">
+                <FilterBottomSheet />
+                {hasFilters && <Button variant="ghost" size="sm" onClick={handleClearFilter}>Clear</Button>}
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                {hasFilters && <Button variant="ghost" size="sm" onClick={handleClearFilter}>Clear All Filters</Button>}
+              </div>
+            )}
             <Sort />
           </div>
+          <div className="mb-4"><FilterBadges /></div>
           {status === 'pending' ? (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
               {Array.from({ length: 9 }).map((_, i) => (
@@ -106,6 +114,9 @@ const ProductGrid: React.FC = () => {
                     ))}
                   </React.Fragment>
                 ))}
+                {
+                  data.pages[0].data.length === 0 && (<p>No products found.</p>)
+                }
               </div>
               <div>
                 <button
