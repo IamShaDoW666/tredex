@@ -14,12 +14,9 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const isNew = Math.random() > 0.5; // Placeholder for demonstration
-  const discount = Math.random() > 0.5;
-
   return (
     <Card className="overflow-hidden p-0 group relative">
-      {isNew && <ShineBorder className='z-10' borderWidth={2} shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />}
+      {product.isNew && <ShineBorder className='z-10' borderWidth={2} shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />}
       <div className="relative bg-background h-[20vh] sm:h-[20rem]">
         <Image
           src={product.images[0]}
@@ -31,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {product.discountPrice && (
             <Badge variant="destructive">Sale</Badge>
           )}
-          {isNew && (
+          {product.isNew && (
             <Badge className='font-bold' variant="destructive">New</Badge>
           )}
         </div>
@@ -42,7 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <Separator className='my-2' />
         <div className="flex flex-col justify-between items-center w-full">
           <div className="flex items-center self-start gap-x-2">
-            {discount ? (
+            {product.discountPrice ? (
               <>
                 <p className="text-sm text-muted-foreground line-through">
                   ₹{Number(4000)}

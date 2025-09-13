@@ -1,26 +1,19 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
-export interface IProductData {
+export interface IProduct extends Document {
   name: string;
   images: string[];
   price: number;
   discountPrice?: number;
   productType: "Sneaker" | "Watch";
   available: boolean;
+  is_new: boolean;
   description?: string;
 }
 
-export interface IProduct extends IProductData, Document {
-  _id: string;
-  images: string[];
-  price: number;
-  discountPrice?: number;
-  productType: "Sneaker" | "Watch"
-  available: boolean;
-  description?: string;
-}
 
 const productSchema = new Schema<IProduct>({
+  _id: Types.ObjectId,
   name: {
     type: String,
     required: [true, 'Product name is required.'],
@@ -48,6 +41,10 @@ const productSchema = new Schema<IProduct>({
   available: {
     type: Boolean,
     default: true,
+  },
+  is_new: {
+    type: Boolean,
+    default: false,
   },
   productType: {
     type: String,
