@@ -2,31 +2,43 @@ import { IProductData } from '@/model/productSchema';
 
 export const sneakers: IProductData[] = [
   {
+    _id: '60d5ec49f8c7a10015a7b8a1',
     name: 'Tredex Runner',
     price: 120.00,
     images: ['https://placehold.co/400x400/gray/white?text=Tredex+Runner'],
     productType: "Sneaker",
     available: true,
+    is_new: false,
+    sex: "Unisex",
   },
   {
+    _id: '60d5ec49f8c7a10015a7b8a2',
     name: 'Tredex Classic',
     price: 85.00,
     images: ['https://placehold.co/400x400/darkgray/white?text=Tredex+Classic'],
     productType: "Sneaker",
     available: true,
+    is_new: false,
+    sex: "Unisex",
   },
   {
+    _id: '60d5ec49f8c7a10015a7b8a3',
     name: 'Tredex Pro',
     price: 150.00,
     images: ['https://placehold.co/400x400/lightgray/black?text=Tredex+Pro'],
     productType: "Sneaker",
     available: true,
+    is_new: false,
+    sex: "Unisex",
   },
   {
+    _id: '60d5ec49f8c7a10015a7b8a4',
     name: 'Tredex Lite',
     price: 95.00,
     images: ['https://placehold.co/400x400/silver/black?text=Tredex+Lite'],
     productType: "Sneaker",
     available: true,
+    is_new: false,
+    sex: "Unisex",
   },
 ];

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { PriceRangeSlider } from './PriceRangeSlider';
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 jest.mock('next/navigation', () => ({
   useSearchParams: jest.fn(),

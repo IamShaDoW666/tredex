@@ -1,5 +1,18 @@
 import { Schema, model, Document, Types } from 'mongoose';
 
+export interface IProductData {
+  _id: string; // Assuming _id is a string in mock data
+  name: string;
+  images: string[];
+  price: number;
+  discountPrice?: number;
+  productType: "Sneaker" | "Watch";
+  available: boolean;
+  is_new: boolean;
+  description?: string;
+  sex: "Men" | "Women" | "Unisex";
+}
+
 export interface IProduct extends Document {
   name: string;
   images: string[];

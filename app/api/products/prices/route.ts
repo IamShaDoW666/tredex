@@ -12,7 +12,15 @@ export async function GET(request: Request) {
     const brand = searchParams.get('brand');
     const search = searchParams.get('search');
 
-    const filter: any = {};
+    interface ProductFilter {
+      $or?: Array<{ name?: { $regex: string; $options: string }; description?: { $regex: string; $options: string } }>;
+      category?: { $in: string[] };
+      size?: { $in: string[] };
+      color?: { $in: string[] };
+      brand?: { $in: string[] };
+    }
+
+    const filter: ProductFilter = {};
 
     if (search) {
       filter.$or = [

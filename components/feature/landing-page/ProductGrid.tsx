@@ -40,6 +40,7 @@ const ProductGrid: React.FC = () => {
     hasNextPage,
     isFetching,
     isFetchingNextPage,
+    isLoading,
     status,
   } = useProducts(limit, search, sort, order, category, size, color, brand, minPrice, maxPrice);
 
@@ -96,7 +97,7 @@ const ProductGrid: React.FC = () => {
             <Sort />
           </div>
           <div className="mb-4"><FilterBadges /></div>
-          {status === 'pending' ? (
+          {isLoading ? (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
               {Array.from({ length: 9 }).map((_, i) => (
                 <Skeleton key={i} className="h-80 w-full" />
@@ -104,7 +105,7 @@ const ProductGrid: React.FC = () => {
             </div>
           ) : status === 'error' ? (
             <p>Error: {error.message}</p>
-          ) : (
+          ) : data ? (
             <>
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
                 {data.pages.map((group, i) => (
@@ -131,7 +132,7 @@ const ProductGrid: React.FC = () => {
               </div>
               <div>{isFetching && !isFetchingNextPage ? 'Fetching...' : null}</div>
             </>
-          )}
+          ) : null}
         </div>
       </div>
     </section>

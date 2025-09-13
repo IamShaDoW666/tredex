@@ -47,7 +47,7 @@ export function FilterBadges() {
       {allFilters.map(filter => (
         <Badge key={`${filter.type}-${filter.value}`} variant="secondary" className="flex items-center gap-1">
           {filter.value}
-          <button onClick={() => handleRemoveFilter(filter.type as any, filter.value)} className="rounded-full hover:bg-background/50">
+          <button onClick={() => handleRemoveFilter(filter.type as ('category' | 'size' | 'color' | 'brand'), filter.value)} className="rounded-full hover:bg-background/50">
             <XIcon className="h-3 w-3" />
           </button>
         </Badge>

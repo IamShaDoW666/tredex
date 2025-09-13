@@ -1,8 +1,8 @@
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { IProduct } from '@/model/productSchema';
 
-const fetchProducts = async ({ pageParam = 1, queryKey }: { pageParam?: number, queryKey: any[] }): Promise<{ data: IProduct[], nextPage: number | null }> => {
-  const [_key, limit, search, sort, order, category, size, color, brand, minPrice, maxPrice] = queryKey;
+const fetchProducts = async ({ pageParam = 1, queryKey: fullQueryKey }: { pageParam?: number, queryKey: (string | number)[] }): Promise<{ data: IProduct[], nextPage: number | null }> => {
+  const [, limit, search, sort, order, category, size, color, brand, minPrice, maxPrice] = fullQueryKey;
   const params = new URLSearchParams({
     page: pageParam.toString(),
     limit: (limit as number).toString(),

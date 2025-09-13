@@ -18,16 +18,12 @@ import { useRouter, usePathname } from "next/navigation";
 import { useTransition } from "react";
 
 export function FilterBottomSheet() {
-  const { open, setOpen, reset, toUrlParams } = useFilterStore();
+  const { open, setOpen, toUrlParams } = useFilterStore();
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
-  const handleClearFilters = () => {
-    reset();
-    router.replace(pathname, { scroll: false });
-    setOpen(false);
-  };
+  
 
   const handleApplyFilters = () => {
     const params = toUrlParams();

@@ -20,7 +20,16 @@ export async function GET(request: Request) {
     const minPrice = searchParams.get('minPrice');
     const maxPrice = searchParams.get('maxPrice');
 
-    const filter: any = {};
+    interface ProductFilter {
+      $or?: Array<{ name?: { $regex: string; $options: string }; description?: { $regex: string; $options: string } }>;
+      category?: { $in: string[] };
+      size?: { $in: string[] };
+      color?: { $in: string[] };
+      brand?: { $in: string[] };
+      price?: { $gte?: number; $lte?: number };
+    }
+
+    const filter: ProductFilter = {};
 
     if (search) {
       filter.$or = [
@@ -55,7 +64,7 @@ export async function GET(request: Request) {
       }
     }
 
-    const sortOrder: any = {};
+    const sortOrder: Record<string, 1 | -1> = {};
     if (sort) {
       sortOrder[sort] = order === 'desc' ? -1 : 1;
     }
