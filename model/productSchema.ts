@@ -9,6 +9,7 @@ export interface IProduct extends Document {
   available: boolean;
   is_new: boolean;
   description?: string;
+  sex: "Men" | "Women" | "Unisex";
 }
 
 
@@ -45,6 +46,11 @@ const productSchema = new Schema<IProduct>({
   is_new: {
     type: Boolean,
     default: false,
+  },
+  sex: {
+    type: String,
+    enum: ["Men", "Women", "Unisex"],
+    default: "Men",
   },
   productType: {
     type: String,
