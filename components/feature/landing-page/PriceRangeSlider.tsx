@@ -1,36 +1,28 @@
 'use client';
 
 import { Slider } from "@/components/ui/slider";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useDebouncedCallback } from 'use-debounce';
+import { useFilterStore } from "@/hooks/use-filter-store";
 
 export function PriceRangeSlider() {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
+  const { filters, setPriceRange, priceBounds } = useFilterStore();
+  const { minPrice, maxPrice } = filters;
+  const { min, max } = priceBounds;
 
-  const handlePriceChange = useDebouncedCallback(([min, max]: number[]) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('minPrice', min.toString());
-    params.set('maxPrice', max.toString());
-    replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }, 300);
-
-  const minPrice = searchParams.get('minPrice');
-  const maxPrice = searchParams.get('maxPrice');
+  const value: [number, number] = [minPrice ?? min, maxPrice ?? max];
 
   return (
     <div className="space-y-4">
       <h3 className="font-semibold mb-2">Price Range</h3>
       <Slider
-        defaultValue={[minPrice ? parseInt(minPrice) : 0, maxPrice ? parseInt(maxPrice) : 500]}
-        max={500}
+        value={value}
+        min={min}
+        max={max}
         step={10}
-        onValueChange={handlePriceChange}
+        onValueChange={setPriceRange}
       />
       <div className="flex justify-between">
-        <span>${minPrice || 0}</span>
-        <span>${maxPrice || 500}</span>
+        <span>${value[0]}</span>
+        <span>${value[1]}</span>
       </div>
     </div>
   );

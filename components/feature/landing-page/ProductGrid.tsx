@@ -1,16 +1,20 @@
-"use client";
+'use client';
 
 import React, { useEffect } from 'react';
 import ProductCard from './ProductCard';
 import { useProducts } from '@/hooks/use-products';
 import { Skeleton } from '@/components/ui/skeleton';
-import { IProduct } from '@/model/productSchema';
 import { Search } from './Search';
 import { Sort } from './Sort';
 import { Filter } from './Filter';
 import { PriceRangeSlider } from './PriceRangeSlider';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
+import { useIsMobile } from '@/hooks/use-is-mobile';
+import { FilterBottomSheet } from './FilterBottomSheet';
+import { Button } from '@/components/ui/button';
+import { useProductPrices } from '@/hooks/use-product-prices';
+import { useFilterStore } from '@/hooks/use-filter-store';
 
 const ProductGrid: React.FC = () => {
   const searchParams = useSearchParams();
@@ -25,6 +29,9 @@ const ProductGrid: React.FC = () => {
   const minPrice = searchParams.get('minPrice') || '';
   const maxPrice = searchParams.get('maxPrice') || '';
 
+  const isMobile = useIsMobile();
+  const pathname = usePathname();
+  const router = useRouter();
   const {
     data,
     error,
@@ -35,6 +42,15 @@ const ProductGrid: React.FC = () => {
     status,
   } = useProducts(limit, search, sort, order, category, size, color, brand, minPrice, maxPrice);
 
+  const { data: prices } = useProductPrices(search, category, size, color, brand);
+  const { setPriceBounds } = useFilterStore();
+
+  useEffect(() => {
+    if (prices) {
+      setPriceBounds({ min: prices.minPrice, max: prices.maxPrice });
+    }
+  }, [prices, setPriceBounds]);
+
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -43,23 +59,37 @@ const ProductGrid: React.FC = () => {
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
+  const renderFilters = () => (
+    <div className="space-y-8">
+      <Search />
+      <Filter />
+      <PriceRangeSlider />
+    </div>
+  );
+
+  const handleClearFilter = () => {
+    router.replace(pathname, { scroll: false });
+  };
+  const hasFilters = searchParams.size > 0;
   return (
     <section className="py-12 px-4">
       <h2 className="text-3xl font-bold text-center mb-8">Featured Products</h2>
       <div className="grid grid-cols-12 gap-8">
-        <div className="col-span-3">
-          <div className="space-y-8">
-            <Search />
-            <Filter />
-            <PriceRangeSlider />
+        {!isMobile && (
+          <div className="col-span-3">
+            {renderFilters()}
           </div>
-        </div>
-        <div className="col-span-9">
-          <div className="flex justify-end mb-4">
+        )}
+        <div className={isMobile ? "col-span-12" : "col-span-9"}>
+          <div className="flex justify-between mb-4">
+            {isMobile && <div>
+              <FilterBottomSheet />
+              {hasFilters && <Button variant="ghost" size="sm" onClick={handleClearFilter}>Clear</Button>}
+            </div>}
             <Sort />
           </div>
           {status === 'pending' ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
               {Array.from({ length: 9 }).map((_, i) => (
                 <Skeleton key={i} className="h-80 w-full" />
               ))}
@@ -68,11 +98,11 @@ const ProductGrid: React.FC = () => {
             <p>Error: {error.message}</p>
           ) : (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
                 {data.pages.map((group, i) => (
                   <React.Fragment key={i}>
                     {group.data.map((product) => (
-                      <ProductCard key={product._id} product={product} />
+                      <ProductCard key={product._id as string} product={product} />
                     ))}
                   </React.Fragment>
                 ))}

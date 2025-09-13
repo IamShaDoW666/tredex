@@ -28,7 +28,7 @@ export function Sort() {
   };
 
   return (
-    <Select onValueChange={handleSort} defaultValue={`${searchParams.get('sort')}:${searchParams.get('order')}`}>
+    <Select onValueChange={handleSort} defaultValue={searchParams.get('sort') ? `${searchParams.get('sort')}:${searchParams.get('order')}` : undefined}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>
