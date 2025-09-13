@@ -10,7 +10,7 @@ import LogoImage from '../../../images/logo.png';
 import { Instagram } from 'lucide-react';
 const Header = () => {
   return (
-    <header className="fixed top-10 ml-2 sm:left-16 z-50 flex justify-between w-full sm:w-auto items-center px-8">
+    <header className="fixed top-10 ml-2 md:left-16 z-50 flex justify-between w-full md:w-auto items-center px-8">
       <div className="flex items-center gap-4 bg-card border-2 dark:border-0 border-accent-foreground rounded-full p-2 overflow-x-auto">
         <Avatar className="bg-primary">
           <AvatarImage src={LogoImage.src} alt="Tredex logo" />
