@@ -30,6 +30,18 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Features
+
+### Product Filtering, Sorting, and Searching
+
+The application allows users to filter, sort, and search for products on the landing page.
+
+- **Search**: Users can search for products by name or description.
+- **Sort**: Products can be sorted by price, name, and creation date.
+- **Filter**: Products can be filtered by category, size, color, and brand.
+- **Price Range**: A price range slider allows users to filter products by price.
+- **Infinite Scroll**: Products are loaded continuously as the user scrolls down the page.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

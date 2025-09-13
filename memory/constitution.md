@@ -17,8 +17,8 @@ To promote reusability and maintain a single source of truth, all UI components 
 ### V. Client and Server Components
 To ensure optimal performance and correct behavior with Next.js App Router, all components that use client-side interactivity (e.g., hooks, event listeners) MUST include the `"use client"` directive at the top of the file. Server components should be used for fetching data and rendering static content whenever possible.
 
-### VI. Responsive Design
-All components and layouts must be designed and built with a mobile-first approach. The user experience on mobile devices is of the utmost importance. Designs should be fully responsive and adapt gracefully to all screen sizes, from small mobile phones to large desktop displays.
+### VI. Mobile-First Design
+The design must be focused on mobile UI/UX, as the web application will be primarily used by mobile users. All components and layouts must be designed and built with a mobile-first approach. The user experience on mobile devices is of the utmost importance. Designs should be fully responsive and adapt gracefully to all screen sizes, from small mobile phones to large desktop displays.
 
 ## Development Workflow
 
@@ -32,4 +32,4 @@ Testing is an important part of our development process. However, we do not foll
 ## Governance
 This constitution is the foundational document for the Tredex project. All development practices, code contributions, and architectural decisions must align with these principles. Amendments to this constitution require team consensus and must be documented.
 
-**Version**: 1.1.0 | **Ratified**: 2025-09-09 | **Last Amended**: 2025-09-09
+**Version**: 1.2.0 | **Ratified**: 2025-09-09 | **Last Amended**: 2025-09-13

@@ -1,38 +1,138 @@
-"use client";
+'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProductCard from './ProductCard';
 import { useProducts } from '@/hooks/use-products';
 import { Skeleton } from '@/components/ui/skeleton';
-import { IProduct } from '@/model/productSchema';
+import { Search } from './Search';
+import { Sort } from './Sort';
+import { Filter } from './Filter';
+import { PriceRangeSlider } from './PriceRangeSlider';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { useInView } from 'react-intersection-observer';
+import { useIsMobile } from '@/hooks/use-is-mobile';
+import { FilterBottomSheet } from './FilterBottomSheet';
+import { Button } from '@/components/ui/button';
+import { useProductPrices } from '@/hooks/use-product-prices';
+import { useFilterStore } from '@/hooks/use-filter-store';
+import { FilterBadges } from './FilterBadges';
 
 const ProductGrid: React.FC = () => {
-  const { data, isLoading, isError } = useProducts(1, 8); // Fetch 8 products for the grid
+  const searchParams = useSearchParams();
+  const limit = parseInt(searchParams.get('limit') || '20', 10);
+  const search = searchParams.get('search') || '';
+  const sort = searchParams.get('sort') || '';
+  const order = searchParams.get('order') || '';
+  const category = searchParams.get('category') || '';
+  const size = searchParams.get('size') || '';
+  const color = searchParams.get('color') || '';
+  const brand = searchParams.get('brand') || '';
+  const minPrice = searchParams.get('minPrice') || '';
+  const maxPrice = searchParams.get('maxPrice') || '';
 
-  if (isLoading) {
-    return (
-      <section className="py-12 px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">Featured Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <Skeleton key={i} className="h-80 w-full" />
-          ))}
-        </div>
-      </section>
-    );
-  }
+  const isMobile = useIsMobile();
+  const pathname = usePathname();
+  const router = useRouter();
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useProducts(limit, search, sort, order, category, size, color, brand, minPrice, maxPrice);
 
-  if (isError) {
-    return <p>Error loading products.</p>;
-  }
+  const { data: prices } = useProductPrices(search, category, size, color, brand);
+  const { setPriceBounds } = useFilterStore();
 
+  useEffect(() => {
+    if (prices) {
+      setPriceBounds({ min: prices.minPrice, max: prices.maxPrice });
+    }
+  }, [prices, setPriceBounds]);
+
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
+
+  const renderFilters = () => (
+    <div className="space-y-8">
+      <Search />
+      <Filter />
+      <PriceRangeSlider />
+    </div>
+  );
+
+  const handleClearFilter = () => {
+    router.replace(pathname, { scroll: false });
+  };
+  const hasFilters = searchParams.size > 0;
   return (
     <section className="py-12 px-4">
       <h2 className="text-3xl font-bold text-center mb-8">Featured Products</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {data?.data.map((product: IProduct) => (
-          <ProductCard key={product._id} product={product} />
-        ))}
+      <div className="grid grid-cols-12 gap-8">
+        {!isMobile && (
+          <div className="col-span-3">
+            {renderFilters()}
+          </div>
+        )}
+        <div className={isMobile ? "col-span-12" : "col-span-9"}>
+          <div className="flex justify-between mb-4">
+            {isMobile ? (
+              <div className="flex items-center gap-2">
+                <FilterBottomSheet />
+                {hasFilters && <Button variant="ghost" size="sm" onClick={handleClearFilter}>Clear</Button>}
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                {hasFilters && <Button variant="ghost" size="sm" onClick={handleClearFilter}>Clear All Filters</Button>}
+              </div>
+            )}
+            <Sort />
+          </div>
+          <div className="mb-4"><FilterBadges /></div>
+          {status === 'pending' ? (
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+              {Array.from({ length: 9 }).map((_, i) => (
+                <Skeleton key={i} className="h-80 w-full" />
+              ))}
+            </div>
+          ) : status === 'error' ? (
+            <p>Error: {error.message}</p>
+          ) : (
+            <>
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+                {data.pages.map((group, i) => (
+                  <React.Fragment key={i}>
+                    {group.data.map((product) => (
+                      <ProductCard key={product._id as string} product={product} />
+                    ))}
+                  </React.Fragment>
+                ))}
+                {
+                  data.pages[0].data.length === 0 && (<p>No products found.</p>)
+                }
+              </div>
+              <div>
+                <button
+                  ref={ref}
+                  onClick={() => fetchNextPage()}
+                  disabled={!hasNextPage || isFetchingNextPage}
+                >
+                  {isFetchingNextPage
+                    ? 'Loading more...'
+                    : ''}
+                </button>
+              </div>
+              <div>{isFetching && !isFetchingNextPage ? 'Fetching...' : null}</div>
+            </>
+          )}
+        </div>
       </div>
     </section>
   );
