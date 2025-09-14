@@ -7,7 +7,7 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { Check, Clock, Mail, MapPin, Shield } from "lucide-react"
+import { Check, Clock, Mail, Shield } from "lucide-react"
 import { useUser } from "@/context/UserContext"
 
 export default function ProfileCard() {

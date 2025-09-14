@@ -1,4 +1,4 @@
-import { betterAuth, User } from "better-auth";
+import { betterAuth } from "better-auth";
 import Database from "better-sqlite3";
 import { admin } from "better-auth/plugins"
 export const auth = betterAuth({

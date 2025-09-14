@@ -27,7 +27,6 @@ export async function PUT(request: Request, context: { params: Promise<{ id: str
   try {
     const { id } = await context.params;
     const body = await request.json();
-    const { name, price } = body;
     if (!id) {
       return NextResponse.json({ error: { message: 'Invalid input data. Name and price are required.' } }, { status: 400 });
     }
