@@ -1,5 +1,6 @@
 import dbConnect from '@/lib/db';
 import Product from '@/model/productSchema';
+import NextNodeServer from 'next/dist/server/next-server';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
@@ -28,8 +29,7 @@ export async function PUT(request: Request, context: { params: Promise<{ id: str
     const { id } = await context.params;
     const body = await request.json();
     const { name, price } = body;
-
-    if (!name || !price) {
+    if (!id) {
       return NextResponse.json({ error: { message: 'Invalid input data. Name and price are required.' } }, { status: 400 });
     }
 
