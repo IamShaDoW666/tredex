@@ -2,6 +2,7 @@ import Providers from '@/components/Providers';
 import type { Metadata } from "next";
 import { Geist_Mono, Exo_2 } from "next/font/google";
 import '../styles/tailwind.css'
+import { Toaster } from '@/components/ui/sonner';
 
 const exo2 = Exo_2({
   variable: "--font-exo2",
@@ -27,7 +28,9 @@ export default function RootLayout({
       <body
         className={`${geistMono.variable} ${exo2.variable} ${exo2.className} antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers>{children}
+          <Toaster richColors />
+        </Providers>
       </body>
     </html>
   );
