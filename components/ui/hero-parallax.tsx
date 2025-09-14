@@ -109,7 +109,7 @@ export const Header = () => {
   const sloganRef = React.useRef<HTMLHeadingElement>(null);
   return (
     <div className="max-w-7xl relative mx-auto py-40 px-4 w-full left-0 top-0">
-      <TextAnimate className="text-7xl md:text-9xl italic font-bold dark:text-primary mb-4" duration={0.4} animation="blurInUp" by="character" once>
+      <TextAnimate className="text-7xl md:text-9xl italic font-bold dark:text-foreground mb-4" duration={0.4} animation="blurInUp" by="character" once>
         TREDEX
       </TextAnimate>
       <h2 ref={sloganRef} className="text-4xl md:text-6xl font-bold dark:text-white ml-4">

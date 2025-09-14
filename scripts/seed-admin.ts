@@ -8,7 +8,6 @@ const seedAdmin = async () => {
         name: "Admin",
         email: adminEmail,
         password: adminPassword,
-        role: "admin"
       }
     });
 

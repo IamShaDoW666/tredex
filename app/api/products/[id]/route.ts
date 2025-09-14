@@ -1,6 +1,5 @@
 import dbConnect from '@/lib/db';
 import Product from '@/model/productSchema';
-import NextNodeServer from 'next/dist/server/next-server';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
