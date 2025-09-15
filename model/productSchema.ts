@@ -6,6 +6,7 @@ export interface IProductData {
   images: string[];
   price: number;
   discountPrice?: number;
+  sizes: string[]
   productType: "Sneaker" | "Watch";
   available: boolean;
   is_new: boolean;
@@ -16,6 +17,7 @@ export interface IProductData {
 export interface IProduct extends Document {
   name: string;
   images: string[];
+  sizes: string[];
   price: number;
   discountPrice?: number;
   productType: "Sneaker" | "Watch";
@@ -41,6 +43,9 @@ const productSchema = new Schema<IProduct>({
     maxlength: [500, 'Description cannot exceed 500 characters.'],
   },
   images: {
+    type: [String],
+  },
+  sizes: {
     type: [String],
   },
   price: {
