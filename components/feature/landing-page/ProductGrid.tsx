@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { startTransition, useEffect } from 'react';
 import ProductCard from './ProductCard';
 import { useProducts } from '@/hooks/use-products';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -45,7 +45,7 @@ const ProductGrid: React.FC = () => {
   } = useProducts(limit, search, sort, order, category, size, color, brand, minPrice, maxPrice);
 
   const { data: prices } = useProductPrices(search, category, size, color, brand);
-  const { setPriceBounds } = useFilterStore();
+  const { setPriceBounds, setOpen, toUrlParams } = useFilterStore();
 
   useEffect(() => {
     if (prices) {
@@ -66,9 +66,17 @@ const ProductGrid: React.FC = () => {
       <Search />
       <Filter />
       <PriceRangeSlider />
+      <Button onClick={handleApplyFilters}>Apply</Button>
     </div>
   );
 
+  const handleApplyFilters = () => {
+    const params = toUrlParams();
+    startTransition(() => {
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+      setOpen(false);
+    });
+  };
   const handleClearFilter = () => {
     router.replace(pathname, { scroll: false });
   };

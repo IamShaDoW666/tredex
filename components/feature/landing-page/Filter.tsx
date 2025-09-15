@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useSearchParams } from "next/navigation";
 import { useFilterStore } from '@/hooks/use-filter-store';
 import { useEffect } from 'react';
+import { Button } from "@/components/ui/button";
 
 const categories = ["Sneaker", "Watch"];
 const sizes = ["7", "8", "9", "10", "11"];
