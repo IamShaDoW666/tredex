@@ -1,6 +1,6 @@
 import dbConnect from '@/lib/db';
 import Category from '../model/categorySchema';
-import Product from '../model/productSchema';
+import Product, { IProductData } from '../model/productSchema';
 
 const categories = [
   { name: 'Running', description: 'Shoes for running' },
@@ -14,6 +14,7 @@ const products = [
     name: 'Nike Air Max 90',
     images: ["https://www.tracerindia.com/cdn/shop/files/1_3a3a95a0-218a-47cf-9d02-f6c1134b88bc.jpg?v=1696502581"],
     price: 1200,
+    sizes: ["7", "8", "9"],
     productType: 'Sneaker',
     available: true,
     description: 'The Nike Air Max 90 remains true to its OG running roots with the iconic Waffle sole, stitched overlays and classic TPU details. Classic colors celebrate your fresh look while Max Air cushioning adds comfort to the journey.',
@@ -22,6 +23,7 @@ const products = [
     name: 'Adidas Ultraboost',
     images: ["https://nb.scene7.com/is/image/NB/bb550vga_nb_02_i?$pdpflexf2$&qlt=80&fmt=webp&wid=440&hei=440"],
     price: 1799,
+    sizes: ["8", "9", "10"],
     productType: 'Sneaker',
     available: true,
     description: 'The Adidas Ultraboost are the most comfortable shoes for running or just for walking.',
@@ -31,6 +33,7 @@ const products = [
     images: ["https://www.tracerindia.com/cdn/shop/files/1_3a3a95a0-218a-47cf-9d02-f6c1134b88bc.jpg?v=1696502581"],
     price: 3499,
     productType: 'Sneaker',
+    sizes: ["6", "7", "8"],
     available: true,
     description: 'The Puma Suede Classic is a classic sneaker that has been around for over 50 years.',
   },
@@ -40,6 +43,7 @@ const products = [
     price: 6599,
     productType: 'Sneaker',
     available: true,
+    sizes: ["6", "7", "8"],
     description: 'The Vans Old Skool is a classic skate shoe that has been around for over 40 years.',
   },
   {
@@ -47,6 +51,7 @@ const products = [
     images: ["https://www.tracerindia.com/cdn/shop/files/1_3a3a95a0-218a-47cf-9d02-f6c1134b88bc.jpg?v=1696502581"],
     price: 4299,
     productType: 'Sneaker',
+    sizes: ["6", "7", "8"],
     available: true,
     description: 'The Nike Air Force 1 is a classic basketball shoe that has become a streetwear staple.',
   },
@@ -54,6 +59,7 @@ const products = [
     name: 'Adidas Samba',
     images: ["https://nb.scene7.com/is/image/NB/bb550vga_nb_02_i?$pdpflexf2$&qlt=80&fmt=webp&wid=440&hei=440"],
     price: 1999,
+    sizes: ["6", "7", "8"],
     productType: 'Sneaker',
     available: true,
     description: 'The Adidas Samba is a timeless indoor soccer shoe that has transcended its athletic roots.',
@@ -62,6 +68,7 @@ const products = [
     name: 'New Balance 550',
     images: ["https://www.tracerindia.com/cdn/shop/files/1_3a3a95a0-218a-47cf-9d02-f6c1134b88bc.jpg?v=1696502581"],
     price: 3499,
+    sizes: ["6", "7", "8"],
     productType: 'Sneaker',
     available: true,
     description: 'The New Balance 550 is a retro basketball sneaker that has made a huge comeback.',
@@ -70,6 +77,7 @@ const products = [
     name: 'Converse Chuck 70',
     images: ["https://nb.scene7.com/is/image/NB/bb550vga_nb_02_i?$pdpflexf2$&qlt=80&fmt=webp&wid=440&hei=440"],
     price: 1999,
+    sizes: ["6", "7", "8"],
     productType: 'Sneaker',
     available: true,
     description: 'The Converse Chuck 70 is a premium version of the classic Chuck Taylor All Star.',

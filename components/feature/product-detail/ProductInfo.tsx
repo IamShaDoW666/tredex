@@ -8,7 +8,7 @@ interface ProductInfoProps {
   product: IProduct
 }
 
-const ProductInfo: React.FC<ProductInfoProps> = ({ name, price, description, product }) => {
+const ProductInfo: React.FC<ProductInfoProps> = ({ name, price, description }) => {
   return (
     <div className="space-y-4">
       <h1 className="text-3xl font-bold">{name}</h1>
