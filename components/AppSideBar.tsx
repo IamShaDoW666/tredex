@@ -21,7 +21,7 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader className="flex items-center">
-        Logo
+        <h1 className="text-3xl md:text-5xl italic font-bold dark:text-foreground mb-4">TREDEX</h1>
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu className="px-2 py-4">
