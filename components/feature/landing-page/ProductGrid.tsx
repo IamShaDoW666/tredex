@@ -86,11 +86,11 @@ const ProductGrid: React.FC = () => {
       <h2 className="text-3xl font-bold text-center mb-8">Featured Products</h2>
       <div className="grid grid-cols-12 gap-8">
         {!isMobile && (
-          <div className="col-span-3">
+          <div className="col-span-3 hidden md:block">
             {renderFilters()}
           </div>
         )}
-        <div className={isMobile ? "col-span-12" : "col-span-9"}>
+        <div className="col-span-12 md:col-span-9">
           <div className="flex justify-between mb-4">
             {isMobile ? (
               <div className="flex items-center gap-2">
@@ -106,7 +106,7 @@ const ProductGrid: React.FC = () => {
           </div>
           <div className="mb-4"><FilterBadges /></div>
           {isLoading ? (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
               {Array.from({ length: 9 }).map((_, i) => (
                 <Skeleton key={i} className="h-80 w-full" />
               ))}
@@ -115,7 +115,7 @@ const ProductGrid: React.FC = () => {
             <p>Error: {error.message}</p>
           ) : data ? (
             <>
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                 {data.pages.map((group, i) => (
                   <React.Fragment key={i}>
                     {group.data.map((product) => (

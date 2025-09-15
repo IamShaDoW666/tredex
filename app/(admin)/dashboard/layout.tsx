@@ -5,7 +5,6 @@ import { redirect } from "next/navigation"
 import { UserProvider } from "@/context/UserContext"
 import AppHeader from "@/components/AppHeader"
 import AppSidebar from "@/components/AppSideBar"
-import '../../../styles/tailwind.css'
 
 
 export default async function DashboardLayout({

@@ -18,28 +18,31 @@ export function ProductSizeSelector({ sizes }: ProductSizeSelectorProps) {
 
   return (
     <>
-      <Label>Sizes</Label>
-      <ToggleGroup
-        type="single"
-        value={selectedSize ?? ''}
-        onValueChange={(value) => setSelectedSize(value)}
-        className="flex flex-wrap gap-2"
-      >
-        {sizes.map((size) => (
-          <ToggleGroupItem
-            key={size}
-            value={size}
-            className={cn(
-              'border',
-              selectedSize === size
-                ? 'border-primary bg-primary text-primary-foreground'
-                : 'border-input'
-            )}
-          >
-            {size}
-          </ToggleGroupItem>
-        ))}
-      </ToggleGroup>
+      <div>
+        <Label className='text-lg'>Sizes</Label>
+        <p className='text-muted-foreground mb-4'>Sizes follow UK standards</p>
+        <ToggleGroup
+          type="single"
+          value={selectedSize ?? ''}
+          onValueChange={(value) => setSelectedSize(value)}
+          className="flex flex-wrap gap-2"
+        >
+          {sizes.map((size) => (
+            <ToggleGroupItem
+              key={size}
+              value={size}
+              className={cn(
+                'border',
+                selectedSize === size
+                  ? 'border-primary bg-primary text-primary-foreground'
+                  : 'border-input'
+              )}
+            >
+              {size}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
+      </div>
     </>
   );
 }

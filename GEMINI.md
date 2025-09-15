@@ -26,9 +26,9 @@ lib/
 : Follow standard conventions
 
 ## Recent Changes
+- 009-add-a-related: Add a related products component.
 - 008-add-option-to: Add option to select product variants.
-- 006-i-want-you: Added login page with `better-auth`.
-- 003-i-want-to: Added  + 
+- 006-i-want-you: Added login page with `better-auth`. 
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

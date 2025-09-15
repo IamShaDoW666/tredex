@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 mb-8">
           {/* Brand Info */}
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
-            <h3 className="text-4xl italic font-bold mb-4 text-primary">TREDEX</h3>
+            <h3 className="text-4xl italic font-bold mb-4 text-foreground">TREDEX</h3>
             <p className="text-muted-foreground text-sm">Trends start here.</p>
           </div>
 

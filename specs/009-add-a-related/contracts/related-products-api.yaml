@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+  title: Related Products API
+  version: 1.0.0
+paths:
+  /api/products/related:
+    get:
+      summary: Get a list of related products
+      parameters:
+        - in: query
+          name: excludeId
+          schema:
+            type: string
+          description: ID of the product to exclude from the related products list.
+          required: true
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 10
+          description: Maximum number of related products to return.
+          required: false
+      responses:
+        '200':
+          description: A list of related products.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          description: Internal server error.
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Unique identifier of the product.
+        name:
+          type: string
+          description: Name of the product.
+        images:
+          type: array
+          items:
+            type: string
+          description: URLs of product images.
+        price:
+          type: number
+          format: float
+          description: Price of the product.
+        discountPrice:
+          type: number
+          format: float
+          description: Discounted price of the product (optional).
+      required:
+        - _id
+        - name
+        - images
+        - price
