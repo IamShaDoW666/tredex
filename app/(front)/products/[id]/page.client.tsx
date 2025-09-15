@@ -8,6 +8,8 @@ import ProductInfo from '@/components/feature/product-detail/ProductInfo';
 import AddToCartButton from '@/components/feature/product-detail/AddToCartButton';
 import { ProductSizeSelector } from '@/components/feature/product-detail/product-size-selector';
 import { gsap } from 'gsap';
+import { ProductDetailSkeleton } from '@/components/feature/product-detail/ProductDetailSkeleton';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const ProductDetailClient = ({ id }: { id: string }) => {
   const { data: product, isLoading, isError } = useProduct(id);
@@ -22,11 +24,20 @@ const ProductDetailClient = ({ id }: { id: string }) => {
   }, [isLoading, product]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <ProductDetailSkeleton />;
   }
 
   if (isError) {
-    return <div>Error loading product.</div>;
+    return (
+      <div className="mx-auto px-4 py-8">
+        <Alert variant="destructive">
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>
+            There was an error loading the product details. Please try again later.
+          </AlertDescription>
+        </Alert>
+      </div>
+    );
   }
 
   if (!product) {
@@ -35,11 +46,11 @@ const ProductDetailClient = ({ id }: { id: string }) => {
   return (
     <div ref={root} className="mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="rounded-lg">
+        <div className="rounded-lg product-image">
           {product.images?.length > 0 &&
             <ProductImageGallery images={product.images} />}
         </div>
-        <div className="space-y-8">
+        <div className="space-y-8 product-info">
           <ProductInfo product={product} name={product.name} price={product.price} description={product.description || ''} />
           <ProductSizeSelector sizes={product.sizes} />
           <AddToCartButton sizes={product.sizes} />

@@ -12,7 +12,7 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({ images }) => 
 
   return (
     <div>
-      <div className="relative rounded-lg h-96 w-full mb-4">
+      <div className="relative rounded-lg h-[500px] w-full mb-4 md:mb-8">
         <Image
           src={selectedImage}
           alt="Selected product image"
@@ -20,7 +20,7 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({ images }) => 
           className="object-contain rounded-lg"
         />
       </div>
-      <div className="flex space-x-2 overflow-x-auto">
+      <div className="flex md:ml-22 space-x-2 overflow-x-auto">
         {images.map((image, index) => (
           <div key={index} className="relative h-24 w-24 flex-shrink-0 cursor-pointer" onClick={() => setSelectedImage(image)}>
             <Image

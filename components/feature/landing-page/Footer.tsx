@@ -26,7 +26,6 @@ const Footer = () => {
               <li><Link href="#" className="hover:text-primary transition-colors">New Arrivals</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Men</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Women</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Kids</Link></li>
             </ul>
           </div>
 
@@ -40,7 +39,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Follow Us */}
           <div>
             <h4 className="font-semibold text-lg mb-4">Follow Us</h4>
             <div className="flex space-x-4">
