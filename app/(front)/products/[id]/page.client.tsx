@@ -6,6 +6,7 @@ import { useProduct } from '@/hooks/use-products';
 import ProductImageGallery from '@/components/feature/product-detail/ProductImageGallery';
 import ProductInfo from '@/components/feature/product-detail/ProductInfo';
 import AddToCartButton from '@/components/feature/product-detail/AddToCartButton';
+import { ProductSizeSelector } from '@/components/feature/product-detail/product-size-selector';
 import { gsap } from 'gsap';
 
 const ProductDetailClient = ({ id }: { id: string }) => {
@@ -40,7 +41,8 @@ const ProductDetailClient = ({ id }: { id: string }) => {
         </div>
         <div className="space-y-8">
           <ProductInfo product={product} name={product.name} price={product.price} description={product.description || ''} />
-          <AddToCartButton />
+          <ProductSizeSelector sizes={product.sizes} />
+          <AddToCartButton sizes={product.sizes} />
         </div>
       </div>
     </div>
