@@ -10,6 +10,7 @@ import { ProductSizeSelector } from '@/components/feature/product-detail/product
 import { gsap } from 'gsap';
 import { ProductDetailSkeleton } from '@/components/feature/product-detail/ProductDetailSkeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { RelatedProducts } from '@/components/feature/product-detail/RelatedProducts';
 
 const ProductDetailClient = ({ id }: { id: string }) => {
   const { data: product, isLoading, isError } = useProduct(id);
@@ -56,6 +57,7 @@ const ProductDetailClient = ({ id }: { id: string }) => {
           <AddToCartButton sizes={product.sizes} />
         </div>
       </div>
+      <RelatedProducts currentProductId={id} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import dbConnect from '@/lib/db';
 import Category from '../model/categorySchema';
-import Product, { IProductData } from '../model/productSchema';
+import Product from '../model/productSchema';
 
 const categories = [
   { name: 'Running', description: 'Shoes for running' },

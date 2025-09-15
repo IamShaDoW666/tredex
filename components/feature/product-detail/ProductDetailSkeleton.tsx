@@ -6,7 +6,7 @@ export function ProductDetailSkeleton() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Image Gallery Skeleton */}
         <div className="rounded-lg">
-          <Skeleton className="h-[400px] w-full" />
+          <Skeleton className="md:h-[60vh] md:w-[60vh] md:mx-auto mx-0 h-[400px] w-full" />
         </div>
 
         {/* Product Info Skeleton */}

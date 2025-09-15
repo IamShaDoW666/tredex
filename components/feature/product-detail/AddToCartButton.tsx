@@ -21,9 +21,12 @@ const AddToCartButton = ({ sizes }: AddToCartButtonProps) => {
   const isDisabled = hasSizes && !selectedSize;
 
   return (
-    <Button className='bg-green-400' onClick={handleAddToCart} disabled={isDisabled}>
-      Order on Whatsapp <FaWhatsapp />
-    </Button>
+    <div className='flex items-center justify-between md:flex-row-reverse'>
+      <Button className='p-0' variant={'link'}>Terms and Conditions</Button>
+      <Button size={'lg'} className='bg-green-400 text-primary-foreground' onClick={handleAddToCart} disabled={isDisabled}>
+        Order on Whatsapp <FaWhatsapp />
+      </Button>
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@ const seedAdmin = async () => {
   try {
     const adminEmail = 'admin@tredexstore.in';
     const adminPassword = 'secret'; // In a real app, use a more secure password and manage it safely
-    const admin = await auth.api.createUser({
+    await auth.api.createUser({
       body: {
         name: "Admin",
         email: adminEmail,
