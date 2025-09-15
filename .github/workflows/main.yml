@@ -1,0 +1,40 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main # Trigger this workflow on pushes to the main branch
+
+env:
+  # Define environment variables for the registry and image name
+  REGISTRY: ghcr.io # Use ghcr.io for GitHub Container Registry
+  IMAGE_NAME: iamshadow666/tredex # Uses your GitHub repository name as the image name
+  CONTAINER_PORT: 3000 # The port your Node.js app runs on inside the container
+  HOST_PORT: 3333      # The port you want to expose on your VPS (e.g., 80 for HTTP)
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest # Use a fresh Ubuntu runner
+
+    permissions:
+      contents: read # Allows checkout of repository code
+      packages: write # Required to push images to GitHub Container Registry
+
+    steps:
+      - name: Checkout repository
+        # Action to checkout your code from the repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@v1.0.3 # A popular action for SSH
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "--- Starting Deployment ---"
+            sudo su
+            cd /var/www/tredex
+            git pull origin main
+            docker compose up --build -d
+            echo "--- Deployment Complete ---"
