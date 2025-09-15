@@ -7,12 +7,10 @@ import Footer from '@/components/feature/landing-page/Footer';
 const LandingPage = () => {
   return (
     <div>
-      <Header />
       <Hero />
       <Suspense fallback={<div>Loading...</div>}>
         <ProductGrid />
       </Suspense>
-      <Footer />
     </div>
   );
 };

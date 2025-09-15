@@ -32,7 +32,7 @@ const fetchProduct = async (id: string): Promise<IProduct> => {
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
-  return response.json();
+  return (await response.json())['data'];
 };
 
 const createProduct = async (newProduct: IProduct) => {
