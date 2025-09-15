@@ -1,0 +1,28 @@
+services:
+  tredex-app:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/tredex
+    depends_on:
+      - mongodb
+    networks:
+      - tredex-network
+  mongodb:
+    image: docker.io/library/mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - tredex-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  tredex-network:
+    driver: bridge
