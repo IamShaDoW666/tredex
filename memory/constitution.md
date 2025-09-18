@@ -20,6 +20,9 @@ To ensure optimal performance and correct behavior with Next.js App Router, all 
 ### VI. Mobile-First Design
 The design must be focused on mobile UI/UX, as the web application will be primarily used by mobile users. All components and layouts must be designed and built with a mobile-first approach. The user experience on mobile devices is of the utmost importance. Designs should be fully responsive and adapt gracefully to all screen sizes, from small mobile phones to large desktop displays.
 
+### VII. TypeScript Best Practices
+All TypeScript code must adhere to strict typing rules to ensure type safety, enhance autocompletion, and improve type inference. This includes, but is not limited to, explicit type declarations for function parameters and return types, proper use of interfaces and types, and avoiding `any` where possible. The goal is to leverage TypeScript's full potential for robust and maintainable code.
+
 ## Development Workflow
 
 - **Version Control:** All development must follow a standard Git flow using feature branches. Changes are merged into the main branch via pull requests.
