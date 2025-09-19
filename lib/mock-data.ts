@@ -1,4 +1,4 @@
-import { IProductData } from '@/model/productSchema';
+import { IProductData } from '@/lib/types';
 
 export const sneakers: IProductData[] = [
   {
@@ -11,6 +11,7 @@ export const sneakers: IProductData[] = [
     available: true,
     is_new: false,
     sex: "Unisex",
+    category: '60d5ec49f8c7a10015a7b8a0',
   },
   {
     _id: '60d5ec49f8c7a10015a7b8a2',
@@ -22,6 +23,7 @@ export const sneakers: IProductData[] = [
     available: true,
     is_new: false,
     sex: "Unisex",
+    category: '60d5ec49f8c7a10015a7b8a0',
   },
   {
     _id: '60d5ec49f8c7a10015a7b8a3',
@@ -33,6 +35,7 @@ export const sneakers: IProductData[] = [
     available: true,
     is_new: false,
     sex: "Unisex",
+    category: '60d5ec49f8c7a10015a7b8a0',
   },
   {
     _id: '60d5ec49f8c7a10015a7b8a4',
@@ -44,5 +47,6 @@ export const sneakers: IProductData[] = [
     available: true,
     is_new: false,
     sex: "Unisex",
+    category: '60d5ec49f8c7a10015a7b8a0',
   },
 ];

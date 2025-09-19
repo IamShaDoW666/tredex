@@ -1,5 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { ICategory } from '@/model/categorySchema';
+import { ICategory } from '@/lib/types';
+import { createCategoryAction, getAllCategories } from '@/actions/category-actions';
+
+// Define a type for creating a new category, without the _id
+interface ICreateCategory extends Omit<ICategory, '_id'> { }
 
 const fetchCategories = async (): Promise<ICategory[]> => {
   const response = await fetch('/api/categories');
@@ -9,7 +13,7 @@ const fetchCategories = async (): Promise<ICategory[]> => {
   return response.json();
 };
 
-const createCategory = async (newCategory: ICategory) => {
+const createCategory = async (newCategory: ICreateCategory) => {
   const response = await fetch('/api/categories', {
     method: 'POST',
     headers: {
@@ -23,12 +27,31 @@ const createCategory = async (newCategory: ICategory) => {
   return response.json();
 };
 
-export const useCategories = () => useQuery<ICategory[]>({ queryKey: ['categories'], queryFn: fetchCategories });
+export const useCategories = () => useQuery({ queryKey: ['categories'], queryFn: getAllCategories });
 
 export const useCreateCategory = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: createCategory,
+    mutationFn: createCategoryAction,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+    },
+  });
+};
+
+const deleteCategory = async (id: string) => {
+  const response = await fetch(`/api/categories/${id}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+};
+
+export const useDeleteCategory = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteCategory,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['categories'] });
     },

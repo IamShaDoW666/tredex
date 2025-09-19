@@ -1,4 +1,4 @@
-import { IProduct } from '@/model/productSchema';
+import { IProduct } from '@/lib/types';
 import React from 'react';
 
 interface ProductInfoProps {

@@ -1,4 +1,4 @@
-import { IProduct } from '@/model/productSchema';
+import { IProduct } from '@/lib/types';
 import { useQuery } from '@tanstack/react-query';
 
 const fetcher = async (url: string): Promise<IProduct[]> => {

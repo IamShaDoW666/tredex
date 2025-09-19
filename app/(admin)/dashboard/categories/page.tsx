@@ -19,7 +19,7 @@ function CategoriesDataTable() {
     return <div>Error loading categories</div>
   }
 
-  return <DataTable columns={columns} data={categories || []} />
+  return <DataTable columns={columns} data={categories?.data || []} />
 }
 
 export default function AdminCategories() {

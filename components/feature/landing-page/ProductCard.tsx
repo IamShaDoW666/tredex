@@ -3,7 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Card, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { IProduct } from '@/model/productSchema';
+import { IProduct } from '@/lib/types';
 import { Separator } from '@/components/ui/separator';
 import { ShineBorder } from '@/components/magicui/shine-border';
 import { Badge } from '@/components/ui/badge';
