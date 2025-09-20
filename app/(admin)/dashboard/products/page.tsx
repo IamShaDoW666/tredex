@@ -46,7 +46,7 @@ export default function ProductsPage() {
           </p>
         </div>
         <div className="flex items-center space-x-2">
-          <Link href="/admin/dashboard/products/new">
+          <Link href="/dashboard/products/create">
             <Button>
               <PlusCircle className="mr-2 h-4 w-4" />
               Add Product

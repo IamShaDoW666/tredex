@@ -1,8 +1,10 @@
-"use server"
+'use server';
 
-import dbConnect from "@/lib/db";
-import Product from "@/model/productSchema";
-
+import { productSchema } from '@/lib/product-schema';
+import dbConnect from '@/lib/db';
+import Product from '@/model/productSchema';
+import { revalidatePath } from 'next/cache';
+import { ProductFormValues } from '@/components/feature/product-form';
 export async function getProductById(id: string) {
   try {
     await dbConnect();
@@ -19,7 +21,6 @@ export async function getProductById(id: string) {
     };
   }
 }
-
 export async function getProductsWithCategories({
   page = 1,
   limit = 10,
@@ -73,7 +74,7 @@ export async function getProductsWithCategories({
       query.price = {};
       if (minPrice) {
         query.price.$gte = parseFloat(minPrice);
-      } 
+      }
       if (maxPrice) {
         query.price.$lte = parseFloat(maxPrice);
       }
@@ -118,6 +119,39 @@ export async function getProductsWithCategories({
     return {
       status: false,
       error: "An error occurred while fetching products.",
+    };
+  }
+}
+
+export async function createProduct(formData: ProductFormValues) {
+  console.log(formData)
+  const validatedFields = productSchema.safeParse(formData);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Product.',
+    };
+  }
+
+  const { ...productData } = validatedFields.data;
+
+  try {
+    await dbConnect();
+
+    const newProduct = new Product({
+      ...productData,
+      images: productData.images ? productData.images.split(',').map(url => url.trim()) : [],
+    });
+
+    await newProduct.save();
+
+    revalidatePath('/admin/products');
+
+    return { message: 'Product created successfully.' };
+  } catch (error) {
+    return {
+      message: 'Database Error: Failed to Create Product.',
     };
   }
 }

@@ -2,7 +2,6 @@
 'use client';
 
 import React, { useLayoutEffect, useRef } from 'react';
-import { useProduct } from '@/hooks/use-products';
 import ProductImageGallery from '@/components/feature/product-detail/ProductImageGallery';
 import ProductInfo from '@/components/feature/product-detail/ProductInfo';
 import AddToCartButton from '@/components/feature/product-detail/AddToCartButton';
@@ -11,9 +10,23 @@ import { gsap } from 'gsap';
 import { ProductDetailSkeleton } from '@/components/feature/product-detail/ProductDetailSkeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { RelatedProducts } from '@/components/feature/product-detail/RelatedProducts';
+import { IProduct } from '@/lib/types';
+import { useQuery } from '@tanstack/react-query';
+import { getProductById } from '@/actions/product-actions';
 
 const ProductDetailClient = ({ id }: { id: string }) => {
-  const { data: product, isLoading, isError } = useProduct(id);
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['product', id],
+    queryFn: async () => {
+      const response = await getProductById(id);
+      if (!response.status) {
+        throw new Error(response.error || "Failed to fetch product");
+      }
+      return response.data;
+    },
+  });
+
+  const product: IProduct | undefined = data as IProduct;
   const root = useRef(null);
 
   useLayoutEffect(() => {
@@ -34,7 +47,7 @@ const ProductDetailClient = ({ id }: { id: string }) => {
         <Alert variant="destructive">
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>
-            There was an error loading the product details. Please try again later.
+            There was an error loading the product details. {error?.message}
           </AlertDescription>
         </Alert>
       </div>

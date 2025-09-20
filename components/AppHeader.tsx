@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import type { User } from "@/lib/types"
 import { Separator } from "./ui/separator"
+import { ThemeToggle } from "./ThemeToggle"
 
 type UserProps = {
   user: User | null
@@ -26,10 +27,7 @@ export default function AppHeader({ user }: UserProps) {
             <Search className="h-4 w-4" />
             <span className="sr-only">Search</span>
           </Button>
-          <Button variant="outline" size="icon">
-            <Bell className="h-4 w-4" />
-            <span className="sr-only">Notifications</span>
-          </Button>
+          <ThemeToggle variant="outline" />
         </div>
       </div>
     </header>
