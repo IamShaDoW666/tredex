@@ -1,4 +1,5 @@
 import mongoose, { Schema, model, Document, Types } from 'mongoose';
+import { ICategory } from './categorySchema';
 
 export interface IProduct extends Document {
   name: string;
@@ -6,7 +7,7 @@ export interface IProduct extends Document {
   price: number;
   discountPrice?: number;
   sizes: string[];
-  category: Types.ObjectId; // Can be category ID or populated category object
+  category: Types.ObjectId | ICategory // Can be category ID or populated category object
   available: boolean;
   is_new: boolean;
   description?: string;

@@ -124,7 +124,6 @@ export async function getProductsWithCategories({
 }
 
 export async function createProduct(formData: ProductFormValues) {
-  console.log(formData)
   const validatedFields = productSchema.safeParse(formData);
 
   if (!validatedFields.success) {
@@ -134,24 +133,44 @@ export async function createProduct(formData: ProductFormValues) {
     };
   }
 
-  const { ...productData } = validatedFields.data;
+  const { sizes, ...productData } = validatedFields.data;
 
   try {
     await dbConnect();
 
     const newProduct = new Product({
       ...productData,
-      images: productData.images ? productData.images.split(',').map(url => url.trim()) : [],
+      sizes: sizes ? sizes.split(',').map((s) => s.trim()).filter(Boolean) : [],
+      // TODO: Implement proper image upload logic. For now, images are not saved.
+      images: [],
     });
-
     await newProduct.save();
 
     revalidatePath('/admin/products');
 
     return { message: 'Product created successfully.' };
   } catch (error) {
+    console.log(error)
     return {
       message: 'Database Error: Failed to Create Product.',
+    };
+  }
+}
+
+export async function deleteProductById(id: string) {
+  try {
+    await dbConnect();
+    const product = await Product.findOneAndDelete({ _id: id })
+    revalidatePath('/admin/products');
+    return {
+      status: true,
+      data: JSON.parse(JSON.stringify(product)),
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      error: "An error occurred while fetching the product.",
     };
   }
 }

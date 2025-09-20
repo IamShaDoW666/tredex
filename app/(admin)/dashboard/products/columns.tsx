@@ -23,7 +23,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Badge } from "@/components/ui/badge"
-import { IProduct, ICategory } from "@/lib/types"
+import { IProduct } from "@/model/productSchema"
+import { ICategory } from "@/model/categorySchema"
+import { deleteProductById } from "@/actions/product-actions"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 export const columns: ColumnDef<IProduct>[] = [
   {
@@ -59,7 +63,7 @@ export const columns: ColumnDef<IProduct>[] = [
     header: "Category",
     cell: ({ row }) => {
       const category = row.original.category;
-      return <p>{typeof category === 'object' && category !== null ? category.name : '-'}</p>
+      return <p>{typeof category === 'object' && category !== null ? (category as ICategory).name : '-'}</p>
     }
   },
   {
@@ -80,7 +84,7 @@ export const columns: ColumnDef<IProduct>[] = [
     id: "actions",
     cell: ({ row }) => {
       const product = row.original
-
+      const router = useRouter()
       return (
         <AlertDialog>
           <DropdownMenu>
@@ -93,7 +97,7 @@ export const columns: ColumnDef<IProduct>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(product._id)}
+                onClick={() => navigator.clipboard.writeText(product._id as string)}
               >
                 Copy ID
               </DropdownMenuItem>
@@ -116,7 +120,15 @@ export const columns: ColumnDef<IProduct>[] = [
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction
-                onClick={() => console.log(`Deleting ${product._id}`)}
+                onClick={async () => {
+                  try {
+                    await deleteProductById(product._id as string)
+                    router.refresh()
+                    toast.success("Product has been deleted successfully!")
+                  } catch (error) {
+                    console.log(error)
+                  }
+                }}
               >
                 Delete
               </AlertDialogAction>

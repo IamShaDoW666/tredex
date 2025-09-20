@@ -19,13 +19,14 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { useTransition } from 'react';
 import { toast } from 'sonner';
-import { IProduct } from '@/model/productSchema';
-import { Form, FormField, FormItem } from '../ui/form';
+import { Form, FormControl, FormField, FormItem } from '../ui/form';
+import { useRouter } from 'next/navigation';
 
 export type ProductFormValues = z.infer<typeof productSchema>;
 
 export function ProductForm() {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter()
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -34,10 +35,10 @@ export function ProductForm() {
       productType: "",
       price: 0,
       description: "",
-      discountPrice: 0,
       available: true,
       is_new: false,
       sex: 'Men',
+      sizes: ""
     },
   });
 
@@ -46,6 +47,7 @@ export function ProductForm() {
       const result = await createProduct(data);
       if (result.message.includes('successfully')) {
         toast.success(result.message);
+        router.push("/dashboard/products")
       } else {
         toast.error(result.message);
       }
@@ -57,48 +59,62 @@ export function ProductForm() {
         <div>
           <FormField name="name" render={({ field }) => <FormItem>
             <Label htmlFor="name">Name</Label>
-            <Input id="price" {...field} />
+            <FormControl>
+              <Input id="name" {...field} />
+            </FormControl>
           </FormItem>} />
         </div>
         <div>
           <FormField name="description" render={({ field }) => <FormItem>
             <Label htmlFor="description">Description</Label>
-            <Textarea id="description" {...field} />
+            <FormControl>
+              <Textarea id="description" {...field} />
+            </FormControl>
           </FormItem>} />
         </div>
         <div>
           <FormField name="price" render={({ field }) => <FormItem>
             <Label htmlFor="price">Price</Label>
-            <Input id="price" type="number" {...field} />
+            <FormControl>
+              <Input id="price" {...field} value={field.value ?? ''} />
+            </FormControl>
           </FormItem>} />
         </div>
         <div>
           <FormField name="discountPrice" render={({ field }) => <FormItem>
             <Label htmlFor="discountPrice">Discount Price</Label>
-            <Input id="discountPrice" type="number" {...field} />
+            <FormControl>
+              <Input id="discountPrice" {...field} value={field.value ?? ''} />
+            </FormControl>
           </FormItem>} />
         </div>
         <div>
           <FormField name="sizes" render={({ field }) => <FormItem>
             <Label htmlFor="sizes">Sizes (comma-separated)</Label>
-            <Input id="sizes" {...field} />
+            <FormControl>
+              <Input id="sizes" {...field} />
+            </FormControl>
           </FormItem>} />
         </div>
 
         <div>
           <FormField name="category" render={({ field }) => <FormItem>
             <Label htmlFor="category">Category</Label>
-            <Input id="category" {...field} />
+            <FormControl>
+              <Input id="category" {...field} />
+            </FormControl>
           </FormItem>} />
         </div>
 
         <div>
           <FormField name="sex" render={({ field }) => <FormItem>
             <Label htmlFor="sex">Sex</Label>
-            <Select onValueChange={(value: IProduct['sex']) => form.setValue('sex', value)} defaultValue="Men">
-              <SelectTrigger>
-                <SelectValue placeholder="Select sex" />
-              </SelectTrigger>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select sex" />
+                </SelectTrigger>
+              </FormControl>
               <SelectContent>
                 <SelectItem value="Men">Men</SelectItem>
                 <SelectItem value="Women">Women</SelectItem>
@@ -111,20 +127,26 @@ export function ProductForm() {
         <div>
           <FormField name="productType" render={({ field }) => <FormItem>
             <Label htmlFor="productType">Product Type</Label>
-            <Input id="productType" {...field} />
+            <FormControl>
+              <Input id="productType" {...field} />
+            </FormControl>
           </FormItem>} />
         </div>
 
         <div className="flex items-center space-x-2">
           <FormField name="available" render={({ field }) => <FormItem>
-            <Checkbox id="available" {...field} defaultChecked />
+            <FormControl>
+              <Checkbox id="available" {...field} defaultChecked />
+            </FormControl>
             <Label htmlFor="available">Available for sale</Label>
           </FormItem>} />
         </div>
 
         <div className="flex items-center space-x-2">
           <FormField name="is_new" render={({ field }) => <FormItem>
-            <Checkbox id="is_new" {...field} />
+            <FormControl>
+              <Checkbox id="is_new" {...field} />
+            </FormControl>
             <Label htmlFor="is_new">New arrival</Label>
           </FormItem>} />
         </div>
@@ -132,9 +154,11 @@ export function ProductForm() {
         <div>
           <FormField name="images" render={({ field }) => <FormItem>
             <Label htmlFor="images">Images</Label>
-            <Input id="images" type="file" multiple onChange={async (e) => {
-              field.onChange(Array.from(e.target.files!))
-            }} />
+            <FormControl>
+              <Input id="images" type="file" multiple onChange={async (e) => {
+                field.onChange(Array.from(e.target.files!))
+              }} />
+            </FormControl>
             <p className="text-sm text-muted-foreground">
               For demonstration, image compression is done in the browser. In a real app, you would upload to a storage service.
             </p>
