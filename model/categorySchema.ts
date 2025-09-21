@@ -1,12 +1,13 @@
-import { Schema, model, Document, Types } from 'mongoose';
+import mongoose, { Schema, model, Document } from 'mongoose';
 
 export interface ICategory extends Document {
   name: string;
   description?: string;
+  products?: string[]; // products can be an array of product IDs
 }
 
+
 const categorySchema = new Schema<ICategory>({
-  _id: Types.ObjectId,
   name: {
     type: String,
     required: [true, 'Category name is required.'],
@@ -19,11 +20,11 @@ const categorySchema = new Schema<ICategory>({
     trim: true,
     maxlength: [500, 'Description cannot exceed 500 characters.'],
   },
+  products: [{ type: Schema.Types.ObjectId, ref: 'Product' }]
 }, {
   timestamps: true,
 });
 
-const Category = model<ICategory>('Category', categorySchema);
+const Category = (mongoose.models.Category || model<ICategory>('Category', categorySchema));
 
 export default Category;
-

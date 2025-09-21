@@ -1,35 +1,23 @@
-import { Schema, model, Document, Types } from 'mongoose';
-
-export interface IProductData {
-  _id: string; // Assuming _id is a string in mock data
-  name: string;
-  images: string[];
-  price: number;
-  discountPrice?: number;
-  sizes: string[]
-  productType: "Sneaker" | "Watch";
-  available: boolean;
-  is_new: boolean;
-  description?: string;
-  sex: "Men" | "Women" | "Unisex";
-}
+import mongoose, { Schema, model, Document, Types } from 'mongoose';
+import { ICategory } from './categorySchema';
+import { IBrand } from './brandSchema';
 
 export interface IProduct extends Document {
   name: string;
   images: string[];
-  sizes: string[];
   price: number;
   discountPrice?: number;
-  productType: "Sneaker" | "Watch";
+  brand: Types.ObjectId | IBrand
+  sizes: string[];
+  category: Types.ObjectId | ICategory // Can be category ID or populated category object
   available: boolean;
   is_new: boolean;
   description?: string;
   sex: "Men" | "Women" | "Unisex";
+  productType?: string;
 }
 
-
 const productSchema = new Schema<IProduct>({
-  _id: Types.ObjectId,
   name: {
     type: String,
     required: [true, 'Product name is required.'],
@@ -70,16 +58,13 @@ const productSchema = new Schema<IProduct>({
     enum: ["Men", "Women", "Unisex"],
     default: "Men",
   },
-  productType: {
-    type: String,
-    enum: ["Sneaker", "Watch"],
-    default: "Sneaker",
-  }
+  category: { type: Schema.Types.ObjectId, ref: 'Category' },
+  brand: { type: Schema.Types.ObjectId, ref: 'Brand' },
+  productType: { type: String },
 }, {
   timestamps: true,
 });
 
-const Product = model<IProduct>('Product', productSchema);
+const Product = (mongoose.models.Product || model('Product', productSchema));
 
 export default Product;
-

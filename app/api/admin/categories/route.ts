@@ -6,23 +6,23 @@ export async function GET() {
   await dbConnect();
 
   try {
-    const categories = await Category.find().populate('products')
+    const categories = await Category.find();
     return NextResponse.json({ data: categories });
   } catch (error: unknown) {
     let errorMessage = 'An unexpected error occurred.';
     if (error instanceof Error) {
       errorMessage = error.message;
     }
-    console.log(error)
     return NextResponse.json({ error: { message: errorMessage } }, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
   await dbConnect();
+
   try {
     const body = await request.json();
-    const { name, description } = body;
+    const { name } = body;
 
     if (!name) {
       return NextResponse.json({ error: { message: 'Invalid input data. Name is required.' } }, { status: 400 });

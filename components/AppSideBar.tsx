@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { LayoutDashboard } from "lucide-react"
+import { Badge, Footprints, Layers, LayoutDashboard } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -17,7 +17,9 @@ import { usePathname } from "next/navigation"
 
 export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
-  const isActive = pathname.startsWith("/dashboard")
+  const isActive = (path: string) => {
+    return pathname.startsWith(`/${path}`)
+  }
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader className="flex items-center">
@@ -26,12 +28,42 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
       <SidebarContent>
         <SidebarMenu className="px-2 py-4">
           <SidebarMenuItem>
-            <SidebarMenuButton isActive={isActive} size="lg">
-              <Link href="/dashboard" className={`${isActive ? "text-foreground" : "text-primary"} flex items-center gap-3`}>
+            <SidebarMenuButton isActive={pathname == "/dashboard"} size="lg">
+              <Link href="/dashboard" className="flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
                   <LayoutDashboard className="h-5 w-5" />
                 </div>
                 <span className={`text-sm font-medium`}>Dashboard</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton isActive={isActive("dashboard/categories")} size="lg">
+              <Link href="/dashboard/categories" className={`flex items-center gap-3`}>
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                  <Layers />
+                </div>
+                <span className={`text-sm font-medium`}>Categories</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton isActive={isActive("dashboard/brands")} size="lg">
+              <Link href="/dashboard/brands" className={`flex items-center gap-3`}>
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                  <Badge />
+                </div>
+                <span className={`text-sm font-medium`}>Brands</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton isActive={isActive("dashboard/products")} size="lg">
+              <Link href="/dashboard/products" className={`flex items-center gap-3`}>
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                  <Footprints />
+                </div>
+                <span className={`text-sm font-medium`}>Products</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

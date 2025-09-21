@@ -2,29 +2,34 @@ import { IProduct } from '@/model/productSchema';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const fetchProducts = async ({ pageParam = 1, queryKey: fullQueryKey }: { pageParam?: number, queryKey: (string | number)[] }): Promise<{ data: IProduct[], nextPage: number | null }> => {
-  const [, limit, search, sort, order, category, size, color, brand, minPrice, maxPrice] = fullQueryKey;
-  const params = new URLSearchParams({
-    page: pageParam.toString(),
-    limit: (limit as number).toString(),
-    search: search as string,
-    sort: sort as string,
-    order: order as string,
-    category: category as string,
-    size: size as string,
-    color: color as string,
-    brand: brand as string,
-    minPrice: minPrice as string,
-    maxPrice: maxPrice as string,
-  });
-  const response = await fetch(`/api/products?${params.toString()}`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
+  try {
+
+    const [, limit, search, sort, order, category, size, color, brand, minPrice, maxPrice] = fullQueryKey;
+    const params = new URLSearchParams({
+      page: pageParam.toString(),
+      limit: (limit as number).toString(),
+      search: search as string,
+      sort: sort as string,
+      order: order as string,
+      category: category as string,
+      size: size as string,
+      color: color as string,
+      brand: brand as string,
+      minPrice: minPrice as string,
+      maxPrice: maxPrice as string,
+    });
+    const response = await fetch(`/api/products?${params.toString()}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const result = await response.json();
+    return {
+      data: result.data,
+      nextPage: result.totalPages > pageParam ? pageParam + 1 : null,
+    };
+  } catch (err) {
+    console.log(err)
   }
-  const result = await response.json();
-  return {
-    data: result.data,
-    nextPage: result.totalPages > pageParam ? pageParam + 1 : null,
-  };
 };
 
 const fetchProduct = async (id: string): Promise<IProduct> => {
@@ -77,7 +82,7 @@ export const useProducts = (limit: number, search: string, sort: string, order: 
   useInfiniteQuery({
     queryKey: ['products', limit, search, sort, order, category, size, color, brand, minPrice, maxPrice],
     queryFn: fetchProducts,
-    getNextPageParam: (lastPage) => lastPage.nextPage,
+    getNextPageParam: (lastPage) => lastPage?.nextPage,
     initialPageParam: 1,
   });
 export const useProduct = (id: string) => useQuery<IProduct>({ queryKey: ['product', id], queryFn: () => fetchProduct(id), enabled: !!id });

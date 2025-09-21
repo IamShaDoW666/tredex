@@ -116,9 +116,9 @@ const ProductGrid: React.FC = () => {
           ) : data ? (
             <>
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-                {data.pages.map((group, i) => (
+                {data.pages?.map((group, i) => (
                   <React.Fragment key={i}>
-                    {group.data.map((product) => (
+                    {group.data?.map((product) => (
                       <ProductCard key={product._id as string} product={product} />
                     ))}
                   </React.Fragment>
