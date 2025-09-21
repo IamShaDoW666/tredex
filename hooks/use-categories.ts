@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { ICategory } from '@/lib/types';
 import { createCategoryAction, getAllCategories } from '@/actions/category-actions';
+import { ICategory } from '@/model/categorySchema';
 
 // Define a type for creating a new category, without the _id
 interface ICreateCategory extends Omit<ICategory, '_id'> { }

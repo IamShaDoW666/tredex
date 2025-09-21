@@ -5,6 +5,7 @@ import dbConnect from '@/lib/db';
 import Product from '@/model/productSchema';
 import { revalidatePath } from 'next/cache';
 import { ProductFormValues } from '@/components/feature/product-form';
+import { redirect } from 'next/navigation';
 export async function getProductById(id: string) {
   try {
     await dbConnect();

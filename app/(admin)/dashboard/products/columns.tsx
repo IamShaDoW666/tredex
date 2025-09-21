@@ -27,7 +27,7 @@ import { IProduct } from "@/model/productSchema"
 import { ICategory } from "@/model/categorySchema"
 import { deleteProductById } from "@/actions/product-actions"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
+import { useQueryClient } from "@tanstack/react-query"
 
 export const columns: ColumnDef<IProduct>[] = [
   {
@@ -84,7 +84,7 @@ export const columns: ColumnDef<IProduct>[] = [
     id: "actions",
     cell: ({ row }) => {
       const product = row.original
-      const router = useRouter()
+      const queryClient = useQueryClient()
       return (
         <AlertDialog>
           <DropdownMenu>
@@ -121,13 +121,9 @@ export const columns: ColumnDef<IProduct>[] = [
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction
                 onClick={async () => {
-                  try {
-                    await deleteProductById(product._id as string)
-                    router.refresh()
-                    toast.success("Product has been deleted successfully!")
-                  } catch (error) {
-                    console.log(error)
-                  }
+                  await deleteProductById(product._id as string)
+                  queryClient.invalidateQueries({ queryKey: ["products"] })
+                  toast.success("Product has been deleted successfully!")
                 }}
               >
                 Delete

@@ -21,12 +21,14 @@ import { useTransition } from 'react';
 import { toast } from 'sonner';
 import { Form, FormControl, FormField, FormItem } from '../ui/form';
 import { useRouter } from 'next/navigation';
+import { useCategories } from '@/hooks/use-categories';
 
 export type ProductFormValues = z.infer<typeof productSchema>;
 
 export function ProductForm() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter()
+  const { data: categories, isLoading } = useCategories()
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -97,16 +99,20 @@ export function ProductForm() {
           </FormItem>} />
         </div>
 
-        <div>
+        <div className='flex justify-between md:justify-start space-x-4'>
           <FormField name="category" render={({ field }) => <FormItem>
             <Label htmlFor="category">Category</Label>
-            <FormControl>
-              <Input id="category" {...field} />
-            </FormControl>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Category" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {categories?.data?.map((category) => <SelectItem value={category._id as string} key={category._id}>{category.name}</SelectItem>)}
+              </SelectContent>
+            </Select>
           </FormItem>} />
-        </div>
-
-        <div>
           <FormField name="sex" render={({ field }) => <FormItem>
             <Label htmlFor="sex">Sex</Label>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
