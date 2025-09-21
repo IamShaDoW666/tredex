@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import ProductImageGallery from '@/components/feature/product-detail/ProductImageGallery';
 import ProductInfo from '@/components/feature/product-detail/ProductInfo';
 import AddToCartButton from '@/components/feature/product-detail/AddToCartButton';

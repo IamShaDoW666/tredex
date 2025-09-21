@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { orderSchema } from '@/zod/order-schema';
 import { Order } from '@/model/orderSchema';
 import dbConnect from '@/lib/db';
+import Product from '@/model/productSchema';
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,17 +12,18 @@ export async function POST(req: NextRequest) {
     const validation = orderSchema.safeParse(body);
 
     if (!validation.success) {
-      return NextResponse.json({ message: 'Invalid request body', errors: validation.error.errors }, { status: 400 });
+      return NextResponse.json({ message: 'Invalid request body', errors: validation.error }, { status: 400 });
     }
 
     const { name, phone, address, extraDetails, product } = validation.data;
-
+    const prod = await Product.findById(product)
     const newOrder = new Order({
       name,
       phone,
       address,
       extraDetails,
       product,
+      amount: prod.price
     });
 
     const savedOrder = await newOrder.save();
