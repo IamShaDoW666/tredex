@@ -3,7 +3,6 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 
 const fetchProducts = async ({ pageParam = 1, queryKey: fullQueryKey }: { pageParam?: number, queryKey: (string | number)[] }): Promise<{ data: IProduct[], nextPage: number | null }> => {
   try {
-
     const [, limit, search, sort, order, category, size, color, brand, minPrice, maxPrice] = fullQueryKey;
     const params = new URLSearchParams({
       page: pageParam.toString(),
@@ -29,6 +28,7 @@ const fetchProducts = async ({ pageParam = 1, queryKey: fullQueryKey }: { pagePa
     };
   } catch (err) {
     console.log(err)
+    return { data: [], nextPage: null };
   }
 };
 
@@ -101,7 +101,7 @@ export const useUpdateProduct = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateProduct,
-    onSuccess: (data: IProduct, variables: { id: string, updatedProduct: IProduct }) => {
+    onSuccess: (_data: IProduct, variables: { id: string, updatedProduct: IProduct }) => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
       queryClient.invalidateQueries({ queryKey: ['product', variables.id] });
     },

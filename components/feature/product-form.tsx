@@ -130,7 +130,7 @@ export function ProductForm({ product }: ProductFormProps) {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {categories?.data?.map((category) => <SelectItem value={category._id as string} key={category._id}>{category.name}</SelectItem>)}
+                {categories?.data?.map((category) => <SelectItem value={category._id as string} key={category._id as string}>{category.name}</SelectItem>)}
               </SelectContent>
             </Select>
           </FormItem>} />
@@ -143,7 +143,7 @@ export function ProductForm({ product }: ProductFormProps) {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {brands?.data?.map((brand) => <SelectItem value={brand._id as string} key={brand._id}>{brand.name}</SelectItem>)}
+                {brands?.data?.map((brand) => <SelectItem value={brand._id as string} key={brand._id as string}>{brand.name}</SelectItem>)}
               </SelectContent>
             </Select>
           </FormItem>} />

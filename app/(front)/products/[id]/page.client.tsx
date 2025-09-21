@@ -10,9 +10,9 @@ import { gsap } from 'gsap';
 import { ProductDetailSkeleton } from '@/components/feature/product-detail/ProductDetailSkeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { RelatedProducts } from '@/components/feature/product-detail/RelatedProducts';
-import { IProduct } from '@/lib/types';
 import { useQuery } from '@tanstack/react-query';
 import { getProductById } from '@/actions/product-actions';
+import { IProduct } from '@/model/productSchema';
 
 const ProductDetailClient = ({ id }: { id: string }) => {
   const { data, isLoading, isError, error } = useQuery({
