@@ -2,10 +2,8 @@
 
 import * as React from "react"
 import {
-  Column,
   ColumnDef,
   ColumnFiltersState,
-  RowData,
   SortingState,
   VisibilityState,
   flexRender,

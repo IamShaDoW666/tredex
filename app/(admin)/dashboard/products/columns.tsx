@@ -1,16 +1,6 @@
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { deleteProductById } from "@/actions/product-actions"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,12 +13,21 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Badge } from "@/components/ui/badge"
-import { IProduct } from "@/model/productSchema"
-import { ICategory } from "@/model/categorySchema"
-import { deleteProductById } from "@/actions/product-actions"
-import { toast } from "sonner"
-import { useQueryClient } from "@tanstack/react-query"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { IBrand } from "@/model/brandSchema"
+import { ICategory } from "@/model/categorySchema"
+import { IProduct } from "@/model/productSchema"
+import { ColumnDef } from "@tanstack/react-table"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { toast } from "sonner"
 
 export const columns: ColumnDef<IProduct>[] = [
   {
@@ -42,13 +41,13 @@ export const columns: ColumnDef<IProduct>[] = [
     accessorKey: "name",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
+        <div
+          className="p-0 flex items-center gap-x-2 cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+          <ArrowUpDown className="h-4 w-4" />
+        </div>
       )
     },
   },
@@ -103,7 +102,6 @@ export const columns: ColumnDef<IProduct>[] = [
     id: "actions",
     cell: ({ row }) => {
       const product = row.original
-      const queryClient = useQueryClient()
       return (
         <AlertDialog>
           <DropdownMenu>
@@ -141,7 +139,6 @@ export const columns: ColumnDef<IProduct>[] = [
               <AlertDialogAction
                 onClick={async () => {
                   await deleteProductById(product._id as string)
-                  queryClient.invalidateQueries({ queryKey: ["products"] })
                   toast.success("Product has been deleted successfully!")
                 }}
               >

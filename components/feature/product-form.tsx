@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { productSchema } from '@/lib/product-schema';
+import { productSchema } from '@/zod/product-schema';
 import { createProduct } from '@/actions/product-actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,19 +22,22 @@ import { toast } from 'sonner';
 import { Form, FormControl, FormField, FormItem } from '../ui/form';
 import { useRouter } from 'next/navigation';
 import { useCategories } from '@/hooks/use-categories';
+import { useBrands } from '@/hooks/use-brands';
 
 export type ProductFormValues = z.infer<typeof productSchema>;
 
 export function ProductForm() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter()
-  const { data: categories, isLoading } = useCategories()
+  const { data: categories } = useCategories()
+  const { data: brands } = useBrands()
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues: {
       name: "",
       category: "",
       productType: "",
+      brand: "",
       price: 0,
       description: "",
       available: true,
@@ -84,7 +87,7 @@ export function ProductForm() {
         </div>
         <div>
           <FormField name="discountPrice" render={({ field }) => <FormItem>
-            <Label htmlFor="discountPrice">Discount Price</Label>
+            <Label htmlFor="discountPrice">Pre-Discount</Label>
             <FormControl>
               <Input id="discountPrice" {...field} value={field.value ?? ''} />
             </FormControl>
@@ -110,6 +113,19 @@ export function ProductForm() {
               </FormControl>
               <SelectContent>
                 {categories?.data?.map((category) => <SelectItem value={category._id as string} key={category._id}>{category.name}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </FormItem>} />
+          <FormField name="brand" render={({ field }) => <FormItem>
+            <Label htmlFor="brand">Brand</Label>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Brand" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {brands?.data?.map((brand) => <SelectItem value={brand._id as string} key={brand._id}>{brand.name}</SelectItem>)}
               </SelectContent>
             </Select>
           </FormItem>} />

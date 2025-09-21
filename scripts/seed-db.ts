@@ -37,6 +37,7 @@ const seedDB = async () => {
       }
       acc[brandId].push(product._id);
       return acc;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }, {} as Record<string, any[]>);
 
     // Update each brand with its products

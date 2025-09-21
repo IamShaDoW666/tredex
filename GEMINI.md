@@ -1,6 +1,6 @@
 # tredex Development Guidelines
 
-Auto-generated from all feature plans. Last updated: 2025-09-10
+Auto-generated from all feature plans. Last updated: 2025-09-21
 
 ## Active Technologies
 - zustand (008-add-option-to)
@@ -26,9 +26,10 @@ lib/
 : Follow standard conventions
 
 ## Recent Changes
+- 012-create-a-brands: Create a brands page.
 - 009-add-a-related: Add a related products component.
-- 008-add-option-to: Add option to select product variants.
-- 006-i-want-you: Added login page with `better-auth`. 
+- 008-add-option-to: Add option to select product variants。
+
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

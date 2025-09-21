@@ -11,5 +11,6 @@ export const productSchema = z.object({
   sex: z.enum(['Men', 'Women', 'Unisex']).default('Men').optional(),
   productType: z.string().optional(),
   images: z.array(z.instanceof(File)).optional(),
-  sizes: z.string().optional()
+  sizes: z.string().optional(),
+  brand: z.string().optional()
 });

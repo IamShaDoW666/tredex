@@ -6,7 +6,6 @@ import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { DataTable } from "@/components/ui/data-table"
 import { columns } from "./columns"
-import { ICategory } from "@/lib/types"
 
 function CategoriesDataTable() {
   const { data: categories, isLoading, error } = useCategories()

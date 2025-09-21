@@ -21,7 +21,17 @@ To ensure optimal performance and correct behavior with Next.js App Router, all 
 The design must be focused on mobile UI/UX, as the web application will be primarily used by mobile users. All components and layouts must be designed and built with a mobile-first approach. The user experience on mobile devices is of the utmost importance. Designs should be fully responsive and adapt gracefully to all screen sizes, from small mobile phones to large desktop displays.
 
 ### VII. TypeScript Best Practices
-All TypeScript code must adhere to strict typing rules to ensure type safety, enhance autocompletion, and improve type inference. This includes, but is not limited to, explicit type declarations for function parameters and return types, proper use of interfaces and types, and avoiding `any` where possible. The goal is to leverage TypeScript's full potential for robust and maintainable code.
+To ensure a high-quality developer experience and catch errors before runtime, all TypeScript code must adhere to strict typing rules. This enhances type safety, improves autocompletion, and enables better type inference. Key practices include:
+- Explicitly declaring types for all function parameters and return values.
+- Using interfaces and types to define clear data structures.
+- Strictly avoiding the `any` type to maintain type safety.
+- Leveraging TypeScript's full potential for robust and maintainable code.
+
+### VIII. Schema Management
+All Zod schemas must be stored in the `@/zod` directory to ensure a single source of truth for data validation schemas.
+
+### IX. Project Structure Adherence
+Given that this is a Next.js application, it is crucial to analyze and adhere to the existing project structure. Proposals for new features or architectural changes must align with Next.js conventions and the established file organization. Avoid suggesting traditional separated front-end/back-end structures for web-related specifications.
 
 ## Development Workflow
 
@@ -29,10 +39,10 @@ All TypeScript code must adhere to strict typing rules to ensure type safety, en
 - **Code Reviews:** All pull requests require at least one approval from another team member. Reviews should focus on code quality, adherence to the constitution, and functionality.
 - **Component Addition:** When adding new components from ShadCN, use the appropriate CLI commands to ensure they are correctly integrated and tracked in `components.json`.
 
-### V. Testing
+- **Testing:**
 Testing is an important part of our development process. However, we do not follow a strict Test-Driven Development (TDD) approach. Tests should be implemented when requested or deemed necessary for the stability of the feature.
 
 ## Governance
 This constitution is the foundational document for the Tredex project. All development practices, code contributions, and architectural decisions must align with these principles. Amendments to this constitution require team consensus and must be documented.
 
-**Version**: 1.2.0 | **Ratified**: 2025-09-09 | **Last Amended**: 2025-09-13
+**Version**: 1.3.0 | **Ratified**: 2025-09-09 | **Last Amended**: 2025-09-21
