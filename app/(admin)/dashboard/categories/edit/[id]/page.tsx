@@ -1,6 +1,5 @@
 
 import { getCategoryById } from '@/actions/category-actions';
-import { ICategory } from '@/model/categorySchema';
 import { CategoryForm } from '@/components/feature/category-form';
 
 export default async function CategoryEditPage({ params }: { params: { id: string } }) {
