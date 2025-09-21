@@ -1,4 +1,4 @@
-FROM node:24-alpine as builder
+FROM node:24-alpine AS builder
 
 RUN npm i -g pnpm
 
@@ -15,7 +15,7 @@ COPY . .
 RUN pnpx @better-auth/cli@latest migrate
 RUN pnpm build
 
-FROM node:24-alpine as prod
+FROM node:24-alpine AS prod
 WORKDIR /app
 COPY --from=builder /app/.next/standalone/ .
 COPY --from=builder /app/sqlite.db .
