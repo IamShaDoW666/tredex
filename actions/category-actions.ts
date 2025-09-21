@@ -3,8 +3,7 @@
 
 import { z } from "zod";
 import dbConnect from "@/lib/db";
-import Category from "@/model/categorySchema";
-import { ICategory } from "@/lib/types";
+import Category, { ICategory } from "@/model/categorySchema";
 
 const categorySchema = z.object({
   name: z.string().min(1, "Category name is required.").max(250),
@@ -40,6 +39,7 @@ export async function getAllCategories(): Promise<{ success: boolean; data?: ICa
     const categories = await Category.find({});
     return { success: true, data: JSON.parse(JSON.stringify(categories)) };
   } catch (error) {
+    console.log(error)
     return { success: false, error: "Failed to fetch categories." };
   }
 }
@@ -54,6 +54,7 @@ export async function getCategoryById(id: string): Promise<{ success: boolean; d
     }
     return { success: true, data: JSON.parse(JSON.stringify(category)) };
   } catch (error) {
+    console.log(error)
     return { success: false, error: "Failed to fetch category." };
   }
 }
@@ -79,6 +80,7 @@ export async function updateCategory(id: string, data: unknown) {
     }
     return { success: true, data: JSON.parse(JSON.stringify(updatedCategory)) };
   } catch (error) {
+    console.log(error)
     return { success: false, error: "Failed to update category." };
   }
 }
@@ -93,6 +95,7 @@ export async function deleteCategory(id: string): Promise<{ success: boolean; er
     }
     return { success: true };
   } catch (error) {
+    console.log(error)
     return { success: false, error: "Failed to delete category." };
   }
 }

@@ -1,9 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCategoryAction, getAllCategories } from '@/actions/category-actions';
 import { ICategory } from '@/model/categorySchema';
-
-// Define a type for creating a new category, without the _id
-interface ICreateCategory extends Omit<ICategory, '_id'> { }
+import { CategoryFormValues } from '@/zod/category-schema';
 
 const fetchCategories = async (): Promise<ICategory[]> => {
   const response = await fetch('/api/categories');
@@ -13,7 +12,7 @@ const fetchCategories = async (): Promise<ICategory[]> => {
   return response.json();
 };
 
-const createCategory = async (newCategory: ICreateCategory) => {
+const createCategory = async (newCategory: CategoryFormValues) => {
   const response = await fetch('/api/categories', {
     method: 'POST',
     headers: {

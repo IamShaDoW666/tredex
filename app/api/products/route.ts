@@ -1,4 +1,5 @@
 import dbConnect from '@/lib/db';
+import Brand from '@/model/brandSchema';
 import Product from '@/model/productSchema';
 import { NextResponse } from 'next/server';
 
@@ -51,7 +52,8 @@ export async function GET(request: Request) {
     }
 
     if (brand) {
-      filter.brand = { $in: brand.split(',') };
+      const brands = await Brand.find({ name: { $in: brand.split(',') } })
+      filter.brand = { $in: brands.map((brand) => brand._id) };
     }
 
     if (minPrice || maxPrice) {

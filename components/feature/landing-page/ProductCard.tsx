@@ -19,13 +19,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <Card className="overflow-hidden p-0 group relative">
         {product.is_new && <ShineBorder className='z-10' borderWidth={2} shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />}
         <div className="relative bg-background h-[20vh] sm:h-[20rem]">
-          <Image
+          {product.images.length > 0 && <Image
             src={product.images[0]}
             alt={product.name}
             fill
             className="object-fill w-full h-full group-hover:scale-105 transition-transform duration-300 ease-in-out rounded-t-lg"
           />
-          <div className="absolute top-2 left-2 flex gap-1">
+          }          <div className="absolute top-2 left-2 flex gap-1">
             {product.discountPrice && (
               <Badge variant="destructive">Sale</Badge>
             )}
@@ -46,7 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               {product.discountPrice ? (
                 <>
                   <p className="text-sm text-muted-foreground line-through">
-                    ₹{Number(4000)}
+                    ₹{Number(product.discountPrice)}
                   </p>
                   <p className="font-semibold text-lg">
                     ₹{product.price}

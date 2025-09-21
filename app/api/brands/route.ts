@@ -1,13 +1,13 @@
 import dbConnect from '@/lib/db';
-import Category from '@/model/categorySchema';
+import Brand from '@/model/brandSchema';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   await dbConnect();
 
   try {
-    const categories = await Category.find().populate('products')
-    return NextResponse.json({ data: categories });
+    const brands = await Brand.find();
+    return NextResponse.json({ data: brands });
   } catch (error: unknown) {
     let errorMessage = 'An unexpected error occurred.';
     if (error instanceof Error) {
@@ -28,10 +28,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: { message: 'Invalid input data. Name is required.' } }, { status: 400 });
     }
 
-    const newCategory = new Category(body);
-    const savedCategory = await newCategory.save();
+    const newBrand = new Brand(body);
+    const savedBrand = await newBrand.save();
 
-    return NextResponse.json({ data: savedCategory }, { status: 201 });
+    return NextResponse.json({ data: savedBrand }, { status: 201 });
   } catch (error: unknown) {
     let errorMessage = 'An unexpected error occurred.';
     if (error instanceof Error) {

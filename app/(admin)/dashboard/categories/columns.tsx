@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { ICategory } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import {
@@ -24,6 +24,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useDeleteCategory } from "@/hooks/use-categories"
+import { ICategory } from "@/model/categorySchema"
 
 export const columns: ColumnDef<ICategory>[] = [
   {
@@ -37,13 +38,13 @@ export const columns: ColumnDef<ICategory>[] = [
     accessorKey: "name",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
+        <div
+          className="p-0 flex items-center gap-x-2 cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+          <ArrowUpDown className="h-4 w-4" />
+        </div>
       )
     },
   },
@@ -69,7 +70,7 @@ export const columns: ColumnDef<ICategory>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(category._id)}
+                onClick={() => navigator.clipboard.writeText(category._id as string)}
               >
                 Copy ID
               </DropdownMenuItem>
@@ -92,7 +93,7 @@ export const columns: ColumnDef<ICategory>[] = [
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction
-                onClick={() => deleteCategory.mutate(category._id)}
+                onClick={() => deleteCategory.mutate(category._id as string)}
               >
                 Delete
               </AlertDialogAction>

@@ -1,18 +1,19 @@
 'use client';
 
 import { Checkbox } from "@/components/ui/checkbox";
+import { useBrands } from "@/hooks/use-brands";
+import { useCategories } from "@/hooks/use-categories";
 import { useFilterStore } from '@/hooks/use-filter-store';
 import { useSearchParams } from "next/navigation";
 import { useEffect } from 'react';
 
-const categories = ["Sneaker", "Watch"];
 const sizes = ["7", "8", "9", "10", "11"];
-const colors = ["Red", "Blue", "Green", "Black", "White"];
-const brands = ["Nike", "Adidas", "Puma", "Reebok"];
 
 export function Filter() {
   const searchParams = useSearchParams();
   const { filters, setFilter, initializeWithUrlParams } = useFilterStore();
+  const { data: categories } = useCategories()
+  const { data: brands } = useBrands()
 
   useEffect(() => {
     initializeWithUrlParams(searchParams);
@@ -23,15 +24,15 @@ export function Filter() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <h3 className="font-semibold mb-2">Category</h3>
-          {categories.map((category) => (
-            <div key={category} className="flex items-center space-x-2">
+          {categories?.data?.map((category) => (
+            <div key={category._id as string} className="flex items-center space-x-2">
               <Checkbox
-                id={`category-${category}`}
-                checked={filters.category.includes(category)}
-                onCheckedChange={() => setFilter('category', category)}
+                id={`category-${category._id as string}`}
+                checked={filters.category.includes(category._id as string)}
+                onCheckedChange={() => setFilter('category', category._id as string)}
                 className="h-5 w-5"
               />
-              <label htmlFor={`category-${category}`}>{category}</label>
+              <label htmlFor={`category-${category._id as string}`}>{category.name}</label>
             </div>
           ))}
         </div>
@@ -49,31 +50,31 @@ export function Filter() {
             </div>
           ))}
         </div>
-        <div>
-          <h3 className="font-semibold mb-2">Color</h3>
-          {colors.map((color) => (
-            <div key={color} className="flex items-center space-x-2">
-              <Checkbox
-                id={`color-${color}`}
-                checked={filters.color.includes(color)}
-                onCheckedChange={() => setFilter('color', color)}
-                className="h-5 w-5"
-              />
-              <label htmlFor={`color-${color}`}>{color}</label>
-            </div>
-          ))}
-        </div>
+        {/* <div> */}
+        {/*   <h3 className="font-semibold mb-2">Color</h3> */}
+        {/*   {colors.map((color) => ( */}
+        {/*     <div key={color} className="flex items-center space-x-2"> */}
+        {/*       <Checkbox */}
+        {/*         id={`color-${color}`} */}
+        {/*         checked={filters.color.includes(color)} */}
+        {/*         onCheckedChange={() => setFilter('color', color)} */}
+        {/*         className="h-5 w-5" */}
+        {/*       /> */}
+        {/*       <label htmlFor={`color-${color}`}>{color}</label> */}
+        {/*     </div> */}
+        {/*   ))} */}
+        {/* </div> */}
         <div>
           <h3 className="font-semibold mb-2">Brand</h3>
-          {brands.map((brand) => (
-            <div key={brand} className="flex items-center space-x-2">
+          {brands?.data?.map((brand) => (
+            <div key={brand._id as string} className="flex items-center space-x-2">
               <Checkbox
-                id={`brand-${brand}`}
-                checked={filters.brand.includes(brand)}
-                onCheckedChange={() => setFilter('brand', brand)}
+                id={`brand-${brand._id as string}`}
+                checked={filters.brand.includes(brand.name)}
+                onCheckedChange={() => setFilter('brand', brand.name)}
                 className="h-5 w-5"
               />
-              <label htmlFor={`brand-${brand}`}>{brand}</label>
+              <label htmlFor={`brand-${brand._id as string}`}>{brand.name}</label>
             </div>
           ))}
         </div>
