@@ -41,7 +41,9 @@ export const columns: ColumnDef<IProduct>[] = [
   {
     accessorKey: "name",
     cell: ({ row }) => {
-      return <Link href={`/dashboard/product/${row.original._id}/edit`} passHref><Button variant={'link'}>{row.original.name}</Button></Link>
+      return (<Link href={`/dashboard/product/${row.original._id}/edit`} passHref>
+        <Button className="p-0" variant={'link'}>{row.original.name}</Button>
+      </Link>)
     },
     header: ({ column }) => {
       return (
