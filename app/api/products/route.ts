@@ -1,5 +1,6 @@
 import dbConnect from '@/lib/db';
 import Brand from '@/model/brandSchema';
+import Category from '@/model/categorySchema';
 import Product from '@/model/productSchema';
 import { NextResponse } from 'next/server';
 
@@ -40,7 +41,8 @@ export async function GET(request: Request) {
     }
 
     if (category) {
-      filter.category = { $in: category.split(',') };
+      const categories = await Category.find({ name: { $in: category.split(',') } })
+      filter.category = { $in: categories.map((cat) => cat._id) };
     }
 
     if (size) {

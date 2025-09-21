@@ -3,6 +3,7 @@
 Auto-generated from all feature plans. Last updated: 2025-09-21
 
 ## Active Technologies
+- mongodb, mongoose (013-add-a-dashboard)
 - zustand (008-add-option-to)
 - better-auth (006-i-want-you)
 - Next.js, React, TailwindCSS (001-landing-page-design)
@@ -26,9 +27,9 @@ lib/
 : Follow standard conventions
 
 ## Recent Changes
+- 013-add-a-dashboard: Add a dashboard/product/[id]/edit page.
 - 012-create-a-brands: Create a brands page.
 - 009-add-a-related: Add a related products component.
-- 008-add-option-to: Add option to select product variants。
 
 
 <!-- MANUAL ADDITIONS START -->

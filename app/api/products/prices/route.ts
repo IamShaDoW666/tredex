@@ -1,4 +1,6 @@
 import dbConnect from '@/lib/db';
+import Brand from '@/model/brandSchema';
+import Category from '@/model/categorySchema';
 import Product from '@/model/productSchema';
 import { NextResponse } from 'next/server';
 
@@ -28,11 +30,16 @@ export async function GET(request: Request) {
         { description: { $regex: search, $options: 'i' } },
       ];
     }
-    if (category) filter.category = { $in: category.split(',') };
+    if (category) {
+      const categories = await Category.find({ name: { $in: category.split(',') } })
+      filter.category = { $in: categories.map((cat) => cat._id) };
+    }
     if (size) filter.size = { $in: size.split(',') };
     if (color) filter.color = { $in: color.split(',') };
-    if (brand) filter.brand = { $in: brand.split(',') };
-
+    if (brand) {
+      const brands = await Brand.find({ name: { $in: brand.split(',') } })
+      filter.brand = { $in: brands.map((brand) => brand._id) };
+    }
     const result = await Product.aggregate([
       { $match: filter },
       {

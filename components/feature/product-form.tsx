@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { productSchema } from '@/zod/product-schema';
-import { createProduct } from '@/actions/product-actions';
+import { createProduct, updateProduct } from '@/actions/product-actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -23,10 +23,17 @@ import { Form, FormControl, FormField, FormItem } from '../ui/form';
 import { useRouter } from 'next/navigation';
 import { useCategories } from '@/hooks/use-categories';
 import { useBrands } from '@/hooks/use-brands';
+import { ICategory } from '@/model/categorySchema';
+import { IProduct } from '@/model/productSchema';
+import { IBrand } from '@/model/brandSchema';
 
 export type ProductFormValues = z.infer<typeof productSchema>;
 
-export function ProductForm() {
+interface ProductFormProps {
+  product?: IProduct;
+}
+
+export function ProductForm({ product }: ProductFormProps) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter()
   const { data: categories } = useCategories()
@@ -34,27 +41,38 @@ export function ProductForm() {
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues: {
-      name: "",
-      category: "",
-      productType: "",
-      brand: "",
-      price: 0,
-      description: "",
-      available: true,
-      is_new: false,
-      sex: 'Men',
-      sizes: ""
+      name: product?.name || "",
+      category: (product?.category as ICategory)?._id as string || "",
+      productType: product?.productType || "",
+      brand: (product?.brand as IBrand)?._id as string || "",
+      price: product?.price || 0,
+      discountPrice: product?.discountPrice || undefined,
+      description: product?.description || "",
+      available: product?.available ?? true,
+      is_new: product?.is_new ?? false,
+      sex: product?.sex || 'Men',
+      sizes: product?.sizes.join(',') || ""
     },
   });
 
   const onSubmit = (data: ProductFormValues) => {
     startTransition(async () => {
-      const result = await createProduct(data);
-      if (result.message.includes('successfully')) {
-        toast.success(result.message);
-        router.push("/dashboard/products")
+      if (product) {
+        const result = await updateProduct(product._id as string, data);
+        if (result.message.includes('successfully')) {
+          toast.success(result.message);
+          router.push("/dashboard/products")
+        } else {
+          toast.error(result.message);
+        }
       } else {
-        toast.error(result.message);
+        const result = await createProduct(data);
+        if (result.message.includes('successfully')) {
+          toast.success(result.message);
+          router.push("/dashboard/products")
+        } else {
+          toast.error(result.message);
+        }
       }
     });
   }
@@ -157,19 +175,23 @@ export function ProductForm() {
 
         <div className="flex items-center space-x-2">
           <FormField name="available" render={({ field }) => <FormItem>
-            <FormControl>
-              <Checkbox id="available" {...field} defaultChecked />
-            </FormControl>
-            <Label htmlFor="available">Available for sale</Label>
+            <div className='flex items-center gap-x-2'>
+              <FormControl>
+                <Checkbox id="available" {...field} checked={field.value} onCheckedChange={field.onChange} />
+              </FormControl>
+              <Label htmlFor="available">Available for sale</Label>
+            </div>
           </FormItem>} />
         </div>
 
         <div className="flex items-center space-x-2">
           <FormField name="is_new" render={({ field }) => <FormItem>
-            <FormControl>
-              <Checkbox id="is_new" {...field} />
-            </FormControl>
-            <Label htmlFor="is_new">New arrival</Label>
+            <div className='flex items-center gap-x-2'>
+              <FormControl>
+                <Checkbox id="is_new" {...field} checked={field.value} onCheckedChange={field.onChange} />
+              </FormControl>
+              <Label htmlFor="is_new">New arrival</Label>
+            </div>
           </FormItem>} />
         </div>
 
@@ -188,7 +210,7 @@ export function ProductForm() {
         </div>
 
         <Button type="submit" disabled={isPending}>
-          {isPending ? 'Creating...' : 'Create Product'}
+          {isPending ? (product ? 'Updating...' : 'Creating...') : (product ? 'Update Product' : 'Create Product')}
         </Button>
       </form>
     </Form>
