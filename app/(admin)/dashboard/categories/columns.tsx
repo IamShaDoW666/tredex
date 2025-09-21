@@ -2,6 +2,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import {
@@ -36,6 +37,9 @@ export const columns: ColumnDef<ICategory>[] = [
   },
   {
     accessorKey: "name",
+    cell: ({ row }) => {
+      return <Link href={`/dashboard/categories/edit/${row.original._id}`} passHref><Button className="p-0" variant={'link'}>{row.original.name}</Button></Link>
+    },
     header: ({ column }) => {
       return (
         <div
@@ -75,6 +79,11 @@ export const columns: ColumnDef<ICategory>[] = [
                 Copy ID
               </DropdownMenuItem>
               <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href={`/dashboard/categories/edit/${category._id}`}>
+                  Edit
+                </Link>
+              </DropdownMenuItem>
               <AlertDialogTrigger asChild>
                 <DropdownMenuItem>
                   <span>Delete</span>
