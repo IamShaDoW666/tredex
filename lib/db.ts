@@ -1,4 +1,8 @@
 import mongoose, { Mongoose } from 'mongoose';
+import './../model/brandSchema';
+import './../model/categorySchema';
+import './../model/productSchema';
+
 
 // Retrieve the MongoDB connection string from environment variables.
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/tredexdb"

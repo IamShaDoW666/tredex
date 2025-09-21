@@ -69,9 +69,8 @@ export async function GET(request: Request) {
       sortOrder[sort] = order === 'desc' ? -1 : 1;
     }
 
-    const products = await Product.find(filter).sort(sortOrder).skip(skip).limit(limit);
+    const products = await Product.find(filter).populate('brand').sort(sortOrder).skip(skip).limit(limit);
     const totalProducts = await Product.countDocuments(filter);
-
     return NextResponse.json({
       data: products,
       totalPages: Math.ceil(totalProducts / limit),
@@ -82,6 +81,7 @@ export async function GET(request: Request) {
     if (error instanceof Error) {
       errorMessage = error.message;
     }
+    console.log(error)
     return NextResponse.json({ error: { message: errorMessage } }, { status: 500 });
   }
 }

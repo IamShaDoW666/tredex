@@ -91,7 +91,7 @@ export async function getProductsWithCategories({
 
     const skip = (page - 1) * limit;
 
-    let productsQuery = Product.find(query).populate("category");
+    let productsQuery = Product.find(query).populate("category").populate("brand")
 
     // Apply sorting
     if (sort && order) {

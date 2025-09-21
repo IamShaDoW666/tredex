@@ -3,10 +3,11 @@ import React from 'react';
 import Image from 'next/image';
 import { Card, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { IProduct } from '@/lib/types';
 import { Separator } from '@/components/ui/separator';
 import { ShineBorder } from '@/components/magicui/shine-border';
 import { Badge } from '@/components/ui/badge';
+import { IProduct } from '@/model/productSchema';
+import { IBrand } from '@/model/brandSchema';
 
 interface ProductCardProps {
   product: IProduct;
@@ -35,7 +36,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
         <CardFooter className="flex flex-col items-start p-4 py-0 ">
           <h3 className="font-bold sm:text-lg truncate w-full">{product.name}</h3>
-          <p className="text-sm text-muted-foreground ">{product.productType}</p>
+          <div className='flex justify-between w-full'>
+            <p className="text-sm text-muted-foreground ">{product.productType}</p>
+            <Badge variant={'secondary'}>{(product.brand as IBrand).name}</Badge>
+          </div>
           <Separator className='my-2' />
           <div className="flex flex-col justify-between items-center w-full">
             <div className="flex items-center self-start gap-x-2">

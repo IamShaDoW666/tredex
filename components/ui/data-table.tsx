@@ -2,9 +2,12 @@
 
 import * as React from "react"
 import {
+  Column,
   ColumnDef,
   ColumnFiltersState,
+  RowData,
   SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -26,7 +29,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 import { useIsMobile } from "@/hooks/use-is-mobile"
-
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -40,8 +42,14 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({})
   const isMobile = useIsMobile();
-
+  React.useEffect(() => {
+    if (isMobile) {
+      //TODO: Hide columns for mobile
+    }
+  }, [isMobile])
   const table = useReactTable({
     data,
     columns,
@@ -50,10 +58,12 @@ export function DataTable<TData, TValue>({
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
       columnFilters,
+      columnVisibility
     },
   })
 
@@ -80,9 +90,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   )
                 })}

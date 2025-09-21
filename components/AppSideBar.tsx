@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Layers, LayoutDashboard } from "lucide-react"
+import { Badge, Footprints, Layers, LayoutDashboard } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/sidebar"
 import SignOutForm from "@/components/SignOutForm"
 import { usePathname } from "next/navigation"
-import { FaMoneyBill } from "react-icons/fa"
 
 export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
@@ -49,10 +48,20 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
+            <SidebarMenuButton isActive={isActive("dashboard/brands")} size="lg">
+              <Link href="/dashboard/brands" className={`flex items-center gap-3`}>
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                  <Badge />
+                </div>
+                <span className={`text-sm font-medium`}>Brands</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
             <SidebarMenuButton isActive={isActive("dashboard/products")} size="lg">
               <Link href="/dashboard/products" className={`flex items-center gap-3`}>
                 <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-                  <Layers />
+                  <Footprints />
                 </div>
                 <span className={`text-sm font-medium`}>Products</span>
               </Link>

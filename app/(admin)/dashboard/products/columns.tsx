@@ -28,6 +28,7 @@ import { ICategory } from "@/model/categorySchema"
 import { deleteProductById } from "@/actions/product-actions"
 import { toast } from "sonner"
 import { useQueryClient } from "@tanstack/react-query"
+import { IBrand } from "@/model/brandSchema"
 
 export const columns: ColumnDef<IProduct>[] = [
   {
@@ -64,6 +65,24 @@ export const columns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const category = row.original.category;
       return <p>{typeof category === 'object' && category !== null ? (category as ICategory).name : '-'}</p>
+    }
+  },
+  {
+    accessorKey: "brand",
+    header: (({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Brand
+        </Button>
+      )
+    }),
+    cell: ({ row }) => {
+      const brand = row.original.brand as IBrand;
+      return <p>{typeof brand === 'object' && brand !== null ? (brand as IBrand).name : '-'}</p>
     }
   },
   {

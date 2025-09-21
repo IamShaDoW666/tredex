@@ -1,11 +1,13 @@
 import mongoose, { Schema, model, Document, Types } from 'mongoose';
 import { ICategory } from './categorySchema';
+import { IBrand } from './brandSchema';
 
 export interface IProduct extends Document {
   name: string;
   images: string[];
   price: number;
   discountPrice?: number;
+  brand: Types.ObjectId | IBrand
   sizes: string[];
   category: Types.ObjectId | ICategory // Can be category ID or populated category object
   available: boolean;
@@ -57,6 +59,7 @@ const productSchema = new Schema<IProduct>({
     default: "Men",
   },
   category: { type: Schema.Types.ObjectId, ref: 'Category' },
+  brand: { type: Schema.Types.ObjectId, ref: 'Brand' },
   productType: { type: String },
 }, {
   timestamps: true,
