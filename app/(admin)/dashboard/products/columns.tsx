@@ -27,6 +27,7 @@ import { ICategory } from "@/model/categorySchema"
 import { IProduct } from "@/model/productSchema"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import Link from "next/link"
 import { toast } from "sonner"
 
 export const columns: ColumnDef<IProduct>[] = [
@@ -39,6 +40,9 @@ export const columns: ColumnDef<IProduct>[] = [
   },
   {
     accessorKey: "name",
+    cell: ({ row }) => {
+      return <Link href={`/dashboard/product/${row.original._id}/edit`} passHref><Button variant={'link'}>{row.original.name}</Button></Link>
+    },
     header: ({ column }) => {
       return (
         <div

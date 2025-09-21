@@ -28,8 +28,8 @@ export function Filter() {
             <div key={category._id as string} className="flex items-center space-x-2">
               <Checkbox
                 id={`category-${category._id as string}`}
-                checked={filters.category.includes(category._id as string)}
-                onCheckedChange={() => setFilter('category', category._id as string)}
+                checked={filters.category.includes(category.name)}
+                onCheckedChange={() => setFilter('category', category.name)}
                 className="h-5 w-5"
               />
               <label htmlFor={`category-${category._id as string}`}>{category.name}</label>

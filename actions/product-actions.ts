@@ -8,7 +8,7 @@ import { ProductFormValues } from '@/components/feature/product-form';
 export async function getProductById(id: string) {
   try {
     await dbConnect();
-    const product = await Product.findById(id).populate('category');
+    const product = await Product.findById(id).populate('category').populate('brand');
     return {
       status: true,
       data: JSON.parse(JSON.stringify(product)),
@@ -154,6 +154,48 @@ export async function createProduct(formData: ProductFormValues) {
     console.log(error)
     return {
       message: 'Database Error: Failed to Create Product.',
+    };
+  }
+}
+
+export async function updateProduct(id: string, formData: ProductFormValues) {
+  const validatedFields = productSchema.safeParse(formData);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Update Product.',
+    };
+  }
+
+  const { sizes, ...productData } = validatedFields.data;
+
+  try {
+    await dbConnect();
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      {
+        ...productData,
+        sizes: sizes ? sizes.split(',').map((s) => s.trim()).filter(Boolean) : [],
+        // TODO: Implement proper image upload logic. For now, images are not saved.
+        images: [],
+      },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedProduct) {
+      return { message: 'Product not found.' };
+    }
+
+    revalidatePath('/admin/products');
+    revalidatePath(`/admin/product/${id}/edit`);
+
+    return { message: 'Product updated successfully.' };
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Database Error: Failed to Update Product.',
     };
   }
 }
