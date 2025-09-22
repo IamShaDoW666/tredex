@@ -80,7 +80,7 @@ export async function GET(request: Request) {
       sortOrder[sort] = order === 'desc' ? -1 : 1;
     }
 
-    const products = await Product.find(filter).populate('brand').sort(sortOrder).skip(skip).limit(limit);
+    const products = await Product.find({ ...filter, available: true }).populate('brand').sort(sortOrder).skip(skip).limit(limit);
     const totalProducts = await Product.countDocuments(filter);
     return NextResponse.json({
       data: products,
