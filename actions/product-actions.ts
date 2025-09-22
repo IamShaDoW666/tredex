@@ -5,6 +5,7 @@ import dbConnect from '@/lib/db';
 import Product from '@/model/productSchema';
 import { revalidatePath } from 'next/cache';
 import { ProductFormValues } from '@/components/feature/product-form';
+import { file } from 'zod';
 export async function getProductById(id: string) {
   try {
     await dbConnect();
@@ -138,14 +139,13 @@ export async function createProduct(formData: ProductFormValues) {
 
   try {
     await dbConnect();
-
     const newProduct = new Product({
       ...productData,
       sizes: sizes ? sizes.split(',').map((s) => s.trim()).filter(Boolean) : [],
-      // TODO: Implement proper image upload logic. For now, images are not saved.
-      images: [],
+      images: productData.images || [],
     });
-    await newProduct.save();
+
+    // await newProduct.save();
 
     revalidatePath('/admin/products');
 
@@ -178,8 +178,7 @@ export async function updateProduct(id: string, formData: ProductFormValues) {
       {
         ...productData,
         sizes: sizes ? sizes.split(',').map((s) => s.trim()).filter(Boolean) : [],
-        // TODO: Implement proper image upload logic. For now, images are not saved.
-        images: [],
+        images: productData.images || [],
       },
       { new: true } // Return the updated document
     );

@@ -9,13 +9,13 @@ import {
 import { getProductById } from "@/actions/product-actions";
 
 interface ProductEditPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function ProductEditPage({ params }: ProductEditPageProps) {
-  const productId = params.id;
+  const productId = (await params).id;
   const { data: product, error } = await getProductById(productId);
   console.log(product)
   if (error) {

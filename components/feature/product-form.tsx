@@ -26,8 +26,11 @@ import { useBrands } from '@/hooks/use-brands';
 import { ICategory } from '@/model/categorySchema';
 import { IProduct } from '@/model/productSchema';
 import { IBrand } from '@/model/brandSchema';
+import Image from 'next/image';
+import { X } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
 
-export type ProductFormValues = z.infer<typeof productSchema>;
+export type ProductFormValues = z.infer<typeof productSchema>
 
 interface ProductFormProps {
   product?: IProduct;
@@ -35,9 +38,26 @@ interface ProductFormProps {
 
 export function ProductForm({ product }: ProductFormProps) {
   const [isPending, startTransition] = useTransition();
-  const router = useRouter()
-  const { data: categories } = useCategories()
-  const { data: brands } = useBrands()
+  const router = useRouter();
+  const { data: categories } = useCategories();
+  const { data: brands } = useBrands();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [imagePreviews, setImagePreviews] = useState<{ url: string, file?: File, existing?: string }[]>([]);
+
+  useEffect(() => {
+    if (product?.images && product.images.length > 0) {
+      setImagePreviews(product.images.map(url => ({ url, existing: url })));
+    }
+
+    return () => {
+      imagePreviews.forEach(preview => {
+        if (preview.file) {
+          URL.revokeObjectURL(preview.url);
+        }
+      });
+    };
+  }, [product?.images]);
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -51,14 +71,72 @@ export function ProductForm({ product }: ProductFormProps) {
       available: product?.available ?? true,
       is_new: product?.is_new ?? false,
       sex: product?.sex || 'Men',
-      sizes: product?.sizes.join(',') || ""
+      sizes: product?.sizes.join(',') || "",
+      images: product?.images || []
     },
   });
 
+  const handleRemoveImage = (index: number) => {
+    const imageToRemove = imagePreviews[index];
+
+    // Revoke object URL if it's a newly added file
+    if (imageToRemove.file) {
+      URL.revokeObjectURL(imageToRemove.url);
+    }
+
+    // Update image previews state
+    const newImagePreviews = imagePreviews.filter((_, i) => i !== index);
+    setImagePreviews(newImagePreviews);
+
+    // Update form images array
+    const currentFormImages = form.getValues('images');
+    const newFormImages = currentFormImages?.filter((_, i) => i !== index);
+    form.setValue('images', newFormImages);
+
+    // If the removed image was the last one, clear the file input
+    if (newImagePreviews.length === 0 && fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }
+
   const onSubmit = (data: ProductFormValues) => {
     startTransition(async () => {
+      const existingImageUrls = data.images?.filter((image): image is string => typeof image === 'string');
+      const imageFiles = data.images?.filter((image): image is File => image instanceof File);
+
+      let newImageUrls: string[] = [];
+      if (imageFiles?.length! > 0) {
+        const formData = new FormData();
+        imageFiles?.forEach(file => formData.append('images', file));
+
+        try {
+          const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!response.ok) {
+            throw new Error('Image upload failed.');
+          }
+
+          const result = await response.json();
+          newImageUrls = result.urls;
+        } catch (error) {
+          toast.error('Failed to upload images.');
+          console.error('Image upload error:', error);
+          return; // Stop submission if upload fails
+        }
+      }
+
+      const finalImageUrls = [...existingImageUrls!, ...newImageUrls];
+
+      const productData = {
+        ...data,
+        images: finalImageUrls,
+      };
+
       if (product) {
-        const result = await updateProduct(product._id as string, data);
+        const result = await updateProduct(product._id as string, productData);
         if (result.message.includes('successfully')) {
           toast.success(result.message);
           router.push("/dashboard/products")
@@ -66,7 +144,7 @@ export function ProductForm({ product }: ProductFormProps) {
           toast.error(result.message);
         }
       } else {
-        const result = await createProduct(data);
+        const result = await createProduct(productData);
         if (result.message.includes('successfully')) {
           toast.success(result.message);
           router.push("/dashboard/products")
@@ -199,16 +277,58 @@ export function ProductForm({ product }: ProductFormProps) {
           <FormField name="images" render={({ field }) => <FormItem>
             <Label htmlFor="images">Images</Label>
             <FormControl>
-              <Input id="images" type="file" multiple onChange={async (e) => {
-                field.onChange(Array.from(e.target.files!))
-              }} />
+              <Input
+                id="images"
+                type="file"
+                multiple
+                ref={fileInputRef}
+                onChange={(e) => {
+                  const files = Array.from(e.target.files!);
+                  const newImagePreviews = files.map(file => ({
+                    url: URL.createObjectURL(file),
+                    file,
+                  }));
+                  setImagePreviews(prev => [...prev, ...newImagePreviews]);
+                  field.onChange([...field.value, ...files]);
+                }}
+              />
             </FormControl>
             <p className="text-sm text-muted-foreground">
               For demonstration, image compression is done in the browser. In a real app, you would upload to a storage service.
             </p>
+            {imagePreviews.length > 0 && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setImagePreviews([]);
+                  form.setValue('images', []);
+                  if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                  }
+                }}
+              >
+                Clear All Images
+              </Button>
+            )}
           </FormItem>} />
         </div>
-
+        <div className='grid grid-cols-2 md:grid-cols-3 p-8'>
+          {imagePreviews.map((preview, index) => (
+            <div key={index} className='w-64 h-64 relative object-cover group'>
+              <Image src={preview.url} fill alt={`image-preview-${index}`} className='object-cover' />
+              <Button
+                type="button"
+                variant="destructive"
+                size="icon"
+                className='absolute top-2 right-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity'
+                onClick={() => handleRemoveImage(index)}
+              >
+                <X className='h-4 w-4' />
+              </Button>
+            </div>
+          ))}
+        </div>
         <Button type="submit" disabled={isPending}>
           {isPending ? (product ? 'Updating...' : 'Creating...') : (product ? 'Update Product' : 'Create Product')}
         </Button>
