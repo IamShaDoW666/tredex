@@ -24,7 +24,6 @@ export function WhatsappOrderModal({
   children,
   productId,
   onOrderSubmit,
-  isDisabled
 }: WhatsappOrderModalProps) {
   const [isOpen, setIsOpen] = useState(false);
 

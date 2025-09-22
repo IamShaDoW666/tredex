@@ -40,7 +40,7 @@ const AddToCartButton = ({ sizes, product }: AddToCartButtonProps) => {
       console.log('Order created:', createdOrder);
 
       // Construct WhatsApp message
-      const whatsappMessage = `Hello, I want to order this item.\n\nProduct: ${product?.name}\nSize: ${orderData.extraDetails}\nColor: ${orderData.extraDetails}\nQuantity: 1\nPrice: ₹${product.price}\n\nMy Name: ${orderData.name}\nAddress: ${orderData.address}\nPhone: ${orderData.phone}`;
+      const whatsappMessage = `Hello, I want to order this item.\n\nProduct: ${product?.name}\nSize: ${selectedSize}\nQuantity: 1\nPrice: ₹${product.price}\n\nMy Name: ${orderData.name}\nAddress: ${orderData.address}\nPhone: ${orderData.phone} \n\nAdditional Info: ${orderData.extraDetails}`;
       const encodedMessage = encodeURIComponent(whatsappMessage);
       const whatsappUrl = `https://wa.me/917902708908?text=${encodedMessage}`;
 

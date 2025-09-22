@@ -5,7 +5,6 @@ import dbConnect from '@/lib/db';
 import Product from '@/model/productSchema';
 import { revalidatePath } from 'next/cache';
 import { ProductFormValues } from '@/components/feature/product-form';
-import { file } from 'zod';
 export async function getProductById(id: string) {
   try {
     await dbConnect();
@@ -145,7 +144,7 @@ export async function createProduct(formData: ProductFormValues) {
       images: productData.images || [],
     });
 
-    // await newProduct.save();
+    await newProduct.save();
 
     revalidatePath('/admin/products');
 

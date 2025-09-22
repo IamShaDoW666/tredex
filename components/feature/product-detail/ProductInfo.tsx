@@ -8,12 +8,12 @@ interface ProductInfoProps {
   product: IProduct
 }
 
-const ProductInfo: React.FC<ProductInfoProps> = ({ name, price, description }) => {
+const ProductInfo: React.FC<ProductInfoProps> = ({ name, price, description, product }) => {
   return (
     <div className="space-y-4">
       <h1 className="text-3xl font-bold">{name}</h1>
       <div className='flex gap-x-4'>
-        <p className="text-2xl text-muted-foreground line-through font-semibold">₹ 4000</p>
+        {product.discountPrice! > 0 && <p className="text-2xl text-muted-foreground line-through font-semibold">₹ {product.discountPrice}</p>}
         <p className="text-2xl font-semibold">₹ {price}</p>
       </div>
       <p className="text-muted-foreground">{description}</p>

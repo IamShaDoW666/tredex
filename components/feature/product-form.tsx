@@ -57,7 +57,7 @@ export function ProductForm({ product }: ProductFormProps) {
         }
       });
     };
-  }, [product?.images]);
+  }, [product?.images, imagePreviews]);
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -99,12 +99,31 @@ export function ProductForm({ product }: ProductFormProps) {
     }
   }
 
+  const handleSetPrimaryImage = (index: number) => {
+    if (index === 0) return;
+
+    setImagePreviews(previews => {
+      const newPreviews = [...previews];
+      const [item] = newPreviews.splice(index, 1);
+      newPreviews.unshift(item);
+      return newPreviews;
+    });
+
+    const currentImages = form.getValues('images') || [];
+    const newImages = [...currentImages];
+    const [imageFile] = newImages.splice(index, 1);
+    newImages.unshift(imageFile);
+    form.setValue('images', newImages, { shouldDirty: true });
+    toast.success("Primary image set");
+  }
+
   const onSubmit = (data: ProductFormValues) => {
     startTransition(async () => {
       const existingImageUrls = data.images?.filter((image): image is string => typeof image === 'string');
       const imageFiles = data.images?.filter((image): image is File => image instanceof File);
 
       let newImageUrls: string[] = [];
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       if (imageFiles?.length! > 0) {
         const formData = new FormData();
         imageFiles?.forEach(file => formData.append('images', file));
@@ -313,15 +332,34 @@ export function ProductForm({ product }: ProductFormProps) {
             )}
           </FormItem>} />
         </div>
-        <div className='grid grid-cols-2 md:grid-cols-3 p-8'>
+        <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
           {imagePreviews.map((preview, index) => (
-            <div key={index} className='w-64 h-64 relative object-cover group'>
-              <Image src={preview.url} fill alt={`image-preview-${index}`} className='object-cover' />
+            <div
+              key={preview.url}
+              className='relative w-[25vh] h-[25vh] group border rounded-md mx-auto'
+            >
+              <Image src={preview.url} fill alt={`image-preview-${index}`} className='object-cover rounded-md' />
+              <div className='absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-md flex items-center justify-center'>
+                {index > 0 && (
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={() => handleSetPrimaryImage(index)}
+                  >
+                    Set as Primary
+                  </Button>
+                )}
+              </div>
+              {index === 0 && (
+                <div className='absolute top-1 left-1 bg-primary text-primary-foreground text-xs font-semibold px-2 py-1 rounded'>
+                  Primary
+                </div>
+              )}
               <Button
                 type="button"
                 variant="destructive"
                 size="icon"
-                className='absolute top-2 right-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity'
+                className='absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity'
                 onClick={() => handleRemoveImage(index)}
               >
                 <X className='h-4 w-4' />
