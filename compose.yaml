@@ -11,6 +11,8 @@ services:
       - mongodb
     networks:
       - tredex-network
+    volumes:
+      - ./public/uploads:/app/public/uploads
   mongodb:
     image: docker.io/library/mongo:latest
     ports:
