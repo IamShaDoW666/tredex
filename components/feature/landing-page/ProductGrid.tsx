@@ -16,14 +16,17 @@ import { Button } from '@/components/ui/button';
 import { useProductPrices } from '@/hooks/use-product-prices';
 import { useFilterStore } from '@/hooks/use-filter-store';
 import { FilterBadges } from './FilterBadges';
-
-const ProductGrid: React.FC = () => {
+interface ProductGridProps {
+  title?: string
+}
+const ProductGrid: React.FC<ProductGridProps> = ({ title = "Collection" }) => {
   const searchParams = useSearchParams();
   const limit = parseInt(searchParams.get('limit') || '20', 10);
   const search = searchParams.get('search') || '';
   const sort = searchParams.get('sort') || '';
   const order = searchParams.get('order') || '';
   const category = searchParams.get('category') || '';
+  const sex = searchParams.get('sex') || '';
   const size = searchParams.get('size') || '';
   const color = searchParams.get('color') || '';
   const brand = searchParams.get('brand') || '';
@@ -42,11 +45,10 @@ const ProductGrid: React.FC = () => {
     isFetchingNextPage,
     isLoading,
     status,
-  } = useProducts(limit, search, sort, order, category, size, color, brand, minPrice, maxPrice);
+  } = useProducts(limit, search, sort, order, category, size, sex, color, brand, minPrice, maxPrice);
 
   const { data: prices } = useProductPrices(search, category, size, color, brand);
-  const { setPriceBounds, setOpen, toUrlParams } = useFilterStore();
-
+  const { setPriceBounds, setOpen, toUrlParams, filters } = useFilterStore();
   useEffect(() => {
     if (prices) {
       setPriceBounds({ min: prices.minPrice, max: prices.maxPrice });
@@ -60,6 +62,16 @@ const ProductGrid: React.FC = () => {
       fetchNextPage();
     }
   }, [inView, hasNextPage, fetchNextPage]);
+
+  const getTitle = () => {
+    if (filters.sex.includes("Men")) {
+      return "Shop Men"
+    } else if (filters.sex.includes("Women")) {
+      return "Shop Women"
+    } else {
+      return title
+    }
+  }
 
   const renderFilters = () => (
     <div className="space-y-8">
@@ -83,7 +95,7 @@ const ProductGrid: React.FC = () => {
   const hasFilters = searchParams.size > 0;
   return (
     <section className="py-12 px-4">
-      <h2 className="text-3xl font-bold text-center mb-8">Featured Products</h2>
+      <h2 className="text-3xl font-bold text-center mb-8">{getTitle()}</h2>
       <div className="grid grid-cols-12 gap-8">
         {!isMobile && (
           <div className="col-span-3 hidden md:block">

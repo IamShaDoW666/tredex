@@ -37,6 +37,7 @@ const ProductDetailClient = ({ id }: { id: string }) => {
     }
   }, [isLoading, product]);
 
+
   if (isLoading) {
     return <ProductDetailSkeleton />;
   }
@@ -67,7 +68,7 @@ const ProductDetailClient = ({ id }: { id: string }) => {
         <div className="space-y-8 product-info">
           <ProductInfo product={product} name={product.name} price={product.price} description={product.description || ''} />
           <ProductSizeSelector sizes={product.sizes} />
-          <AddToCartButton sizes={product.sizes} />
+          <AddToCartButton product={product} sizes={product.sizes} />
         </div>
       </div>
       <RelatedProducts currentProductId={id} />
@@ -75,4 +76,4 @@ const ProductDetailClient = ({ id }: { id: string }) => {
   );
 };
 
-export default ProductDetailClient
+export default ProductDetailClient;

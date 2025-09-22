@@ -6,7 +6,7 @@ const LandingPage = () => {
     <div>
       <Hero />
       <Suspense fallback={<div>Loading...</div>}>
-        <ProductGrid />
+        <ProductGrid title='Featured Products' />
       </Suspense>
     </div>
   );

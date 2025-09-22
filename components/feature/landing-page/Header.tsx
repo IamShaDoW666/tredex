@@ -19,7 +19,7 @@ const Header = () => {
         {/* Desktop navigation - hidden on mobile */}
         <nav className="hidden md:flex items-center gap-2"> {/* Added hidden md:flex */}
           <Link href="/" passHref>
-            <Button variant="ghost" className="text-foreground hover:bg-accent hover:text-foreground underline">
+            <Button variant="ghost" className="text-foreground hover:bg-accent hover:text-foreground">
               Home
             </Button>
           </Link>
@@ -28,12 +28,12 @@ const Header = () => {
               Collection
             </Button>
           </Link>
-          <Link href="/men" passHref>
+          <Link href="/collection?sex=Men" passHref>
             <Button variant="ghost" className="text-foreground hover:bg-accent hover:text-foreground">
               Men
             </Button>
           </Link>
-          <Link href="/women" passHref>
+          <Link href="/collection?sex=Women" passHref>
             <Button variant="ghost" className="text-foreground hover:bg-accent hover:text-foreground">
               Women
             </Button>

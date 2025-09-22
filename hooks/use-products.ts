@@ -3,7 +3,7 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 
 const fetchProducts = async ({ pageParam = 1, queryKey: fullQueryKey }: { pageParam?: number, queryKey: (string | number)[] }): Promise<{ data: IProduct[], nextPage: number | null }> => {
   try {
-    const [, limit, search, sort, order, category, size, color, brand, minPrice, maxPrice] = fullQueryKey;
+    const [, limit, search, sort, order, category, size, sex, color, brand, minPrice, maxPrice] = fullQueryKey;
     const params = new URLSearchParams({
       page: pageParam.toString(),
       limit: (limit as number).toString(),
@@ -12,6 +12,7 @@ const fetchProducts = async ({ pageParam = 1, queryKey: fullQueryKey }: { pagePa
       order: order as string,
       category: category as string,
       size: size as string,
+      sex: sex as string,
       color: color as string,
       brand: brand as string,
       minPrice: minPrice as string,
@@ -78,9 +79,9 @@ const deleteProduct = async (id: string) => {
   return response.json();
 };
 
-export const useProducts = (limit: number, search: string, sort: string, order: string, category: string, size: string, color: string, brand: string, minPrice: string, maxPrice: string) =>
+export const useProducts = (limit: number, search: string, sort: string, order: string, category: string, size: string, sex: string, color: string, brand: string, minPrice: string, maxPrice: string) =>
   useInfiniteQuery({
-    queryKey: ['products', limit, search, sort, order, category, size, color, brand, minPrice, maxPrice],
+    queryKey: ['products', limit, search, sort, order, category, size, sex, color, brand, minPrice, maxPrice],
     queryFn: fetchProducts,
     getNextPageParam: (lastPage) => lastPage?.nextPage,
     initialPageParam: 1,

@@ -17,6 +17,7 @@ export async function GET(request: Request) {
     const order = searchParams.get('order');
     const category = searchParams.get('category');
     const size = searchParams.get('size');
+    const sex = searchParams.get('sex');
     const color = searchParams.get('color');
     const brand = searchParams.get('brand');
     const minPrice = searchParams.get('minPrice');
@@ -25,7 +26,8 @@ export async function GET(request: Request) {
     interface ProductFilter {
       $or?: Array<{ name?: { $regex: string; $options: string }; description?: { $regex: string; $options: string } }>;
       category?: { $in: string[] };
-      size?: { $in: string[] };
+      sizes?: { $in: string[] };
+      sex?: { $in: string[] };
       color?: { $in: string[] };
       brand?: { $in: string[] };
       price?: { $gte?: number; $lte?: number };
@@ -46,7 +48,12 @@ export async function GET(request: Request) {
     }
 
     if (size) {
-      filter.size = { $in: size.split(',') };
+      filter.sizes = { $in: size.split(',') };
+    }
+
+
+    if (sex) {
+      filter.sex = { $in: sex.split(',') };
     }
 
     if (color) {
@@ -73,7 +80,7 @@ export async function GET(request: Request) {
       sortOrder[sort] = order === 'desc' ? -1 : 1;
     }
 
-    const products = await Product.find(filter).populate('brand').sort(sortOrder).skip(skip).limit(limit);
+    const products = await Product.find({ ...filter, available: true }).populate('brand').sort(sortOrder).skip(skip).limit(limit);
     const totalProducts = await Product.countDocuments(filter);
     return NextResponse.json({
       data: products,
