@@ -57,7 +57,8 @@ export function ProductForm({ product }: ProductFormProps) {
         }
       });
     };
-  }, [product?.images, imagePreviews]);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product?.images]);
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues: {
