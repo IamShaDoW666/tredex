@@ -28,12 +28,12 @@ const Header = () => {
               Collection
             </Button>
           </Link>
-          <Link href="/men" passHref>
+          <Link href="/collection?sex=Men" passHref>
             <Button variant="ghost" className="text-foreground hover:bg-accent hover:text-foreground">
               Men
             </Button>
           </Link>
-          <Link href="/women" passHref>
+          <Link href="/collection?sex=Women" passHref>
             <Button variant="ghost" className="text-foreground hover:bg-accent hover:text-foreground">
               Women
             </Button>

@@ -5,6 +5,7 @@ type Filters = {
   size: string[];
   color: string[];
   brand: string[];
+  sex: string[];
   minPrice: number | null;
   maxPrice: number | null;
 };
@@ -19,8 +20,8 @@ type FilterStore = {
   priceBounds: PriceBounds;
   open: boolean;
   setOpen: (open: boolean) => void;
-  setFilter: (type: 'category' | 'size' | 'color' | 'brand', value: string) => void;
-  removeFilter: (type: 'category' | 'size' | 'color' | 'brand', value: string) => void;
+  setFilter: (type: 'category' | 'size' | 'color' | 'brand' | 'sex', value: string) => void;
+  removeFilter: (type: 'category' | 'size' | 'color' | 'brand' | 'sex', value: string) => void;
   resetPriceFilter: () => void;
   setPriceRange: (range: [number, number]) => void;
   setPriceBounds: (bounds: PriceBounds) => void;
@@ -34,6 +35,7 @@ const initialFilters: Filters = {
   size: [],
   color: [],
   brand: [],
+  sex: [],
   minPrice: null,
   maxPrice: null,
 };
@@ -101,6 +103,7 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
     const category = params.get('category')?.split(',') || [];
     const size = params.get('size')?.split(',') || [];
     const color = params.get('color')?.split(',') || [];
+    const sex = params.get('sex')?.split(',') || [];
     const brand = params.get('brand')?.split(',') || [];
     const minPrice = params.has('minPrice') ? Number(params.get('minPrice')) : null;
     const maxPrice = params.has('maxPrice') ? Number(params.get('maxPrice')) : null;
@@ -109,6 +112,7 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
       filters: {
         category,
         size,
+        sex,
         color,
         brand,
         minPrice,
@@ -122,7 +126,7 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
     const params = new URLSearchParams();
 
     Object.entries(filters).forEach(([key, value]) => {
-      if (key === 'category' || key === 'size' || key === 'color' || key === 'brand') {
+      if (key === 'category' || key === 'size' || key === 'color' || key === 'brand' || key === 'sex') {
         if (Array.isArray(value) && value.length > 0) {
           params.set(key, value.join(','));
         }

@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect } from 'react';
 
 const sizes = ["7", "8", "9", "10", "11"];
+const sex = ["Men", "Women", "Unisex"];
 
 export function Filter() {
   const searchParams = useSearchParams();
@@ -47,6 +48,20 @@ export function Filter() {
                 className="h-5 w-5"
               />
               <label htmlFor={`size-${size}`}>{size}</label>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h3 className="font-semibold mb-2">Gender</h3>
+          {sex.map((s) => (
+            <div key={s} className="flex items-center space-x-2">
+              <Checkbox
+                id={`sex-${s}`}
+                checked={filters.sex.includes(s)}
+                onCheckedChange={() => setFilter('sex', s)}
+                className="h-5 w-5"
+              />
+              <label htmlFor={`sex-${s}`}>{s}</label>
             </div>
           ))}
         </div>
