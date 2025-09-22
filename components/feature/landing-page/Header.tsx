@@ -19,7 +19,7 @@ const Header = () => {
         {/* Desktop navigation - hidden on mobile */}
         <nav className="hidden md:flex items-center gap-2"> {/* Added hidden md:flex */}
           <Link href="/" passHref>
-            <Button variant="ghost" className="text-foreground hover:bg-accent hover:text-foreground underline">
+            <Button variant="ghost" className="text-foreground hover:bg-accent hover:text-foreground">
               Home
             </Button>
           </Link>
