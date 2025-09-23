@@ -24,7 +24,7 @@ export async function POST(request: Request) {
       const filePath = path.join(uploadDir, filename);
 
       await writeFile(filePath, buffer);
-      uploadedImageUrls.push(`/uploads/${filename}`);
+      uploadedImageUrls.push(`${process.env.NEXT_PUBLIC_APP_URL}/uploads/${filename}`);
     }
 
     return NextResponse.json({ urls: uploadedImageUrls }, { status: 200 });
