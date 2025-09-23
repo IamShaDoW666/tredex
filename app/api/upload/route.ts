@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { writeFile } from 'fs/promises';
 import path from 'path';
+import sharp from 'sharp';
 
 export async function POST(request: Request) {
   try {
@@ -20,11 +21,32 @@ export async function POST(request: Request) {
 
     for (const file of files) {
       const buffer = Buffer.from(await file.arrayBuffer());
-      const filename = `${Date.now()}-${file.name}`;
-      const filePath = path.join(uploadDir, filename);
+      let processedBuffer: Buffer;
+      let newFilename: string;
 
-      await writeFile(filePath, buffer);
-      uploadedImageUrls.push(`${process.env.NEXT_PUBLIC_APP_URL}/uploads/${filename}`);
+      try {
+        // Use sharp to process and compress the image
+        processedBuffer = await sharp(buffer)
+          .resize({ width: 900 }) // Optional: resize image to a max width of 800px
+          .jpeg({ quality: 80 }) // Compress to JPEG with 80% quality
+          .toBuffer();
+
+        // Generate a new filename with .jpeg extension
+        const originalExt = path.extname(file.name);
+        const baseName = path.basename(file.name, originalExt);
+        newFilename = `${Date.now()}-${baseName}.jpeg`;
+
+      } catch (sharpError) {
+        console.error(`Sharp image processing error for file ${file.name}:`, sharpError);
+        // If sharp fails, fall back to original buffer and filename
+        processedBuffer = buffer;
+        newFilename = `${Date.now()}-${file.name}`;
+      }
+
+      const filePath = path.join(uploadDir, newFilename);
+
+      await writeFile(filePath, processedBuffer);
+      uploadedImageUrls.push(`${process.env.NEXT_PUBLIC_APP_URL}/uploads/${newFilename}`);
     }
 
     return NextResponse.json({ urls: uploadedImageUrls }, { status: 200 });
