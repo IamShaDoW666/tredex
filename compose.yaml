@@ -13,8 +13,6 @@ services:
       - ./public/uploads:/app/public/uploads
   mongodb:
     image: docker.io/library/mongo:latest
-    ports:
-      - "27017:27017"
     volumes:
       - mongodb_data:/data/db
     networks:
