@@ -23,9 +23,9 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-lg mb-4">Shop</h4>
             <ul className="space-y-2 text-muted-foreground text-sm">
-              <li><Link href="#" className="hover:text-primary transition-colors">New Arrivals</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Men</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Women</Link></li>
+              <li><Link href="/collection" className="hover:text-primary transition-colors">New Arrivals</Link></li>
+              <li><Link href="/collection?sex=Men" className="hover:text-primary transition-colors">Men</Link></li>
+              <li><Link href="/collection?sex=Women" className="hover:text-primary transition-colors">Women</Link></li>
             </ul>
           </div>
 
@@ -34,8 +34,7 @@ const Footer = () => {
             <h4 className="font-semibold text-lg mb-4">Support</h4>
             <ul className="space-y-2 text-muted-foreground text-sm">
               <li><Link href="#" className="hover:text-primary transition-colors">Contact Us</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">FAQ</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Shipping & Returns</Link></li>
+              {/* <li><Link href="#" className="hover:text-primary transition-colors">Shipping & Returns</Link></li> */}
             </ul>
           </div>
 

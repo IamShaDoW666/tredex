@@ -168,7 +168,6 @@ export async function updateProduct(id: string, formData: ProductFormValues) {
   }
 
   const { sizes, ...productData } = validatedFields.data;
-
   try {
     await dbConnect();
 

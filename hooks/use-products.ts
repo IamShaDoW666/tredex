@@ -79,6 +79,23 @@ const deleteProduct = async (id: string) => {
   return response.json();
 };
 
+export const useProductsPlain = () =>
+  useQuery({
+    queryKey: ['productsplain'],
+    queryFn: async () => {
+      try {
+        const response = await fetch(`/api/products?showInSlider=true&limit=15`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        return result.data
+      } catch {
+        console.log("error in queryFunction")
+      }
+    },
+  });
+
 export const useProducts = (limit: number, search: string, sort: string, order: string, category: string, size: string, sex: string, color: string, brand: string, minPrice: string, maxPrice: string) =>
   useInfiniteQuery({
     queryKey: ['products', limit, search, sort, order, category, size, sex, color, brand, minPrice, maxPrice],

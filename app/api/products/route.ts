@@ -14,6 +14,7 @@ export async function GET(request: Request) {
 
     const search = searchParams.get('search');
     const sort = searchParams.get('sort');
+    const showInSlider = searchParams.get('showInSlider');
     const order = searchParams.get('order');
     const category = searchParams.get('category');
     const size = searchParams.get('size');
@@ -51,9 +52,8 @@ export async function GET(request: Request) {
       filter.sizes = { $in: size.split(',') };
     }
 
-
     if (sex) {
-      filter.sex = { $in: sex.split(',') };
+      filter.sex = { $in: [...sex.split(','), "Unisex"] };
     }
 
     if (color) {
@@ -80,7 +80,7 @@ export async function GET(request: Request) {
       sortOrder[sort] = order === 'desc' ? -1 : 1;
     }
 
-    const products = await Product.find({ ...filter, available: true }).populate('brand').sort(sortOrder).skip(skip).limit(limit);
+    const products = await Product.find({ ...filter, available: true, showInSlider: showInSlider }).populate('brand').sort(sortOrder).skip(skip).limit(limit);
     const totalProducts = await Product.countDocuments(filter);
     return NextResponse.json({
       data: products,

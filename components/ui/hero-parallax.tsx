@@ -11,16 +11,13 @@ import Image from 'next/image'; // Added this import
 import { Highlighter } from "../magicui/highlighter";
 import Link from "next/link";
 import { TextAnimate } from "../magicui/text-animate";
+import { IProduct } from "@/model/productSchema";
 
 
 export const HeroParallax = ({
   products,
 }: {
-  products: {
-    title: string;
-    link: string;
-    thumbnail: string;
-  }[];
+  products: IProduct[]
 }) => {
   const firstRow = products.slice(0, 5);
   const secondRow = products.slice(5, 10);
@@ -78,7 +75,7 @@ export const HeroParallax = ({
             <ProductCard
               product={product}
               translate={translateX}
-              key={product.title}
+              key={product._id as string}
             />
           ))}
         </motion.div>
@@ -87,7 +84,7 @@ export const HeroParallax = ({
             <ProductCard
               product={product}
               translate={translateXReverse}
-              key={product.title}
+              key={product._id as string}
             />
           ))}
         </motion.div>
@@ -96,7 +93,7 @@ export const HeroParallax = ({
             <ProductCard
               product={product}
               translate={translateX}
-              key={product.title}
+              key={product._id as string}
             />
           ))}
         </motion.div>
@@ -126,11 +123,7 @@ export const ProductCard = ({
   product,
   translate,
 }: {
-  product: {
-    title: string;
-    link: string;
-    thumbnail: string;
-  };
+  product: IProduct;
   translate: MotionValue<number>;
 }) => {
   return (
@@ -141,23 +134,23 @@ export const ProductCard = ({
       whileHover={{
         y: -20,
       }}
-      key={product.title}
+      key={product._id as string}
       className="group/product rounded-lg border-2 overflow-hidden h-56 md:h-96 md:w-[24rem] w-[12rem] relative shrink-0"
     >
       <Link
-        href={product.link}
+        href={`/products/${product._id as string}`}
         className="block group-hover/product:shadow-2xl "
       >
         <Image // Changed from img to Image
-          src={product.thumbnail}
-          alt={product.title}
+          src={product.images[0]}
+          alt={product.name}
           fill
           className=" object-left-top absolute h-full w-full inset-0"
         />
       </Link>
       <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-background pointer-events-none"></div>
       <h2 className="absolute bottom-4 left-4 font-bold text-foreground dark:text-black">
-        {product.title}
+        {product.name}
       </h2>
     </motion.div>
   );

@@ -6,7 +6,8 @@ import { HeroParallax } from '@/components/ui/hero-parallax';
 import { Spotlight } from '@/components/ui/spotlight';
 import Link from 'next/link';
 import { Boxes, ShieldCheck, Truck } from 'lucide-react';
-export const products = [
+import { useProductsPlain } from '@/hooks/use-products';
+export const dummyProducts = [
   {
     title: "Nike Air Force 1 '07",
     link: "http://localhost:3000",
@@ -100,9 +101,11 @@ export const products = [
 ];
 
 const Hero = () => {
+  const { data: products, isLoading } = useProductsPlain()
   return (
     <>
-      <HeroParallax products={products} />
+      {!isLoading && <HeroParallax products={products} />}
+      {/* {JSON.stringify(products)} */}
       <div className="py-32 flex flex-col justify-center items-center relative overflow-hidden">
         <Spotlight
           className="-top-40 left-0 md:-top-20 md:left-60"

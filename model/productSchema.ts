@@ -11,6 +11,7 @@ export interface IProduct extends Document {
   sizes: string[];
   category: Types.ObjectId | ICategory // Can be category ID or populated category object
   available: boolean;
+  showInSlider: boolean;
   is_new: boolean;
   description?: string;
   sex: "Men" | "Women" | "Unisex";
@@ -53,10 +54,14 @@ const productSchema = new Schema<IProduct>({
     type: Boolean,
     default: false,
   },
+  showInSlider: {
+    type: Boolean,
+    default: false,
+  },
   sex: {
     type: String,
     enum: ["Men", "Women", "Unisex"],
-    default: "Men",
+    default: "Unisex",
   },
   category: { type: Schema.Types.ObjectId, ref: 'Category' },
   brand: { type: Schema.Types.ObjectId, ref: 'Brand' },

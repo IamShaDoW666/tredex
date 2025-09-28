@@ -8,6 +8,7 @@ export const productSchema = z.object({
   category: z.string().min(1, 'Category is required.'),
   available: z.boolean().default(true).optional(),
   is_new: z.boolean().default(false).optional(),
+  showInSlider: z.boolean().default(false).optional(),
   sex: z.enum(['Men', 'Women', 'Unisex']).default('Men').optional(),
   productType: z.string().optional(),
   images: z.array(z.instanceof(File).or(z.string())).optional(),

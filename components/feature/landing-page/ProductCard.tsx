@@ -26,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             className="object-fill w-full h-full group-hover:scale-105 transition-transform duration-300 ease-in-out rounded-t-lg"
           />
           }          <div className="absolute top-2 left-2 flex gap-1">
-            {product.discountPrice && (
+            {(product.discountPrice && !product.is_new) && (
               <Badge variant="destructive">Sale</Badge>
             )}
             {product.is_new && (

@@ -1,7 +1,7 @@
 import Hero from '@/components/feature/landing-page/Hero';
 import ProductGrid from '@/components/feature/landing-page/ProductGrid';
 import { Suspense } from 'react';
-const LandingPage = () => {
+const LandingPage = async () => {
   return (
     <div>
       <Hero />

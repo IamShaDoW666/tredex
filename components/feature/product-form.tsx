@@ -71,6 +71,7 @@ export function ProductForm({ product }: ProductFormProps) {
       description: product?.description || "",
       available: product?.available ?? true,
       is_new: product?.is_new ?? false,
+      showInSlider: product?.showInSlider ?? false,
       sex: product?.sex || 'Men',
       sizes: product?.sizes.join(',') || "",
       images: product?.images || []
@@ -278,6 +279,17 @@ export function ProductForm({ product }: ProductFormProps) {
                 <Checkbox id="available" {...field} checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>
               <Label htmlFor="available">Available for sale</Label>
+            </div>
+          </FormItem>} />
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <FormField name="showInSlider" render={({ field }) => <FormItem>
+            <div className='flex items-center gap-x-2'>
+              <FormControl>
+                <Checkbox id="showInSlider" {...field} checked={field.value} onCheckedChange={field.onChange} />
+              </FormControl>
+              <Label htmlFor="showInSlider">Show in Slider</Label>
             </div>
           </FormItem>} />
         </div>
