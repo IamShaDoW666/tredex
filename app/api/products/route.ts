@@ -28,6 +28,7 @@ export async function GET(request: Request) {
       $or?: Array<{ name?: { $regex: string; $options: string }; description?: { $regex: string; $options: string } }>;
       category?: { $in: string[] };
       sizes?: { $in: string[] };
+      showInSlider?: boolean;
       sex?: { $in: string[] };
       color?: { $in: string[] };
       brand?: { $in: string[] };
@@ -60,6 +61,10 @@ export async function GET(request: Request) {
       filter.color = { $in: color.split(',') };
     }
 
+    if (showInSlider) {
+      filter.showInSlider = showInSlider === "true"
+    }
+
     if (brand) {
       const brands = await Brand.find({ name: { $in: brand.split(',') } })
       filter.brand = { $in: brands.map((brand) => brand._id) };
@@ -80,7 +85,9 @@ export async function GET(request: Request) {
       sortOrder[sort] = order === 'desc' ? -1 : 1;
     }
 
-    const products = await Product.find({ ...filter, available: true, showInSlider: showInSlider }).populate('brand').sort(sortOrder).skip(skip).limit(limit);
+    console.log(filter)
+
+    const products = await Product.find({ ...filter, available: true }).populate('brand').sort(sortOrder).skip(skip).limit(limit);
     const totalProducts = await Product.countDocuments(filter);
     return NextResponse.json({
       data: products,
