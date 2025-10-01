@@ -44,12 +44,12 @@ export function MobileNavToggle() {
               Collection
             </Button>
           </Link>
-          <Link href="/men" passHref>
+          <Link href="/collection?sex=Men" passHref>
             <Button variant="ghost" className="text-3xl py-6 font-semibold w-full justify-start">
               Men
             </Button>
           </Link>
-          <Link href="/women" passHref>
+          <Link href="/collection?sex=Women" passHref>
             <Button variant="ghost" className="text-3xl py-6 font-semibold w-full justify-start">
               Women
             </Button>

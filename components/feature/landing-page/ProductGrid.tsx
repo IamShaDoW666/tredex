@@ -64,6 +64,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ title = "Collection" }) => {
   }, [inView, hasNextPage, fetchNextPage]);
 
   const getTitle = () => {
+    if (pathname === '/') return "Collection"
+    if (filters.sex.includes("Men") && filters.sex.includes("Women")) return "Collection"
     if (filters.sex.includes("Men")) {
       return "Shop Men"
     } else if (filters.sex.includes("Women")) {

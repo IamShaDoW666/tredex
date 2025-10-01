@@ -1,6 +1,3 @@
-"use client";
-
-import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import Link from 'next/link';
@@ -12,10 +9,12 @@ const Header = () => {
   return (
     <header className="fixed top-10 ml-2 md:left-16 z-50 flex justify-between w-full md:w-auto items-center px-8">
       <div className="flex items-center gap-4 bg-card border-2 dark:border-0 border-accent-foreground rounded-full p-2 overflow-x-auto">
-        <Avatar className="bg-primary">
-          <AvatarImage src={LogoImage.src} alt="Tredex logo" />
-          <AvatarFallback>TX</AvatarFallback>
-        </Avatar>
+        <Link href={'/'}>
+          <Avatar className="bg-primary">
+            <AvatarImage src={LogoImage.src} alt="Tredex logo" />
+            <AvatarFallback>TX</AvatarFallback>
+          </Avatar>
+        </Link>
         {/* Desktop navigation - hidden on mobile */}
         <nav className="hidden md:flex items-center gap-2"> {/* Added hidden md:flex */}
           <Link href="/" passHref>
