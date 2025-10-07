@@ -80,7 +80,7 @@ const deleteProduct = async (id: string) => {
 };
 
 export const useProductsPlain = () =>
-  useQuery({
+  useQuery<IProduct[]>({
     queryKey: ['productsplain'],
     queryFn: async () => {
       try {
