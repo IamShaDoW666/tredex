@@ -11,7 +11,6 @@ interface RelatedProductsProps {
 
 export function RelatedProducts({ currentProductId }: RelatedProductsProps) {
   const { relatedProducts, isLoading, isError } = useRelatedProducts(currentProductId);
-
   if (isLoading) {
     return (
       <div className="mt-8">

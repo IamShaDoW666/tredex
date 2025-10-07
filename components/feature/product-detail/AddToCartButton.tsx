@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { FaWhatsapp } from "react-icons/fa";
@@ -43,7 +41,7 @@ const AddToCartButton = ({ sizes, product }: AddToCartButtonProps) => {
       // Construct WhatsApp message
       const whatsappMessage = `Hello, I want to order this item.\n\nProduct: ${product?.name}\nSize: ${selectedSize}\nQuantity: 1\nPrice: ₹${product.price}\n\nMy Name: ${orderData.name}\nAddress: ${orderData.address}\nPhone: ${orderData.phone} \n\nAdditional Info: ${orderData.extraDetails}`;
       const encodedMessage = encodeURIComponent(whatsappMessage);
-      const whatsappUrl = `https://wa.me/917902708908?text=${encodedMessage}`;
+      const whatsappUrl = `https://wa.me/919645580972?text=${encodedMessage}`;
 
       window.open(whatsappUrl, '_blank');
     } catch (error) {

@@ -20,7 +20,7 @@ export function ProductSizeSelector({ sizes }: ProductSizeSelectorProps) {
     <>
       <div>
         <Label className='text-lg'>Sizes</Label>
-        <p className='text-muted-foreground mb-4'>Sizes follow UK standards</p>
+        <p className='text-muted-foreground mb-4'>ALL LISTED SIZES FOLLOW UK AND EUROPE SIZING STANDARD</p>
         <ToggleGroup
           type="single"
           value={selectedSize ?? ''}
