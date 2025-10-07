@@ -116,7 +116,7 @@ const Hero = () => {
           <p className="text-lg md:text-xl mt-4 mb-8 max-w-3xl">
             Discover the latest sneaker collection. Explore our curated selection of the most sought-after sneakers from top brands. From timeless classics to the latest drops, find your perfect pair at Tredex.
           </p>
-          <Link href="/products">
+          <Link href="/collection">
             <Button size="lg" className="text-lg px-8 py-6">Shop Now</Button>
           </Link>
 
