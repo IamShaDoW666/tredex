@@ -27,9 +27,9 @@ lib/
 : Follow standard conventions
 
 ## Recent Changes
+- 016-i-want-to: Generate a terms and conditions modal and page.
 - 013-add-a-dashboard: Add a dashboard/product/[id]/edit page.
 - 012-create-a-brands: Create a brands page.
-- 009-add-a-related: Add a related products component.
 
 
 <!-- MANUAL ADDITIONS START -->

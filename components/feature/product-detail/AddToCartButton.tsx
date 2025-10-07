@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { FaWhatsapp } from "react-icons/fa";
 import { useProductStore } from '@/hooks/use-product-store';
 import { WhatsappOrderModal } from '../whatsapp-order-modal';
+import TermsAndConditionsModal from '@/components/feature/terms-and-conditions-modal';
 import { IProduct } from '@/model/productSchema';
 import { orderSchema } from '@/zod/order-schema';
 import z from 'zod';
@@ -56,7 +57,9 @@ const AddToCartButton = ({ sizes, product }: AddToCartButtonProps) => {
 
   return (
     <div className='flex items-center justify-between md:flex-row-reverse'>
-      <Button className='p-0' variant={'link'}>Terms and Conditions</Button>
+      <TermsAndConditionsModal>
+        <Button className='p-0' variant={'link'}>Terms and Conditions</Button>
+      </TermsAndConditionsModal>
       <WhatsappOrderModal isDisabled={isDisabled} productId={product._id as string} onOrderSubmit={handleOrderSubmit}>
         <Button size={'lg'} className='bg-green-400 text-primary-foreground' onClick={handleAddToCart} disabled={isDisabled}>
           Order on Whatsapp <FaWhatsapp />
