@@ -1,5 +1,6 @@
 import Header from '@/components/feature/landing-page/Header';
 import Footer from '@/components/feature/landing-page/Footer';
+import { ScrollProvider } from "@/context/ScrollContext";
 
 export default function FrontLayout({
   children,
@@ -7,10 +8,10 @@ export default function FrontLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <ScrollProvider>
       <Header />
       {children}
       <Footer />
-    </>
+    </ScrollProvider>
   );
 }

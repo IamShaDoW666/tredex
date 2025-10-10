@@ -16,10 +16,14 @@ import { Button } from '@/components/ui/button';
 import { useProductPrices } from '@/hooks/use-product-prices';
 import { useFilterStore } from '@/hooks/use-filter-store';
 import { FilterBadges } from './FilterBadges';
+import { useScroll } from '@/context/ScrollContext';
+import { FloatingSearchIcon } from '../floating-search-icon';
+
 interface ProductGridProps {
   title?: string
 }
 const ProductGrid: React.FC<ProductGridProps> = ({ title = "Collection" }) => {
+  const { collectionsGridRef } = useScroll();
   const searchParams = useSearchParams();
   const limit = parseInt(searchParams.get('limit') || '20', 10);
   const search = searchParams.get('search') || '';
@@ -96,7 +100,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ title = "Collection" }) => {
   };
   const hasFilters = searchParams.size > 0;
   return (
-    <section className="py-12 px-4">
+    <section ref={collectionsGridRef as React.RefObject<HTMLElement>} className="py-12 px-4">
       <h2 className="text-3xl font-bold text-center mb-8">{getTitle()}</h2>
       <div className="grid grid-cols-12 gap-8">
         {!isMobile && (
@@ -157,6 +161,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ title = "Collection" }) => {
           ) : null}
         </div>
       </div>
+      <FloatingSearchIcon />
     </section>
   );
 };
