@@ -42,7 +42,7 @@ export function FloatingSearchIcon() {
       className={`fixed z-50 md:hidden ${
         isOpen
           ? "bottom-[45vh] left-1/2 -translate-x-1/2"
-          : "bottom-10 right-1/2 translate-x-1/2"
+          : "bottom-10 right-[10vh] translate-x-1/2"
       }`}
     >
       <Motion

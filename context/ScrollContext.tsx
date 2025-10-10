@@ -3,13 +3,13 @@
 import { createContext, useContext, useRef, RefObject } from 'react';
 
 interface ScrollContextType {
-  collectionsGridRef: RefObject<HTMLElement> | null;
+  collectionsGridRef: RefObject<HTMLElement | null>;
 }
 
 const ScrollContext = createContext<ScrollContextType | null>(null);
 
 export function ScrollProvider({ children }: { children: React.ReactNode }) {
-  const collectionsGridRef = useRef<HTMLElement>(null);
+  const collectionsGridRef = useRef<HTMLElement | null>(null);
 
   return (
     <ScrollContext.Provider value={{ collectionsGridRef }}>
