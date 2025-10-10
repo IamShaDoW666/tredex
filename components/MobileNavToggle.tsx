@@ -35,22 +35,22 @@ export function MobileNavToggle() {
         </SheetClose>
         <nav ref={navRef} className="flex flex-col justify-center gap-8 pt-10"> {/* Increased padding-top */}
           <Link href="/" passHref>
-            <Button variant="ghost" className="text-3xl py-6 font-semibold w-full justify-start">
+            <Button onClick={() => setIsOpen(!isOpen)} variant="ghost" className="text-3xl py-6 font-semibold w-full justify-start">
               Home
             </Button>
           </Link>
           <Link href="/collection" passHref>
-            <Button variant="ghost" className="text-3xl py-6 font-semibold w-full justify-start">
+            <Button onClick={() => setIsOpen(!isOpen)} variant="ghost" className="text-3xl py-6 font-semibold w-full justify-start">
               Collection
             </Button>
           </Link>
           <Link href="/collection?sex=Men" passHref>
-            <Button variant="ghost" className="text-3xl py-6 font-semibold w-full justify-start">
+            <Button onClick={() => setIsOpen(!isOpen)} variant="ghost" className="text-3xl py-6 font-semibold w-full justify-start">
               Men
             </Button>
           </Link>
           <Link href="/collection?sex=Women" passHref>
-            <Button variant="ghost" className="text-3xl py-6 font-semibold w-full justify-start">
+            <Button onClick={() => setIsOpen(!isOpen)} variant="ghost" className="text-3xl py-6 font-semibold w-full justify-start">
               Women
             </Button>
           </Link>
