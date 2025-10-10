@@ -32,7 +32,6 @@ declare const global: typeof globalThis & {
 };
 
 let cached = global.mongoose;
-
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }

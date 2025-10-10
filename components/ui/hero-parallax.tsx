@@ -55,7 +55,7 @@ export const HeroParallax = () => {
     return (
         <div
             ref={ref}
-            className="h-[210vh] md:h-[280vh] md:y-20 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+            className="h-[210vh] md:h-[280vh] md:y-20 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
         >
             <Header />
             {!isLoading &&
@@ -68,7 +68,7 @@ export const HeroParallax = () => {
                     }}
                     className=""
                 >
-                    <motion.div initial={{ opacity: 0, y:-50 }} transition={{duration: 0.7}} animate={{ opacity: 1, y:0 }} className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
+                    <motion.div initial={{ opacity: 0, y:-50 }} transition={{duration: 0.7}} animate={{ opacity: 1, y:0 }} className="flex flex-row-reverse space-x-reverse space-x-4 md:space-x-0 md:gap-x-20  mb-10 md:mb-20">
                         {firstRow?.map((product) => (
                             <ProductCard
                                 product={product}
@@ -77,7 +77,7 @@ export const HeroParallax = () => {
                             />
                         ))}
                     </motion.div>
-                    <motion.div initial={{ opacity: 0, y:-50 }} transition={{duration: 0.7}} animate={{ opacity: 1, y:0 }} className="flex flex-row  mb-20 space-x-20 ">
+                    <motion.div initial={{ opacity: 0, y:-50 }} transition={{duration: 0.7}} animate={{ opacity: 1, y:0 }} className="flex flex-row  mb-10 md:mb-20 space-x-4 md:space-x-0 md:gap-x-20  ">
                         {secondRow?.map((product) => (
                             <ProductCard
                                 product={product}
@@ -86,7 +86,7 @@ export const HeroParallax = () => {
                             />
                         ))}
                     </motion.div>
-                    <motion.div initial={{ opacity: 0, y:-50 }} transition={{duration: 0.7}} animate={{ opacity: 1, y:0 }} className="flex flex-row-reverse md:mb-20 space-x-reverse space-x-20">
+                    <motion.div initial={{ opacity: 0, y:-50 }} transition={{duration: 0.7}} animate={{ opacity: 1, y:0 }} className="flex flex-row-reverse mb-10 md:mb-20 space-x-reverse space-x-4 md:space-x-0 md:gap-x-20">
                         {thirdRow?.map((product) => (
                             <ProductCard
                                 product={product}
@@ -147,7 +147,7 @@ export const ProductCard = ({
                 />
             </Link>
             <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-background pointer-events-none"></div>
-            <h2 className="absolute bottom-4 left-4 font-bold text-foreground dark:text-black">
+            <h2 className="absolute bottom-4 left-4 font-bold text-sm md:text-md text-foreground dark:text-black">
                 {product.name}
             </h2>
         </motion.div>
