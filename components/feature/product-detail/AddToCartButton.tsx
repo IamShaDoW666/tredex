@@ -9,62 +9,57 @@ import { orderSchema } from '@/zod/order-schema';
 import z from 'zod';
 
 interface AddToCartButtonProps {
-  sizes: string[];
-  product: IProduct
+    product: IProduct
 }
 
-const AddToCartButton = ({ sizes, product }: AddToCartButtonProps) => {
-  const { selectedSize } = useProductStore();
+const AddToCartButton = ({ product }: AddToCartButtonProps) => {
+    const { selectedSize } = useProductStore();
 
-  const handleAddToCart = () => {
-    // Logic to add to cart will be implemented later
-    console.log('Added to cart with size:', selectedSize);
-  };
+    const handleAddToCart = () => {
+        // Logic to add to cart will be implemented later
+        console.log('Added to cart with size:', selectedSize);
+    };
 
-  const handleOrderSubmit = async (orderData: z.infer<typeof orderSchema>) => {
-    try {
-      const response = await fetch('/api/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
-      });
+    const handleOrderSubmit = async (orderData: z.infer<typeof orderSchema>) => {
+        try {
+            const response = await fetch('/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            });
 
-      if (!response.ok) {
-        throw new Error('Failed to create order');
-      }
+            if (!response.ok) {
+                throw new Error('Failed to create order');
+            }
 
-      const createdOrder = await response.json();
-      console.log('Order created:', createdOrder);
+            const createdOrder = await response.json();
+            console.log('Order created:', createdOrder);
 
-      // Construct WhatsApp message
-      const whatsappMessage = `Hello, I want to order this item.\n\nProduct: ${product?.name}\nSize: ${selectedSize}\nQuantity: 1\nPrice: ₹${product.price}\n\nMy Name: ${orderData.name}\nAddress: ${orderData.address}\nPhone: ${orderData.phone} \n\nAdditional Info: ${orderData.extraDetails}`;
-      const encodedMessage = encodeURIComponent(whatsappMessage);
-      const whatsappUrl = `https://wa.me/919645580972?text=${encodedMessage}`;
+            // Construct WhatsApp message
+            const whatsappMessage = `Hello, I want to order this item.\n\nProduct: ${product?.name}\nSize: ${selectedSize ?? '-'}\nQuantity: 1\nPrice: ₹${product.price}\n\nMy Name: ${orderData.name}\nAddress: ${orderData.address}\nPhone: ${orderData.phone} \n\nAdditional Info: ${orderData.extraDetails}`;
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappUrl = `https://wa.me/919645580972?text=${encodedMessage}`;
 
-      window.open(whatsappUrl, '_blank');
-    } catch (error) {
-      console.error('Error submitting order:', error);
-      alert('Failed to place order. Please try again.');
-    }
-  };
-
-  const hasSizes = sizes && sizes.length > 0;
-  const isDisabled = hasSizes && !selectedSize;
-
-  return (
-    <div className='flex items-center justify-between md:flex-row-reverse'>
-      <TermsAndConditionsModal>
-        <Button className='p-0' variant={'link'}>Terms and Conditions</Button>
-      </TermsAndConditionsModal>
-      <WhatsappOrderModal isDisabled={isDisabled} productId={product._id as string} onOrderSubmit={handleOrderSubmit}>
-        <Button size={'lg'} className='bg-green-400 text-primary-foreground' onClick={handleAddToCart} disabled={isDisabled}>
-          Order on Whatsapp <FaWhatsapp />
-        </Button>
-      </WhatsappOrderModal>
-    </div>
-  );
+            window.open(whatsappUrl, '_blank');
+        } catch (error) {
+            console.error('Error submitting order:', error);
+            alert('Failed to place order. Please try again.');
+        }
+    };
+    return (
+        <div className='flex items-center justify-between md:flex-row-reverse'>
+            <TermsAndConditionsModal>
+                <Button className='p-0' variant={'link'}>Terms and Conditions</Button>
+            </TermsAndConditionsModal>
+            <WhatsappOrderModal productId={product._id as string} onOrderSubmit={handleOrderSubmit}>
+                <Button size={'lg'} className='bg-green-400 text-primary-foreground' onClick={handleAddToCart}>
+                    Order on Whatsapp <FaWhatsapp />
+                </Button>
+            </WhatsappOrderModal>
+        </div>
+    );
 };
 
 export default AddToCartButton;

@@ -16,7 +16,6 @@ import { orderSchema } from "@/zod/order-schema";
 interface WhatsappOrderModalProps {
   children: React.ReactNode;
   productId: string;
-  isDisabled: boolean;
   onOrderSubmit: (data: z.infer<typeof orderSchema>) => Promise<void>;
 }
 
