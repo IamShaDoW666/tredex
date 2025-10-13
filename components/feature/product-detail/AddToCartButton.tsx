@@ -13,7 +13,7 @@ interface AddToCartButtonProps {
 }
 
 const AddToCartButton = ({ product }: AddToCartButtonProps) => {
-    const { selectedSize } = useProductStore();
+    const { selectedSize, quantity } = useProductStore();
 
     const handleAddToCart = () => {
         // Logic to add to cart will be implemented later
@@ -38,7 +38,7 @@ const AddToCartButton = ({ product }: AddToCartButtonProps) => {
             console.log('Order created:', createdOrder);
 
             // Construct WhatsApp message
-            const whatsappMessage = `Hello, I want to order this item.\n\nProduct: ${product?.name}\nSize: ${selectedSize ?? '-'}\nQuantity: 1\nPrice: ₹${product.price}\n\nMy Name: ${orderData.name}\nAddress: ${orderData.address}\nPhone: ${orderData.phone} \n\nAdditional Info: ${orderData.extraDetails}`;
+            const whatsappMessage = `Hello, I want to order this item.\n\nProduct: ${product?.name}\nSize: ${selectedSize ?? '-'}\nQuantity: ${quantity}\nPrice: ₹${product.price}\n\nMy Name: ${orderData.name}\nAddress: ${orderData.address}\nPincode: ${orderData.pincode ?? "-"}\nPhone: ${orderData.phone} \n\nAdditional Info: ${orderData.extraDetails}`;
             const encodedMessage = encodeURIComponent(whatsappMessage);
             const whatsappUrl = `https://wa.me/919645580972?text=${encodedMessage}`;
 
