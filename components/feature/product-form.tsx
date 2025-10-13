@@ -64,7 +64,6 @@ export function ProductForm({ product }: ProductFormProps) {
     defaultValues: {
       name: product?.name || "",
       category: (product?.category as ICategory)?._id as string || "",
-      productType: product?.productType || "",
       brand: (product?.brand as IBrand)?._id as string || "",
       price: product?.price || 0,
       discountPrice: product?.discountPrice || undefined,
@@ -260,15 +259,6 @@ export function ProductForm({ product }: ProductFormProps) {
                 <SelectItem value="Unisex">Unisex</SelectItem>
               </SelectContent>
             </Select>
-          </FormItem>} />
-        </div>
-
-        <div>
-          <FormField name="productType" render={({ field }) => <FormItem>
-            <Label htmlFor="productType">Product Type</Label>
-            <FormControl>
-              <Input id="productType" {...field} />
-            </FormControl>
           </FormItem>} />
         </div>
 
