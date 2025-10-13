@@ -8,7 +8,7 @@ const LandingPage = async () => {
             <Hero />
             <WatchSunglass />
             <Suspense fallback={<div>Loading...</div>}>
-                <ProductGrid title='Featured Products' shoesOnly={true} />
+                <ProductGrid title='Featured Products' />
             </Suspense>
         </div>
     );
