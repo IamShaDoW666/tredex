@@ -37,7 +37,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <CardFooter className="flex flex-col items-start p-4 py-0 ">
           <h3 className="font-bold sm:text-lg truncate w-full">{product.name}</h3>
           <div className='flex justify-between w-full'>
-            <p className="text-sm text-muted-foreground ">{product.productType}</p>
             <Badge variant={'secondary'}>{(product.brand as IBrand).name}</Badge>
           </div>
           <Separator className='my-2' />
