@@ -29,7 +29,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ title = "Collection" }) => {
   const search = searchParams.get('search') || '';
   const sort = searchParams.get('sort') || '';
   const order = searchParams.get('order') || '';
-  const category = searchParams.get('category') || '';
+  const category = searchParams.get('category') || 'Sneakers';
   const sex = searchParams.get('sex') || '';
   const size = searchParams.get('size') || '';
   const color = searchParams.get('color') || '';
