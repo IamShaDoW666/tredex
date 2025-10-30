@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Badge, Footprints, Layers, LayoutDashboard } from "lucide-react"
+import { Badge, Footprints, Layers, LayoutDashboard, KeyRound } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -64,6 +64,16 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
                   <Footprints />
                 </div>
                 <span className={`text-sm font-medium`}>Products</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton isActive={isActive("dashboard/settings")} size="lg">
+              <Link href="/dashboard/settings/change-password" className={`flex items-center gap-3`}>
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                  <KeyRound />
+                </div>
+                <span className={`text-sm font-medium`}>Change Password</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
